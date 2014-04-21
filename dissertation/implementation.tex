@@ -1,5 +1,16 @@
 \chapter{Implementation}
+	\section{Overview}
+		At a high level, the program is composed of 3 components - data handling, sketch processing and charting (in increasing order of complexity).
 	\section{Data import and management}
+		Since the application is targeted at the average user, their data is most likely to be stored in spreadsheet format. Thus, it is important to allow them to import data from .xlsx and .csv files. 
+		For the sake of simplicity, the code assumes that the data is well-formed. Specifically, it works on the following assumptions:
+		\begin{enumerate}
+		\item The data is arranged as records in the rows of the spreadsheet.
+		\item The first row contains the names of the various fields.
+		\item No data is missing (if there are $m$ columns and $n$ rows, there are $m \cdot n$ data values.
+		\end{enumerate}
+		
+		Under these assumptions, import tabular data is a common use case, so I studied a number of existing libraries and methods to do this in C\# and ultimately settled on 
 	\section{Sketch Processing Workflow}
 	\section{Charting}
 	
