@@ -1,5 +1,5 @@
 \chapter{Introduction}
-\section{Overview}
+\section{Motivation}
 This project is an exploration of Human Computer Interface concepts governing the interactions of users with tools that let them explore and visualise data.
 
 The design of currently available charting tools were constrained by the input devices available previously: mouse and keyboard. Thus, they usually allow graph generation through one of two interfaces:
@@ -7,7 +7,18 @@ The design of currently available charting tools were constrained by the input d
 \item A series of dialog boxes and wizards to walk the user through a number of choices.
 \item Writing code that is interpreted to process data and generate graphics.
 \end{enumerate}
-This paper describes a different interface, which allows the user to sketch a subset of a chart on their computer touch screen like they would on paper. The hypotheses are that this interface is more learnable over time, and that it allows easier modification and exploration of visualisations compared to other charting applications. Both these hypotheses were investigated through a user study.
+
+Because these designs were constrained, they cannot offer certain benefits, such as easier learnability and direct manipulation.
+%TODO How to describe 'learnability' in correct parlance.
+
+\section{Project Description}
+This paper describes a different interface, which allows the user to sketch a subset of a chart on their computer touch screen like they would on paper. The hypotheses are that:
+\begin{enumerate}
+\item[H1] This interface is more 'learnable' over time
+\item[H2] It allows easier modification and exploration of visualisations compared to other charting applications.
+\end{enumerate}
+
+Both these hypotheses were investigated through a user study.
 
 The end result is a proof-of-concept charting application that works as below:
 \begin{enumerate}
@@ -20,6 +31,8 @@ The end result is a proof-of-concept charting application that works as below:
 \item Any changes on either the sketch or formal chart is fed through to the other view. For example, erasing the a sketched bar removes a data series from the formal bar.
 \end{enumerate}
 
-\section{Background}
-Sketching inputs have been studied for a while as more natural interfaces to computers, especially for graphics-related tasks \citep{Sutherland1964}.
-\section{Objectives}
+\section{Background and Related Work}
+Sketching inputs have been studied since the 1960s \citep{Sutherland1964} as more natural interfaces to computers, especially for graphics-related tasks. This has largely been motivated by the widely recognised importance of interaction to Information Visualisation (InfoVis) \citep{Lee2012}. Additionally, the metaphor of sketching on paper can encourage exploratory work due to the ease of creating changes and visually expressing what sort of change one is trying to make \citep{Citation Needed}, minimising the gap between a person's intent and the execution of the intent.
+%TODO Find citation for above statement. 
+
+Meanwhile, there has been increasing adoption of touch-enabled phones and multi-touch slates amongst the general public, demonstrating people's affection for what have been referred to as Natural User Interfaces \cite{Lee2012}.
