@@ -45,11 +45,16 @@ This project involved vast exploratory design work, in preparation of the actual
 		\item Run a pilot study followed by a user study to evaluate the system.
 	\end{enumerate}
 	
+	\section{Development Environment}
+	For this project, the hardware available was a Microsoft Surface Pro (\nth{1} gen), which features the active digitizer screen required for precise inking. Since this machine runs Windows by default, we chose to develop the system using the .NET framework, which has built-in support for Tablet PCs and Ink handling.
+	
+	As a precaution, insurance was taken out on the machine to ensure quick replacement in case of damage or loss. Additionally, version control was used extensively in the project, to ensure no work was lost. The code for the RATA ink stroke recogniser, described below, was uploaded to a Git repository in collaboration with RATA's authors. The code for this project was then written in a fork of that repository, to allow updates to RATA to be pulled in. The dissertation itself was written in \LaTeX , so that the text files could be versioned in another Git repository. Both repositories were backed up off-site on repository host Bitbucket. The dissertation was also backed up online using file synchronisation software Microsoft OneDrive. 
+	
 	\section{Building the classifier}	
 	Core to the system is an ink recognition component that identifies the chart element (e.g.\ bar, axis) that the user has sketched. This must work above a certain accuracy threshold or the system will prove frustrating to users \citep{Frankish1995}. However, since the project scope included other components too, the time available to build this classifier was limited. Hence, we decided to build a classifier using existing tools rather than implementing one from scratch. 
 	
 	\subsection{Tools used}
-	Microsoft provides a digital ink library that includes an ink stroke recognizer. There are a number of other ink recognition tools available, such as \$1, Rubine, PaleoSketch and CALI. However, while these recognizers work well for the recognition tasks they were designed for, the RATA framework is explicitly designed to allow generation of a custom recogniser for a new domain using a few example images \citep{Chang2010}. It thus outperforms a number of these recognisers on data sets other than the examples they ship with. By choosing to use RATA, we ensured we got a high accuracy rate for a domain of chart elements that may need to expand over time to incorporate more types of charts.
+	The digital ink library Microsoft provides includes an ink stroke recognizer. There are a number of other ink recognition tools available, such as \$1, Rubine, PaleoSketch and CALI. However, while these recognizers work well for the recognition tasks they were designed for, the RATA framework is explicitly designed to allow generation of a custom recogniser for a new domain using a few example images \citep{Chang2010}. It thus outperforms a number of these recognisers on data sets other than the examples they ship with. By choosing to use RATA, we ensured we got a high accuracy rate for a domain of chart elements that may need to expand over time to incorporate more types of charts.
 	%TODO Do I need to cite a paper introducing each of the named recognisers?
 	%TODO Should I include more explanation on why RATA is a great choice compared to the alternatives? This would be largely based on the introduction in the RATA paper cited. This might be restated as evaluating the options we had and how they worked, and seeing that RATA's methodology was best suited for this task.
 	
@@ -58,26 +63,83 @@ This project involved vast exploratory design work, in preparation of the actual
 	\subsection{Data collection}
 	After acquiring RATA, we inspected the code and did manual testing to find some blocking bugs. Since we were in contact with the authors of the software, including Beryl Plimmer who until recently worked at the University of Cambridge Computer Lab, we were able to confirm with them that these were indeed bugs. We implemented fixes for them and contributed them back to the authors, and are working towards getting the code ready for to be published Open Source.
 	
-	With a working version of RATA, an initial study was run to collect training data. We asked 10 participants (20-26 year old Cambridge students, studying a large variety of subjects) to draw 2 charts each. 
+	With a working version of RATA, an initial study was run to collect training data. We asked 10 participants (20-26 year old Cambridge students, studying a large variety of subjects) to draw a chart. I spoke out the following prompt:
 	
-	First, they were shown a spreadsheet file containing sample data as below:
-	\begin{tabu}{l r r}
-		\rowfont{\bfseries} Year & Births & Deaths \\
-		2010 & 50,000 & 30,000 \\
-		2011 & 40,000 & 35,000 \\
-		2012 & 36,000 & 37,000 \\
-		2013 & 34,000 & 35,000 \\
-	\end{tabu}
+	\begin{quotation}
+	Imagine you are a government official trying to use a bar chart to visualise how the population has grown over time. Can you sketch out what this bar chart might look like? Just treat this screen like paper.
+	\end{quotation}
 	
-	\vspace{10pt}
+	 They were then presented a simple UI with a large white canvas and the following task description written in a panel:
 	
-	Next, I spoke out the following task prompt.
+	\begin{quotation}
+	Draw 2 axes. Label the x axis 'Year' and the y 'Population'. Draw 3 bars of different heights. Each shape (axis, bar) should be drawn in one stroke.
+	\end{quotation}
+	
+%	First, they were shown a spreadsheet file containing sample data as below:
+%	\begin{tabu}{l r r}
+%		\rowfont{\bfseries} Year & Births & Deaths \\
+%		2010 & 50,000 & 30,000 \\
+%		2011 & 40,000 & 35,000 \\
+%		2012 & 36,000 & 37,000 \\
+%		2013 & 34,000 & 35,000 \\
+%	\end{tabu}
+%	
+%	\vspace{10pt}
+%	
+%	Next, I spoke out the following task prompt.
+%
+%	
+%	\begin{quote}
+%		Say you are a government official trying to visualise trends in birth and death rates over time. Could you draw a bar hart on this screen that you would need to visualise this. No need to plot the actual data, just a rough sketch of what this chart would look like.	
+%	\end{quote}
+	
+	They were asked to draw the same chart 2 times, in order to get 20 training samples in total, and to observe how much variation there is between multiple sketches by the same user. On the second drawing, they were encouraged to draw a less conventional chart, to make the system as robust in the face of variations as possible. 
+	%TODO ^Explain this better
+		
+	\begin{figure}[h]
+        \centering
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{collection1}
+                \caption{Regular chart}
+                \label{fig:regular}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{collection2}
+                \caption{Using lines instead of bars}
+                \label{fig:lines}
+        \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+          %(or a blank line to force the subfigure onto a new line)
+          \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{collection3}
+                \caption{Grouped bars}
+                \label{fig:grouped}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{collection4}
+                \caption{Using a mouse instead of the stylus}
+                \label{fig:trembling}
+        \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \caption{Some of the more unusual chart sketches collected}\label{fig:data_collection_samples}
+	\end{figure}
+	
+	Three elements were then defined: Axis, Bar and Text (an extra element, 'L Axis' was added later based on feedback from a pilot user study). We went through each figure and labelled the various elements.
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\textwidth]{collection_labelled}
+		\caption{Elements of the sketch labelled as Axis (cyan), Bar (brown) or Text (dark blue)}
+		\label{fig:collection_labelled}
+	\end{figure}
 
+	Once all the elements in all the charts were labelled, we could begin training. RATA includes a dataset generator tool that allowed easy extraction of various features of the strokes, such as 'distance from first to last point', 'absolute curve of largest segment' and 'pressure variation'. This data was compiled into a .csv file for use in training. 
+	\subsection{Training}	
 	
-	\begin{quote}
-		Say you are a government official trying to visualise trends in birth and death rates over time. Could you draw a bar hart on this screen that you would need to visualise this. No need to plot the actual data, just a rough sketch of what this chart would look like.	
-	\end{quote}
-	
-	They were asked to draw the same chart 2 times, in order to get 20 training samples in total, and to observe how much variation there is between multiple sketches by the same user. 
 	\section{Design}
 	\section{Planning}
