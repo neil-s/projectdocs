@@ -40,7 +40,7 @@ This project involved vast exploratory design work, in preparation of the actual
 		\item Assess the various methods to build a classifier for ink recognition, including using the RATA Framework
 		\item Run an initial user study to  see how people naturally draw graphs, and also use it to collect training examples for the classifier.
 		\item Build a UI that accepts strokes, runs them through the classifier, and shows the user feedback to indicate successful recognition.
-		\item Build the UI widget that lets users import their spreadsheets in Microsoft Excel or Comma Separated Value files. It must then expose the various fields detected.
+		\item Build the UI widget that lets users import their spreadsheets in Microsoft Excel (xlsx) or Comma Separated Value (csv) files. It must then expose the various fields detected.
 		\item Build the charting component to convert the recognised sketches and the ink into a finished visualisation.
 		\item Run a pilot study followed by a user study to evaluate the system.
 	\end{enumerate}
@@ -138,8 +138,10 @@ This project involved vast exploratory design work, in preparation of the actual
 		\label{fig:collection_labelled}
 	\end{figure}
 
-	Once all the elements in all the charts were labelled, we could begin training. RATA includes a dataset generator tool that allowed easy extraction of various features of the strokes, such as 'distance from first to last point', 'absolute curve of largest segment' and 'pressure variation'. This data was compiled into a .csv file for use in training. 
+	Once all the elements in all the charts were labelled, we could begin training. RATA includes a dataset generator tool that allowed easy extraction of various features of the strokes, such as 'distance from first to last point', 'absolute curve of largest segment' and 'pressure variation'. Data for 121 such attributes, about 270 ink strokes was compiled into a .csv file for use in training. 
 	\subsection{Training}	
+	The labelled data was then sent to a 'Vote' classifier in Weka, which uses combines the probability distributions derived from multiple classifiers. Specifically, the types of classifiers combined were Logit Boost, Bayes Net, LMT and Random Forest. In order to assess how well each of these individual classifiers were performing, an experiment was set up using Weka Experimenter. The data collected in the initial study was shuffled, and then 66\% was chosen randomly as training data, the rest as testing. Then a paired T Test gave the following results
 	
+	\input{weka_experiment}
 	\section{Design}
 	\section{Planning}
