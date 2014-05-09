@@ -40,7 +40,8 @@ This project involved vast exploratory design work, in preparation of the actual
 	
 	
 	\section{Work Items}
-	An iterative development process, similar to the Spiral Model was adopted for this project. This allowed early experimentation with and user testing of the various components and different interface designs. The following broad work items were identified as necessary to achieve the objectives above:
+
+	The following broad work items were identified as necessary to achieve the objectives above:
 	%TODO Maybe insert a picture of my development process here, including the user studies?
 	\begin{enumerate}
 		\item Get the requisite approvals for the human study from the Ethics Review Committee.
@@ -50,7 +51,16 @@ This project involved vast exploratory design work, in preparation of the actual
 		\item Build the UI widget that lets users import their spreadsheets in Microsoft Excel (xlsx) or Comma Separated Value (csv) files. It must then expose the various fields detected.
 		\item Build the charting component to convert the recognised sketches and the ink into a finished visualisation.
 		\item Run a pilot study followed by a user study to evaluate the system.
-	\end{enumerate}
+	\end{enumerate}	
+	
+	An iterative development process, similar to the Spiral Model and Scrum, was adopted for this project. This allowed early experimentation with and user testing of the various components and different interface designs. After each iteration of the code development, we came across design decisions that needed to be made. After evaluating the various options, we would build one out, resulting in a new iteration, and then repeat the process.
+	
+	To manage technical debt and follow best practices, we adopted a form of Test-Driven Development (TDD). In its pure form, TDD relies on a fully planned out functional specification and automated testing. However, since the design and functionality of this project were evolving over time, small specifications were made for each iteration, and changed as necessary after a sprint (to borrow Scrum terminology). Also, since the input needed to sketched by hand, and the output was visual and changes in literal pixel values between trials, it was non-trivial to simulate and verify this interaction automatically. These parts were verified through repeated manual testing each time the code was changed or refactored. Parts of the code that were effectively in a functional programming style (deterministic calculations with no side effects) could, however, be checked with unit tests. In addition, to pick up design flaws early, the prototypes were constantly used for hallway testing (friends and family were asked to use the application and speak out what they were thinking as they did).
+	
+	Thanks to the constant refactoring of the code to minimise coupling, the project could be open sourced at the end and plugged in as a standard GUI component in other Windows applications in the end, making sure that this software can actually be used.
+	
+	
+	
 	
 	
 	\section{Development Environment}
