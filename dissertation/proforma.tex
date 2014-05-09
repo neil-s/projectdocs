@@ -7,12 +7,12 @@ College:            & Pembroke College				\\
 Project Title:      & Sketching Charts				\\
 Examination:        & Computer Science Tripos, Part II, 2014        \\
 Word Count:         & TODO							\\
-Project Originator: & Alan Blackwell, Neil Satra        \\
-Supervisor:         & Alistair Stead				\\ 
+Project Originator: & Alan Blackwell (afb21), Neil Satra (ns532)        \\
+Supervisor:         & Alistair Stead (ags46)				\\ 
 \end{tabular}
 
 \section*{Original Aims}
-This project aims to explore if users are able to create content faster, or experiment with it more, if given the tools to directly manipulate their creation. Specifically, it involved:
+This project aims to explore if users are able to create information visualisations faster, or experiment with it more, if given the tools to directly manipulate their charts. Specifically, it involved:
 \begin{enumerate}
 
 	\item Building an application that lets users create graphical visualisations of their data by simply sketching their desired output, like they would on paper.
@@ -22,18 +22,23 @@ This project aims to explore if users are able to create content faster, or expe
 \end{enumerate}
 
 \section*{Work Completed}
-I have completed all core work items by building a Chart component for desktop applications that successfully runs sketch recognition on user input to determine what they intend to create, and then generates those chart graphics for them. I have also designed and built an interface that makes the learning curve for interacting with this component short and gentle, by applying HCI principles. 
+I have completed all the core work items by successfully building a Chart component in C\# for Windows applications. This component lets users make a rough sketch of the chart they want to create with a stylus on their tablet, and then uses sketch recognition to create an actual chart based on their data. It performs the sketch recognition by running data mining algorithms on computed features of the digital ink. It also imports data by parsing a user-specified spreadsheet file. I also designed and developed an interface that exposes this component in a user friendly way, attempting to minimize the learning curve by applying Human Computer Interface principles to match the users' mental model through liveness and direct manipulation. I ran a user study assessing how quickly users learnt how to use it (both native and non-native English speakers), and comparing its complexity to that of the existing charting application Microsoft Excel.
 
-A few extensions were also completed, including allowing edits to the formal chart to flow back and manipulate the raw sketches.
+As an extension, I implemented the ability to beautify the hand-drawn sketches in a natural-looking manner to match edits made to the chart. I also implemented the ability to erase parts of the hand-drawn sketch, and have those same changes applied to the chart, to further solidify the metaphor to pen and paper.
 
 \section*{Special Difficulties}
-None.
+%None.
+%TODO Shall I put none or the items below?
+\begin{itemize}
+	\item Acquiring and fixing the source code of a component used for sketch recognition from the team that wrote it.
+	\item Automating the testing of the highly visual parts of the project.
+\end{itemize}
+
 
 %\begin{minipage}{\textwidth}
 \section*{Declaration of Originality}
 
-I, Neil Satra of Pembroke College, being a candidate for Part II of the Computer
-Science Tripos, hereby declare that this dissertation and the work described in it are my own work, unaided except as may be specified below, and that the dissertation does not contain material that has already been used to any substantial extent for a comparable purpose.
+I, Neil Satra of Pembroke College, being a candidate for Part II of the Computer Science Tripos, hereby declare that this dissertation and the work described in it are my own work, unaided except as may be specified below, and that the dissertation does not contain material that has already been used to any substantial extent for a comparable purpose.
 
 \bigskip
 \leftline{Signed}
