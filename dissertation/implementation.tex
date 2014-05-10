@@ -52,7 +52,7 @@
 	
 	At first, the modeless version was chosen for its lower cognitive overhead. However, when the extension to allow edits not just to the sketch view, but also the formal view, was undertaken, we had to switch over to a mode-based system to allow the user to interact with the graph in both views with their stylus.
 	
-	\subsection{Standard or custom charting}	
+	\subsection{Standard or custom charting widget}	
 	Since the system is generating a formal version of the chart, a charting component is required to render this visualisation. The .NET framework comes with built-in chart controls that offer basic functionality with relatively low implementation effort. They also allow easy export as dynamic chart objects into Microsoft Office files. However, customising their appearance beyond a certain point is extremely difficult, making it easier to just make one's own charting component from scratch and control all aspects of the rendering. This means having to re-implement a lot of core functionality though, such as scaling shapes correctly, choosing labels that are round figures when possible, and generating colours than work well together for different data series. This also means that the chart can only be exported as a raster image rather than as a chart object.
 	
 	To enable rapid prototyping, we chose to utilise the standard charting component at first. As our needs to customise the chart grew, we were able to make our own chart class that implemented the same interface as the standard component, and so could be slotted in to replace it.
@@ -77,7 +77,22 @@
 
 
 	\section{Development}
-		At a high level, the program is composed of 3 components - data handling, sketch processing and charting (in increasing order of complexity). It is written in an Object Oriented fashion, with separation between the views (Windows Forms) and controllers (C\# classes), to allow for easy testing.
+	Interleaved with the design process above was the development process detailed in this section. The C\# code supports a stand-alone Sketch Chart component that can be used in any Windows Forms application that requires charting functionality, as well as a reference implementation of such an application, Sketchography, which lets users import their Microsoft Excel or Comma Separated Values data and generate charts. This satisfies all the core requirements described in \autoref{sec:Requirements}, as well as 3 of the 6 extensions outlined.
+	
+	\begin{figure}[h]
+		\includegraphics[width=1\linewidth]{ClassDiagram}
+		\caption{Interactions between classes}
+	\end{figure}		
+	
+	As seen above, the Sketchography form is the main application run when Program starts. Sketchography contains a SketchChart component, which contains the canvas for users to sketch on, as well as the formal chart generated. SketchChart in turn uses SketchAxis and SketchSeries objects. SketchChart, SketchAxis and SketchSeries inherit from their non-sketch counterparts Chart, Axis and Series (from System.Windows.Forms.DataVisualization.Charting, which is part of the .NET framework), in order to reuse the built-in functionality and members, and complement them with functions and members specific to sketching. SketchChart also references two instances of SizeDragger, which is a custom UI widget to support dragging ends of columns in a column chart to scale them. Settings and Resources are two additional classes used to store properties of the project.
+	
+	
+	%TODO Should I include that the core of the project is around 620 lines of code? This doesn't include the classifier or the interface code
+	No class is more than 400 lines of code, indicating that functionality has been split up at a reasonably fine grain to not concentrate too much responsibility in any one class. Visual Studio's calculated code metrics show that the project has a maintainability index of 74/100, which gets the highest rating - 'good' maintainability. Should I include the data in this paragraph?
+	
+	At a high level, the functionality of the program can be divided into 3 responsibilities - data handling, sketch processing and charting (in increasing order of complexity). It is written in an Object Oriented fashion, with separation between the views (Windows Forms) and controllers (C\# classes), to allow for easy testing.
+	
+	
 	\subsection{Data import and management}
 		Since the application is targeted at the average user, their data is most likely to be stored in spreadsheet format. Thus, it is important to allow them to import data from .xlsx and .csv files. 
 		For the sake of simplicity, the code assumes that the data is well-formed. Specifically, it works on the following assumptions:
@@ -87,7 +102,103 @@
 		\item No data is missing (if there are $m$ columns and $n$ rows, there are $m \cdot n$ data values.
 		\end{enumerate}
 		
-		Under these assumptions, importing tabular data is a common use case, so I studied a number of existing libraries and methods to do this in C\# and ultimately settled on built-in OLE data import functionality. 
-	\subsection{Sketch Processing Workflow}
-	\subsection{Charting}
+		Under these assumptions, importing tabular data is a common use case, so I studied a number of existing libraries and methods to do this in C\#. At first the LinqToExcel package from the NuGet package manager was used to easily import data from the file. However, this package had limited documentation, making it hard to achieve more complex tasks. Additionally, it added an external dependency, and carried a license that allow free reuse of the software as long as the original copyright message was included. The package was helpful for rapid prototyping at first, but after the code was more mature, we removed this dependency and implemented the file import ourselves using the OLE DB provider.
 	
+	%TODO Try to lay these screenshots out better, and decide whether first 2 are needed at all.
+	\begin{figure}[h]
+		\centering
+		\begin{subfigure}[b]{0.3\textwidth}
+			\includegraphics[width=\textwidth]{data1}
+			\caption{Initial state}
+			\label{fig:data1}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.6\textwidth}
+			\includegraphics[width=\textwidth]{data2}
+			\caption{When "Load File" is clicked}
+			\label{fig:data2}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.5\textwidth}
+			\includegraphics[width=\textwidth]{data3}
+			\caption{Column headers are shown with data previews in tooltips}
+			\label{fig:data3}
+		\end{subfigure}
+	\end{figure}		
+		
+		
+	The interface shows a "Load File" button, which when clicked reveals a standard system filepicker dialog with a filter to show *.csv, *.xls and *.xlsx files.	Selecting a file causes the "Load File" button to disappear and be replaced by a list of column headers (the names of the various fields). This helps minimise interface clutter and only expose the most relevant information at all times. However, it comes at the cost of the user needing to hit 'Reset' if they choose the wrong file by mistake. To reassure the user that data has been imported correctly, and for them to check which column header corresponds to which data, hovering over any header reveals the first few entries for that field as a sample.
+	
+	
+	\subsection{Sketch Processing Workflow}
+	RATA.SSR provides a sample that calls the classifier API. For this project, that reference was followed, with a lot of extraneous code and unnecessary branches removed, until a basic prototype existed consisting of nothing but a blank canvas which receives user ink, passes it off to a classifier, and outputs the recognition result in a log-like text box. This was then integrated into the application described above, with its data import facility. 
+	
+	When the user draws a stroke on the SketchChart element within the Sketchography window, a number of steps occur:
+	\begin{enumerate}
+	\item The \texttt{SketchChart} is covered by an \texttt{InkOverlay} object, which receives the stroke. An \texttt{inkOverlay.Stroke} event is fired, which allows our event handler to run custom code.
+	\item The \texttt{InkOverlay.Stroke} event handler calculates additional features of the stroke that are not included in the stroke's properties by default, and stores them in its extended properties.
+	\item The stroke is then sent to the classifier, which is loaded from a file on program initialization.
+	\item The \texttt{classifierClassify} function returns a string from a set of previously defined strings representing the various recognition results. This string is passed off to the \texttt{ConvertToFormal} method, which, as the name suggests, creates the corresponding formal chart elements. The \texttt{ConvertToFormal} method is also sent the stroke object itself, so that it can use its properties such as the location to place the formal object accordingly.
+	 
+	\end{enumerate}
+
+	After the core of the project was finished, an extension was implemented that allows erasing of strokes. The stylus available has a button simulating an eraser at the back. When this eraser comes into range, a \texttt{CursorInRange} event is thrown, wherein we can check whether the stylus is inverted or not.
+	
+	\begin{lstlisting}[frame=single]
+_inkOverlay.EditingMode = e.Cursor.Inverted ? 
+		InkOverlayEditingMode.Delete : 
+		InkOverlayEditingMode.Ink;
+	\end{lstlisting}
+	
+	Then, when a stroke is received (the same event is thrown whether the stroke is ink or the eraser), if the editing mode is Ink, the steps above are run. If it is Delete, the corresponding chart element is detected and reset. On the next re-paint of the interface, this element will be removed from the canvas. To minimize lag between the action and the feedback, this repainting is forced immediately with an \texttt{Invalidate()} call.
+	
+	\subsection{Charting}
+	This part of the functionality, unexpectedly, proved the most challenging and time-consuming. In the first few iterations, a built-in .NET chart component was used, which allowed rapid prototyping. Below is a description of how \texttt{ConvertToFormal} responds to user actions it receives, via the stroke classifier. 
+	
+	\begin{table}[h]
+	\begin{tabular}{p{0.2 \linewidth} p{0.8 \linewidth}}
+	\bfseries User Action	& \bfseries Application Response \\
+	Load File &
+	Bind chart's data source to the in-memory data table created from the imported file. 
+	\\
+	
+	\vspace*{10\lineskip}
+	Draw an axis &
+	\begin{enumerate}
+	\item Calculate the bounding box (the smallest rectangle that entirely encloses the stroke) of the sketched axis, and use a heuristic comparing the height to the width to determine whether it is a vertical or horizontal axis. 
+	\item The line running through the center of the bounding box is taken as the intended coordinates of the formal axis. This must be done since sketched axes are rarely perfectly straight lines, so using the actual endpoints of the line might result in a non-aligned axis. 
+	\item The endpoint coordinates of the straightened line are used to set the vertical or horizontal position and size of the formal chart. They are also saved in an Axis object, which can then be drawn onto the formal chart.
+	\item If it a horizontal axis, a drop target is below the axis. This is a rectangle of the same length as the axis, and a preconfigured height deemed big enough to make it hard for the user to miss, while minimising the screen space used up.
+\end{enumerate}		
+	\\
+	
+	\vspace*{10\lineskip}
+	Draw a bar &
+	\begin{enumerate}
+	\item A bar is the indicator that the user wants a new data series added on a bar/column chart. Thus, a new data series is added to the chart's SeriesCollection in the form of a Series object. The name of this series is set as ``SeriesX'', where X is incremented for each new series. This will be useful for the drop target system described later.
+	\item When the new series is added, the Chart object automatically assigns it a new series colour from the colour palette. The application changes the colour of the stroke the user drew to this series colour, to give feedback that it has been recognised as a series. 
+	\item A drop target the same size and position as the bounding box of the bar is created, corresponding to that series.
+	\end{enumerate}
+	\\
+	\end{tabular}
+	\end{table}
+	
+	\begin{figure}[h]
+	\includegraphics[scale=1]{droptargets}
+	\caption{Drop Targets for 2 data series and the X axis, revealed when data is being dropped onto the chart}
+	\end{figure}
+	
+	In response to strokes that create chart elements, drop targets are generated so that the user may then drag and drop data directly onto the chart element to bind it. This provides direct manipulation, since it doesn't force the user through a menu and dialogue system to configure which data corresponds to which axis. In order to do this, a dictionary is maintained in SketchChart, storing the mapping between Rectangles encoding the location of a drop target, and the string representing the chart element it corresponds to. For the x axis, this would be "X Axis"; for the data series it would be the name of the series. When the user begins dragging a column header from the list on the left, this calls a number of event handlers in Sketchography. These configure the drag and drop action so that the column name saved within the list item is the data sent to the drop location. They also flip a \texttt{ShowDropTargets} flag, so that the chart rendering system draws grey rectangles indicating where the drop areas lie. This UI pattern is based on one users may be familiar from a number of drag and drop interfaces they may have previously interacted with, thus making it easier for them to understand what's happening. We also tried adding 'Drop here' text in the targets like in the examples below, but this proved to cluttered in the small drop targets being used. Additionally, hallway testing revealed that once users began dropping, they were already aware that they must drop it in targets, and the change in colour was conspicuous enough to draw their attention to them.
+	
+	\begin{figure}[h]
+		\centering
+		\begin{subfigure}[b]{0.4\textwidth}
+			\includegraphics[width=\textwidth]{dropexample1}
+			\caption{Gmail.com compose window, taken in May, 2014}
+			\label{fig:dropexample1}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.4\textwidth}
+			\includegraphics[width=\textwidth]{dropexample2}
+			\caption{Facebook.com status update widget, taken in May, 2014}
+			\label{fig:dropexample2}
+		\end{subfigure}
+
+	\end{figure}
