@@ -1,0 +1,16 @@
+<<echo=FALSE>>=
+data <- read.csv("C:\\Users\\Neil\\SkyDrive\\Documents\\Cambridge\\3rd Year\\Project\\User Study\\StudyDataCleaned.csv")
+attach(data)
+options(width=60)
+listing <- function(x, options) {
+    paste("\\begin{lstlisting}[basicstyle=\\ttfamily,breaklines=true]\n",
+      x, "\\end{lstlisting}\n", sep = "")
+  }
+@
+
+%TODO Fix the width of this thing:
+<<tidy=TRUE>>=
+t.test(Task1, Task2, paired=TRUE, alt="less")
+@
+
+

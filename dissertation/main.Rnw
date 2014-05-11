@@ -1,0 +1,72 @@
+\documentclass[12pt, twoside, a4paper, openright]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{setspace}
+\usepackage{natbib}
+\usepackage{enumitem}
+\usepackage{tabu}
+\usepackage{nth}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{float}
+\raggedbottom                           % try to avoid widows and orphans
+%\sloppy
+%\clubpenalty1000%
+%\widowpenalty1000%
+
+%\addtolength{\oddsidemargin}{6mm}       % adjust margins
+%\addtolength{\evensidemargin}{-8mm}
+
+\renewcommand{\baselinestretch}{1.1}    % adjust line spacing to make
+                                        % more readable
+
+
+
+
+\begin{document}
+\lstset{language=[Sharp]C}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title
+
+\pagestyle{empty}
+
+\input{title.tex}
+
+\cleardoublepage
+
+\pagestyle{plain}
+
+\input{proforma.tex}
+
+\tableofcontents
+
+%TODO: Should I include a list of figures here? I really don't see the point
+
+\clearpage
+
+
+\setcounter{page}{1}
+\pagenumbering{arabic}
+\pagestyle{headings}
+
+\input{introduction.tex}
+\input{preparation.tex}
+\input{implementation.tex}
+<<child-demo, child='evaluation.Rnw'>>=
+@
+\input{conclusions.tex}
+
+\addcontentsline{toc}{chapter}{Bibliography}
+%\bibliography{refs}
+
+\cleardoublepage
+
+%TODO: Appendices go here
+
+\bibliographystyle{apalike}
+\bibliography{collection}
+\end{document}

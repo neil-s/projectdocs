@@ -2,4 +2,5 @@
 
 %TODO Describe the user study setup
 Ran a study, here are the results:
-\Sexpr{knit_child('analysis.Rnw')}
+<<child-demo, child='learningttest.Rnw'>>=
+@
