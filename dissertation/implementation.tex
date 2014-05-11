@@ -150,10 +150,8 @@ _inkOverlay.EditingMode = e.Cursor.Inverted ?
 	
 	Then, when a stroke is received (the same event is thrown whether the stroke is ink or the eraser), if the editing mode is Ink, the steps above are run. If it is Delete, the corresponding chart element is detected and reset. On the next re-paint of the interface, this element will be removed from the canvas. To minimize lag between the action and the feedback, this repainting is forced immediately with an \texttt{Invalidate()} call.
 	
-	\subsection{Charting}
-	This part of the functionality, unexpectedly, proved the most challenging and time-consuming. In the first few iterations, a built-in .NET chart component was used, which allowed rapid prototyping. Below is a description of how \texttt{ConvertToFormal} responds to user actions it receives, via the stroke classifier. 
+	 Below is a description of how \texttt{ConvertToFormal} responds to user actions it receives, via the stroke classifier. 
 	
-	\begin{table}[h]
 	\begin{tabular}{p{0.2 \linewidth} p{0.8 \linewidth}}
 	\bfseries User Action	& \bfseries Application Response \\
 	Load File &
@@ -179,15 +177,7 @@ _inkOverlay.EditingMode = e.Cursor.Inverted ?
 	\end{enumerate}
 	\\
 	\end{tabular}
-	\end{table}
-	
-	\begin{figure}[h]
-	\includegraphics[scale=1]{droptargets}
-	\caption{Drop Targets for 2 data series and the X axis, revealed when data is being dropped onto the chart}
-	\end{figure}
-	
-	In response to strokes that create chart elements, drop targets are generated so that the user may then drag and drop data directly onto the chart element to bind it. This provides direct manipulation, since it doesn't force the user through a menu and dialogue system to configure which data corresponds to which axis. In order to do this, a dictionary is maintained in SketchChart, storing the mapping between Rectangles encoding the location of a drop target, and the string representing the chart element it corresponds to. For the x axis, this would be "X Axis"; for the data series it would be the name of the series. When the user begins dragging a column header from the list on the left, this calls a number of event handlers in Sketchography. These configure the drag and drop action so that the column name saved within the list item is the data sent to the drop location. They also flip a \texttt{ShowDropTargets} flag, so that the chart rendering system draws grey rectangles indicating where the drop areas lie. This UI pattern is based on one users may be familiar from a number of drag and drop interfaces they may have previously interacted with, thus making it easier for them to understand what's happening. We also tried adding 'Drop here' text in the targets like in the examples below, but this proved to cluttered in the small drop targets being used. Additionally, hallway testing revealed that once users began dropping, they were already aware that they must drop it in targets, and the change in colour was conspicuous enough to draw their attention to them.
-	
+
 	\begin{figure}[h]
 		\centering
 		\begin{subfigure}[b]{0.4\textwidth}
@@ -202,3 +192,91 @@ _inkOverlay.EditingMode = e.Cursor.Inverted ?
 		\end{subfigure}
 
 	\end{figure}
+	
+	In response to strokes that create chart elements, drop targets are generated so that the user may then drag and drop data directly onto the chart element to bind it. This provides direct manipulation, since it doesn't force the user through a menu and dialogue system to configure which data corresponds to which axis. In order to do this, a dictionary is maintained in SketchChart, storing the mapping between Rectangles encoding the location of a drop target, and the string representing the chart element it corresponds to. For the x axis, this would be ``X Axis"; for the data series it would be the name of the series. 
+	
+	\begin{figure}[h]
+	\includegraphics[scale=1]{droptargets}
+	\caption{Drop Targets for 2 data series and the X axis, revealed when data is being dropped onto the chart}
+	\end{figure}
+	
+	When the user begins dragging a column header from the list on the left, this calls a number of event handlers in Sketchography. These configure the drag and drop action so that the column name saved within the list item is the data sent to the drop location. They also flip a \texttt{ShowDropTargets} flag, so that the chart rendering system draws grey rectangles indicating where the drop areas lie. This UI pattern is based on one users may be familiar from a number of drag and drop interfaces they may have previously interacted with, thus making it easier for them to understand what's happening. We also tried adding `Drop here' text in the targets like in the examples below, but this proved to cluttered in the small drop targets being used. Additionally, hallway testing revealed that once users began dropping, they were already aware that they must drop it in targets, and the change in colour was conspicuous enough to draw their attention to them.
+	
+	When the data is dropped, this calls another event handler. In Sketchography, the event handler simply verifies that its a valid drag and drop, and then passes on the data to the \texttt{DropData} function on the SketchChart. For every rectangle in the dictionary of drop targets, \texttt{DropData} checks if the drop event occured within it. When it finds the drop target the user picked, it looks up the corresponding string, and calls \texttt{BindDataSeries} on it. \texttt{BindDataSeries} adds the binding appropriately. If the data was dropped on a data series rather than the X axis, it also renames that series and the corresponding drop target, so that the user can reassign that bar to some other data if they change their mind. From this point, the charting functionality takes over.
+	
+	
+	
+	
+	
+
+	
+	\subsection{Charting}
+	This part of the functionality, unexpectedly, proved the most challenging and time-consuming. In the first few iterations, a built-in .NET chart component was used, which allowed rapid prototyping. However, converting from the coordinate system used within the charting component to that used in the rest of the window was proving non-trivial and inaccurate. In addition, the component didn't allow very fine-grained positioning of its various elements, or much control over their sizing and other attributes. Hence, we had to implement our own chart control. To make the most of the functionality already implemented in the built-in control, we inherited from it. This also meant our custom control could easily replace the built-in one since it implemented the same interface but with a few extra features.
+	
+	The painting of the chart graphics is done in a largely procedural fashion unfortunately, as this is how it is done for Windows Forms controls. Most of the work is done in the \texttt{PostPaint} event handler, which is called after the built-in chart is done painting (even though the built-in chart control is not shown to the user at all, it still needs to be painted in a hidden background for some of its functionality to work correctly). This painting occurs whenever changes are made that might affect its output. Within the event handler, there are distinct sections that:
+	\begin{itemize}
+	\item Draw a background to cover up the built-in chart.
+	\item Draw the formal axes and bars.
+	\item Draw a height drag handle if needed.
+	\item Draw a width drag handle if needed.
+	\item Move the user's strokes to fit the bars.
+	\item Draw the drop targets if needed.
+	\item Change the colour of ink strokes to match their series colour if needed. 
+	\item Update the legend.
+	\end{itemize}
+	
+	Each of these steps involves a lot of complicated computation, maintaining of state, and conversion between coordinate systems. The particularly interesting parts are described below.
+	
+	\subsubsection{Positioning and scaling bars}
+	To allow maximum flexibility, constants are introduced that control various parameters of the appearance of the bars, such as the ratio of the gap between them, and the fraction of the height of the chart they should cover by default. Then, formulae are used to account for the number of data series, the relative width scale of each series, the relative scale of the gap between data points, and the length of the X axis, to calculate the position each bar should be drawn at.
+	
+	The application also has to calculate the values to show for labels on the Y axis. This is something that the custom charting control doesn't handle as elegantly as the built-in control, since the values are not usually rounded, whole numbers. This is because the range of values in the data series is simply spread across a set number of labels to determine the individual label values.
+	\subsubsection{Transforming strokes to match formal bars}
+	\begin{figure}[h]
+		\centering
+		\begin{subfigure}[b]{0.35\textwidth}
+			\includegraphics[width=\textwidth]{sketchtransform1}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.4\textwidth}
+			\includegraphics[width=\textwidth]{sketchtransform2}
+		\end{subfigure}
+		\caption{Before and after the transform}
+	\end{figure}		
+	
+	This was implemented as an extension, to better express the connection between the sketches and the formal bars to the user. It is done by maintaining a mapping between the sketch and the first bar of the series. When the bar is drawn, its coordinates and dimensions are saved. These are then applied as a scale and translation transform to the associated sketch.
+	
+	
+	\subsubsection{Height and width dragging}
+	Another extension was to allow users to make changes to the formal chart, and have those changes feed back to the sketches. We decided to offer the ability to change the width and height of the bars. When in the formal view, if users hover over the first bar in a series, they see a drag handle each for the height and width, in the form of a grey rectangle. We decided on the size of these handles by experimenting with various sizes to see which one formed a target big enough to grasp with a stylus. Since these rectangles are simply graphics drawn onto a picture box rather than explicit controls, they do not offer native drag functionality. Instead, this has to be approximated by toggling a flag when mouse/stylus is down within the rectangle of the drag handle indicating that a drag has started. When the mouse/stylus is lifted, if the flag was on and the cursor position has changed, this is viewed as a drag, and the change in position is taken to be the size change desired. This scaling is then applied to the variables previously introduced for positioning and scaling bars, so the changes take effect in the next paint cycle, which seems fairly instantaneous to users, if not perfectly so.
+	
+	\begin{figure}
+	\includegraphics[scale=1]{draghandles}
+	\caption{Drag handles}
+	\end{figure}		
+	
+	To help users discover what these drag handles do, the cursor changes to a sideways drag cursor in the direction corresponding to whether it is a height or width handle, when it hovers over these handles.	
+	
+	At first, the naive implementation of the scaling broke when users tried particularly extreme drags, which they tended to play with even if it wasn't the scale they finally intended to use. The calculations had to be refined over time.
+	
+	\subsubsection{Maintaining the legend}
+	To keep the user aware of the state of the system at all times, it is important to have a legend showing which data is connected to which element of the visualisation. While most charting tools have a separate legend, we decided, in the theme of direct manipulation, that the colour key should be right where the data is - in the list of column headers. 
+	
+	However, the list of column headers is in the Sketchography form, whereas the colours are stored within the SketchChart, which is referenced in the form. We followed a subscriber pattern here, by creating an event in SketchChart that notifies about changes to the legend. SketchChart also exposes a public Legend dictionary, mapping colours to headers. Sketchography subscribes to those notifications, and its event handler regenerates the legend by checking the list in SketchChart.	
+	
+	\begin{figure}
+	\includegraphics[scale=1]{legend}
+	\caption{Legend}
+	\end{figure}
+	
+	
+	\subsubsection{Switching between the formal and informal views}
+	We initially did this by offering a simple toggle button that read `Toggle View', and a text box that showed the current view the user was in `Sketch View' or `Chart View'. However, during hallway testing, users repeatedly clicked on the text box, or were just generally confused about which view they were in. This confirmed a previous worry that the disconnect between the action trigger and the reflection of its actions would be confusing, so we implemented radio buttons as shown below. These contain pictures of the two views, so users can spot the difference visually without needing to internalise what the two phrases represent. Another concept of showing visual layers with live previews was not tested because of time and technical constraints.
+	
+	%TODO Get screenshot of earlier iteration
+	
+	\begin{figure}[h]
+	\includegraphics[scale=1]{toggle}
+	\caption{Switching between formal and informal views}
+	\end{figure}
+	
+	Behind the scenes, all the chart elements are drawn in both views, with the unselected view dimmed or ghosted out. Hence, when users are sketching, they can see faint feedback of the recognition in the background and thus notice early if there has been a misclassification. This is done by setting two alpha or transparency values - one which is high when the formal view is selected, and one which is high when the in informal mode. Each of the elements then uses one of these alpha values to draw themselves according to which mode they should be prominent in.
