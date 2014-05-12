@@ -8,7 +8,6 @@
 \usepackage{tabu}
 \usepackage{nth}
 \usepackage{graphicx}
-\usepackage{epstopdf}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{hyperref}

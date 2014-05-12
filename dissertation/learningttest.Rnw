@@ -6,41 +6,37 @@ listing <- function(x, options) {
     paste("\\begin{lstlisting}[basicstyle=\\ttfamily,breaklines=true]\n",
       x, "\\end{lstlisting}\n", sep = "")
   }
+par("pin"=c(3,2))
 @
 
 Irrefutable evidence that users learnt how to use the software and got faster after one try.
 %TODO Fix the width of this thing:
 <<tidy=TRUE>>=
 t.test(Task1, Task2, paired=TRUE)
-@
 
-The test is valid if the data follows a normal distribution. For each of the tasks, below is a Q-Q plot comparing the actual values (points) to the theoretical normal (line), and the results of the Shapiro Wilk test of normality.
-	
-<<echo=FALSE>>=
-par("pin"=c(3,2))
-qqnorm(Task1)
+qqnorm(Task1, main="Task 1 Q-Q Plot")
 qqline(Task1)
 shapiro.test(Task1)
 
-qqnorm(Task2)
+qqnorm(Task2, main="Task 2 Q-Q Plot")
 qqline(Task2)
 shapiro.test(Task2)
+
+summary(aov(TaskDiff~LanguageBinary, data=data))
 @
 
-
-Similar evidence that people took longer to change the bar height in Excel than in Sketchography.
 
 <<>>=
 t.test(Sketch, Excel, paired=TRUE)
-@
 
-
-<<echo=FALSE>>=
-qqnorm(Sketch)
+qqnorm(Sketch, main="Sketch Modification Task Q-Q Plot")
 qqline(Sketch)
 shapiro.test(Sketch)
 
-qqnorm(Excel)
+qqnorm(Excel, main="Excel Modification Task Q-Q Plot")
 qqline(Excel)
 shapiro.test(Excel)
+
+summary(aov(ModDiff~LanguageBinary, data=data))
 @
+

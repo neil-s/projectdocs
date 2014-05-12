@@ -1,5 +1,71 @@
 \chapter{Evaluation}
+Since design usability was the salient point of this project, a user study was a good way to assess its performance. After gaining approval from the Ethics board, a pilot study was run, followed by the actual user study. The results confirm the hypotheses - users learnt how to use the system after one use, and they were able to modify their chart faster in Sketchography compared to Excel. A description of the study and a summary of the results follows; for the entire questionnaire and full data analysis, see appendix blah.
+%TODO Add reference to appendix ^
 
+\section{Study Goals}
+In the Introduction \ref{cha:introduction}, it was hypothesized that the direct manipulation and liveness of this system would offer two advantages:
+
+\begin{enumerate}
+\item[H1] This interface is more 'learnable' over time
+\item[H2] It encourages exploratory data visualisation creation by making modification easier
+\end{enumerate}
+
+Hence, the study was design to evaluate whether these two properties were achieved. 
+
+\subsection*{Learnability}
+To see whether the interface is learnable over time, users were asked to carry out a very similar task twice, and their times across tasks were compared. If the user shows a statistically significant improvement in the time taken to carry out the task, then they are learning how to use the interface, and becoming better at using it. The chosen task is to import (mock) data and create a bar chart.
+
+To make this experiment fair, the tasks must be phrased very carefully. The tasks must be very similar, to make sure one isn't systematically harder or easier, but not so similar that users can mechanically follow the same steps without even understanding the problem.
+
+In addition, the tasks must tell the user what output is expected, without explicitly listing every single step required to get there. This didn't hold true for the first draft of the task descriptions, an example of which is below.
+
+\begin{quotation}
+Task A:
+\begin{enumerate}
+\item Load the `Task A.xlsx' file.
+\item Create a bar chart of `Births' and `Deaths', with `Year' on the X Axis.
+\end{enumerate}
+\end{quotation}
+
+Clearly, this would leave little room for users to demonstrate that they have learnt how to use the application, since the task guides them through exactly what they need to do. Thus, the task was rephrased to focus on the problem (note, the data schema of the file was also changed to focus on differences between countries rather than years).
+
+\begin{quotation}
+Task A:
+
+You work in a government agency and are trying to see how population is growing in 4 different countries. The ‘Task A’ file contains information regarding how many births and deaths occurred in 1 year in each country (the numbers are scaled to account for population). 
+
+Use the Sketchography app to create a column bar chart that will allow someone to compare birth and death rates across the countries.
+
+Speak out aloud the name of the country where the population is declining (where the death rate is larger than the birth rate).
+
+\end{quotation}
+
+This is better, since the user now needs to understand the context of the problem, grasp which data is relevant and which fields need to go on each axis for them to notice the trend required.
+
+\subsubsection*{Modification}
+To see whether the interface encourages exploration, the time required to make a specific modification in Sketchography needed to be compared to the time required for the same modification in users' usual chart editor. The only other chart editor we compared was Microsoft Excel, which proved a sensible decision since all the final study participants indicated that Excel was their tool of choice for making charts, and only 2 out of 10 had actually used anything else to create a chart.
+
+To make the comparison fair, we needed a modification that was a reasonable change to make quickly, and was supported by both editors. Two such changes are to change the width of the bars, and to change the height of the bars, without changing the dimensions of the chart itself. In the pilot study, some participants were asked to change the height, while others were asked to change the width. However, in Excel, the user has no direct control over the width of the bars. Instead, they have to do this indirectly by changing a 'Gap Width' setting, which controls the space between the bars. This indirection was not a perfect analogue to the method to change the bar width in Sketchography, so some users never identified how to make this change. Thus, in the final user study, we focused instead just on changing the height of the bar.
+
+\subsubsection*{Other factors}
+A number of factors could affect people's performance on these tasks. For example, users who regularly create charts in Excel might be faster. Additionally, since Excel relies heavily on text, while Sketchography largely uses visual metaphors, non-native English speakers may be faster with Sketchography. To investigate how these factors affect the two measures above, a questionnaire was given to users following their completion of the tasks, asking:
+
+\begin{enumerate}
+\item How often do you make charts for work or studies?
+\item What tool do use for making these charts?
+\item How many years have you been using that tool for?
+\item Have you used Microsoft Excel to make charts?
+\end{enumerate}
+
+Additionally, they were asked some open-ended questions to gain qualitative observations on their thoughts on Excel and Sketchography.
+
+The exact phrasing of the questionnaire and the task descriptions is in the Appendix Blah.
+%TODO Insert reference to appendix.
+
+
+\section{Pilot Study}
+\section{User Study}
+\subsection{Learnability}
 \begin{verbatim}
 > t.test(Task1, Task2, paired = TRUE)
 
@@ -35,8 +101,15 @@ Task 1 & 0.8435 & 0.04854 \\
 Task 2 & 0.8317 & 0.03511 \\
 \end{tabular}
 
+The learnability doesn't change much whether you speak English or not, so Sketchography is just as easy for non-native English speakers to pick up.
+\begin{verbatim}
+> summary(aov(TaskDiff~LanguageBinary, data=data))
+               Df Sum Sq Mean Sq F value Pr(>F)
+LanguageBinary  1    518   518.4   0.815  0.393
+Residuals       8   5091   636.4                       
+\end{verbatim}
 
-
+\subsection{Modification}
 Similar evidence that people took longer to change the bar height in Excel than in Sketchography.
 
 \begin{verbatim}
@@ -72,3 +145,11 @@ Dataset & W & p-value \\
 Sketch & 0.9426 & 0.3966 \\
 Excel & 0.8943 & 0.1896 \\
 \end{tabular}
+
+
+\begin{verbatim}
+> summary(aov(ModDiff~LanguageBinary, data=data))
+               Df Sum Sq Mean Sq F value Pr(>F)
+LanguageBinary  1   1392    1392   0.917  0.366
+Residuals       8  12153    1519    
+\end{verbatim}

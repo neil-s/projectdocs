@@ -57,7 +57,6 @@
 \usepackage{tabu}
 \usepackage{nth}
 \usepackage{graphicx}
-\usepackage{epstopdf}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{hyperref}
@@ -141,37 +140,50 @@ Irrefutable evidence that users learnt how to use the software and got faster af
 ## mean of the differences 
 ##                    41.2
 \end{verbatim}
+\begin{alltt}
+\hlkwd{qqnorm}\hlstd{(Task1,} \hlkwc{main} \hlstd{=} \hlstr{"Task 1 Q-Q Plot"}\hlstd{)}
+\hlkwd{qqline}\hlstd{(Task1)}
+\end{alltt}
 \end{kframe}
-\end{knitrout}
-
-
-The test is valid if the data follows a normal distribution. For each of the tasks, below is a Q-Q plot comparing the actual values (points) to the theoretical normal (line), and the results of the Shapiro Wilk test of normality.
-	
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-31} 
-\begin{kframe}\begin{verbatim}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-21} 
+\begin{kframe}\begin{alltt}
+\hlkwd{shapiro.test}\hlstd{(Task1)}
+\end{alltt}
+\begin{verbatim}
 ## 
 ## 	Shapiro-Wilk normality test
 ## 
 ## data:  Task1
 ## W = 0.8435, p-value = 0.04854
 \end{verbatim}
+\begin{alltt}
+\hlkwd{qqnorm}\hlstd{(Task2,} \hlkwc{main} \hlstd{=} \hlstr{"Task 2 Q-Q Plot"}\hlstd{)}
+\hlkwd{qqline}\hlstd{(Task2)}
+\end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-32} 
-\begin{kframe}\begin{verbatim}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-22} 
+\begin{kframe}\begin{alltt}
+\hlkwd{shapiro.test}\hlstd{(Task2)}
+\end{alltt}
+\begin{verbatim}
 ## 
 ## 	Shapiro-Wilk normality test
 ## 
 ## data:  Task2
 ## W = 0.8317, p-value = 0.03511
 \end{verbatim}
+\begin{alltt}
+\hlkwd{summary}\hlstd{(}\hlkwd{aov}\hlstd{(TaskDiff} \hlopt{~} \hlstd{LanguageBinary,} \hlkwc{data} \hlstd{= data))}
+\end{alltt}
+\begin{verbatim}
+##                Df Sum Sq Mean Sq F value Pr(>F)
+## LanguageBinary  1    518     518    0.81   0.39
+## Residuals       8   5091     636
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 
 
-
-Similar evidence that people took longer to change the bar height in Excel than in Sketchography.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -191,32 +203,49 @@ Similar evidence that people took longer to change the bar height in Excel than 
 ## mean of the differences 
 ##                   -55.8
 \end{verbatim}
+\begin{alltt}
+\hlkwd{qqnorm}\hlstd{(Sketch,} \hlkwc{main} \hlstd{=} \hlstr{"Sketch Modification Task Q-Q Plot"}\hlstd{)}
+\hlkwd{qqline}\hlstd{(Sketch)}
+\end{alltt}
 \end{kframe}
-\end{knitrout}
-
-
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-51} 
-\begin{kframe}\begin{verbatim}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-31} 
+\begin{kframe}\begin{alltt}
+\hlkwd{shapiro.test}\hlstd{(Sketch)}
+\end{alltt}
+\begin{verbatim}
 ## 
 ## 	Shapiro-Wilk normality test
 ## 
 ## data:  Sketch
 ## W = 0.9246, p-value = 0.3966
 \end{verbatim}
+\begin{alltt}
+\hlkwd{qqnorm}\hlstd{(Excel,} \hlkwc{main} \hlstd{=} \hlstr{"Excel Modification Task Q-Q Plot"}\hlstd{)}
+\hlkwd{qqline}\hlstd{(Excel)}
+\end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-52} 
-\begin{kframe}\begin{verbatim}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-32} 
+\begin{kframe}\begin{alltt}
+\hlkwd{shapiro.test}\hlstd{(Excel)}
+\end{alltt}
+\begin{verbatim}
 ## 
 ## 	Shapiro-Wilk normality test
 ## 
 ## data:  Excel
 ## W = 0.8943, p-value = 0.1896
 \end{verbatim}
+\begin{alltt}
+\hlkwd{summary}\hlstd{(}\hlkwd{aov}\hlstd{(ModDiff} \hlopt{~} \hlstd{LanguageBinary,} \hlkwc{data} \hlstd{= data))}
+\end{alltt}
+\begin{verbatim}
+##                Df Sum Sq Mean Sq F value Pr(>F)
+## LanguageBinary  1   1392    1392    0.92   0.37
+## Residuals       8  12153    1519
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
+
 
 
 \bibliographystyle{apalike}
