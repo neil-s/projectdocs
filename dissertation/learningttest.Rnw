@@ -8,9 +8,37 @@ listing <- function(x, options) {
   }
 @
 
+Irrefutable evidence that users learnt how to use the software and got faster after one try.
 %TODO Fix the width of this thing:
 <<tidy=TRUE>>=
 t.test(Task1, Task2, paired=TRUE, alt="less")
 @
 
+The test is valid if the data follows a normal distribution. For each of the tasks, below is a Q-Q plot comparing the actual values (points) to the theoretical normal (line), and the results of the Shapiro Wilkes test of normality.
 
+<<echo=FALSE>>=
+qqnorm(Task1)
+qqline(Task1)
+shapiro.test(Task1)
+
+qqnorm(Task2)
+qqline(Task2)
+shapiro.test(Task2)
+@
+
+
+Similar evidence that people took longer to change the bar height in Excel than in Sketchography.
+
+<<>>=
+t.test(Sketch, Excel, paired=TRUE, alt="greater")
+@
+
+<<echo=FALSE>>=
+qqnorm(Sketch)
+qqline(Sketch)
+shapiro.test(Sketch)
+
+qqnorm(Excel)
+qqline(Excel)
+shapiro.test(Excel)
+@

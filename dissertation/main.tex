@@ -115,6 +115,7 @@ Ran a study, here are the results:
 
 
 
+Irrefutable evidence that users learnt how to use the software and got faster after one try.
 %TODO Fix the width of this thing:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -138,6 +139,77 @@ Ran a study, here are the results:
 \end{knitrout}
 
 
+The test is valid if the data follows a normal distribution. For each of the tasks, below is a Q-Q plot comparing the actual values (points) to the theoretical normal (line), and the results of the Shapiro Wilkes test of normality.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-31} 
+\begin{kframe}\begin{verbatim}
+## 
+## 	Shapiro-Wilk normality test
+## 
+## data:  Task1
+## W = 0.8435, p-value = 0.04854
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-32} 
+\begin{kframe}\begin{verbatim}
+## 
+## 	Shapiro-Wilk normality test
+## 
+## data:  Task2
+## W = 0.8317, p-value = 0.03511
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+Similar evidence that people took longer to change the bar height in Excel than in Sketchography.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{t.test}\hlstd{(Sketch, Excel,} \hlkwc{paired} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{alt} \hlstd{=} \hlstr{"greater"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	Paired t-test
+## 
+## data:  Sketch and Excel
+## t = -4.548, df = 9, p-value = 0.9993
+## alternative hypothesis: true difference in means is greater than 0
+## 95 percent confidence interval:
+##  -78.29    Inf
+## sample estimates:
+## mean of the differences 
+##                   -55.8
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-51} 
+\begin{kframe}\begin{verbatim}
+## 
+## 	Shapiro-Wilk normality test
+## 
+## data:  Sketch
+## W = 0.9246, p-value = 0.3966
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-52} 
+\begin{kframe}\begin{verbatim}
+## 
+## 	Shapiro-Wilk normality test
+## 
+## data:  Excel
+## W = 0.8943, p-value = 0.1896
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 
 
