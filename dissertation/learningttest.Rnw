@@ -11,12 +11,13 @@ listing <- function(x, options) {
 Irrefutable evidence that users learnt how to use the software and got faster after one try.
 %TODO Fix the width of this thing:
 <<tidy=TRUE>>=
-t.test(Task1, Task2, paired=TRUE, alt="less")
+t.test(Task1, Task2, paired=TRUE)
 @
 
-The test is valid if the data follows a normal distribution. For each of the tasks, below is a Q-Q plot comparing the actual values (points) to the theoretical normal (line), and the results of the Shapiro Wilkes test of normality.
-
+The test is valid if the data follows a normal distribution. For each of the tasks, below is a Q-Q plot comparing the actual values (points) to the theoretical normal (line), and the results of the Shapiro Wilk test of normality.
+	
 <<echo=FALSE>>=
+par("pin"=c(3,2))
 qqnorm(Task1)
 qqline(Task1)
 shapiro.test(Task1)
@@ -30,8 +31,9 @@ shapiro.test(Task2)
 Similar evidence that people took longer to change the bar height in Excel than in Sketchography.
 
 <<>>=
-t.test(Sketch, Excel, paired=TRUE, alt="greater")
+t.test(Sketch, Excel, paired=TRUE)
 @
+
 
 <<echo=FALSE>>=
 qqnorm(Sketch)

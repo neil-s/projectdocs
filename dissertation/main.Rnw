@@ -8,6 +8,7 @@
 \usepackage{tabu}
 \usepackage{nth}
 \usepackage{graphicx}
+\usepackage{epstopdf}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{hyperref}
@@ -56,8 +57,7 @@
 \input{introduction.tex}
 \input{preparation.tex}
 \input{implementation.tex}
-<<child-demo, child='evaluation.Rnw'>>=
-@
+\input{evaluation.tex}
 \input{conclusions.tex}
 
 \addcontentsline{toc}{chapter}{Bibliography}
@@ -66,7 +66,9 @@
 \cleardoublepage
 
 %TODO: Appendices go here
-
+\chapter{Appendices}
+<<child-demo, child='learningttest.Rnw'>>=
+@
 \bibliographystyle{apalike}
 \bibliography{collection}
 \end{document}

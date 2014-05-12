@@ -1,5 +1,74 @@
-\section{Evaluation}
+\chapter{Evaluation}
 
-%TODO Describe the user study setup
-Ran a study, here are the results:
-\Sexpr{knit_child('analysis.Rnw')}
+\begin{verbatim}
+> t.test(Task1, Task2, paired = TRUE)
+
+	Paired t-test
+
+data:  Task1 and Task2
+t = 5.2186, df = 9, p-value = 0.0005502
+alternative hypothesis: true difference in means 
+is not equal to 0
+95 percent confidence interval:
+ 23.34058 59.05942
+sample estimates:
+mean of the differences 
+                   41.2 
+\end{verbatim}
+
+The test is valid if the data follows a normal distribution. For each of the tasks, below is a Q-Q plot comparing the actual values (points) to the theoretical normal (line), and the results of the Shapiro Wilk test of normality.
+
+\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{\textwidth}
+			\includegraphics[width=\textwidth]{figure/task1qq.png}
+		\end{subfigure}
+		\begin{subfigure}[b]{\textwidth}
+			\includegraphics[width=\textwidth]{figure/task2qq.png}
+		\end{subfigure}
+		\caption{Normality Tests for Creation Tasks}
+	\end{figure}
+
+\begin{tabular}{l l l}
+Dataset & W & p-value \\
+Task 1 & 0.8435 & 0.04854 \\
+Task 2 & 0.8317 & 0.03511 \\
+\end{tabular}
+
+
+
+Similar evidence that people took longer to change the bar height in Excel than in Sketchography.
+
+\begin{verbatim}
+> t.test(Sketch, Excel, paired = TRUE)
+
+	Paired t-test
+
+data:  Sketch and Excel
+t = -4.5484, df = 9, p-value = 0.001389
+alternative hypothesis: true difference in means 
+is not equal to 0
+95 percent confidence interval:
+ -83.55241 -28.04759
+sample estimates:
+mean of the differences 
+                  -55.8 
+\end{verbatim}
+
+\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{\textwidth}
+			\includegraphics[width=\textwidth]{figure/sketchqq.png}
+		\end{subfigure}
+		\begin{subfigure}[b]{\textwidth}
+			\includegraphics[width=\textwidth]{figure/excelqq.png}
+		\end{subfigure}
+		\caption{Normality Test for Modification Tasks}
+	\end{figure}
+
+
+\begin{tabular}{l l l}
+Dataset & W & p-value \\
+Sketch & 0.9426 & 0.3966 \\
+Excel & 0.8943 & 0.1896 \\
+\end{tabular}

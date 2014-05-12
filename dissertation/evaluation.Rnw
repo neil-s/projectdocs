@@ -1,6 +1,0 @@
-\section{Evaluation}
-
-%TODO Describe the user study setup
-Ran a study, here are the results:
-<<child-demo, child='learningttest.Rnw'>>=
-@

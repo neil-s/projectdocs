@@ -57,6 +57,7 @@
 \usepackage{tabu}
 \usepackage{nth}
 \usepackage{graphicx}
+\usepackage{epstopdf}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{hyperref}
@@ -106,11 +107,16 @@
 \input{introduction.tex}
 \input{preparation.tex}
 \input{implementation.tex}
+\input{evaluation.tex}
+\input{conclusions.tex}
 
-\section{Evaluation}
+\addcontentsline{toc}{chapter}{Bibliography}
+%\bibliography{refs}
 
-%TODO Describe the user study setup
-Ran a study, here are the results:
+\cleardoublepage
+
+%TODO: Appendices go here
+\chapter{Appendices}
 
 
 
@@ -120,17 +126,17 @@ Irrefutable evidence that users learnt how to use the software and got faster af
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{t.test}\hlstd{(Task1, Task2,} \hlkwc{paired} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{alt} \hlstd{=} \hlstr{"less"}\hlstd{)}
+\hlkwd{t.test}\hlstd{(Task1, Task2,} \hlkwc{paired} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## 
 ## 	Paired t-test
 ## 
 ## data:  Task1 and Task2
-## t = 5.219, df = 9, p-value = 0.9997
-## alternative hypothesis: true difference in means is less than 0
+## t = 5.219, df = 9, p-value = 0.0005502
+## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##   -Inf 55.67
+##  23.34 59.06
 ## sample estimates:
 ## mean of the differences 
 ##                    41.2
@@ -139,8 +145,8 @@ Irrefutable evidence that users learnt how to use the software and got faster af
 \end{knitrout}
 
 
-The test is valid if the data follows a normal distribution. For each of the tasks, below is a Q-Q plot comparing the actual values (points) to the theoretical normal (line), and the results of the Shapiro Wilkes test of normality.
-
+The test is valid if the data follows a normal distribution. For each of the tasks, below is a Q-Q plot comparing the actual values (points) to the theoretical normal (line), and the results of the Shapiro Wilk test of normality.
+	
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-31} 
@@ -170,23 +176,24 @@ Similar evidence that people took longer to change the bar height in Excel than 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{t.test}\hlstd{(Sketch, Excel,} \hlkwc{paired} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{alt} \hlstd{=} \hlstr{"greater"}\hlstd{)}
+\hlkwd{t.test}\hlstd{(Sketch, Excel,} \hlkwc{paired} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## 
 ## 	Paired t-test
 ## 
 ## data:  Sketch and Excel
-## t = -4.548, df = 9, p-value = 0.9993
-## alternative hypothesis: true difference in means is greater than 0
+## t = -4.548, df = 9, p-value = 0.001389
+## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -78.29    Inf
+##  -83.55 -28.05
 ## sample estimates:
 ## mean of the differences 
 ##                   -55.8
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
+
 
 
 \begin{knitrout}
@@ -211,16 +218,6 @@ Similar evidence that people took longer to change the bar height in Excel than 
 \end{kframe}
 \end{knitrout}
 
-
-
-\input{conclusions.tex}
-
-\addcontentsline{toc}{chapter}{Bibliography}
-%\bibliography{refs}
-
-\cleardoublepage
-
-%TODO: Appendices go here
 
 \bibliographystyle{apalike}
 \bibliography{collection}
