@@ -64,8 +64,42 @@ The exact phrasing of the questionnaire and the task descriptions is in the Appe
 
 
 \section{Pilot Study}
+The pilot study was conducted on 3 participants, all grad students at the University of Cambridge Computer Lab, who were not paid for their time. It was carried out in a controlled lab environment, with a video recording set up that focussed on their interactions with the application, and also recorded what they were saying as they interacted with it.
+
+The study proceeded as follows:
+\begin{enumerate}
+\item The participant signs a form indicating his consent to participating, and being recorded for the purposes of the study. They are also informed that they are being timed not to assess their own performance, but that of the system, in order to put them at rest.
+\item I demonstrate the system to them by importing a data file, creating a bar chart, switching between formal and informal views and resetting the application to its initial state.
+\item I explain that they will be given a task description on a slip of paper, and can take as long as they like to read it. When they are ready, I will start timing. I will not answer any questions they may have about the system.
+\item The Surface tablet is presented to them, with the application open in its initial state. The default folder when the `Open File' dialogue is opened contains only the three Excel files they need for their tasks, and are named `Task A.xlsx' and so on.
+\item They are given the 2 creation tasks, followed by the two modification tasks. Comments they make out loud during this time are noted down. 
+\item After they finish all 4 tasks, they are given the questionnaire.
+\item After they finish the questionnaire, they are free to leave. Most stay to make comments about the software, which are also noted down.
+\end{enumerate}
+
+The key things we learnt were:
+\begin{enumerate}
+\item The task descriptions gave the steps in too much detail, as described above.
+\item The width modification task isn't appropriate, as described above.
+\item Despite it being subtly mentioned that each chart element must be drawn with an individual stroke, some users draw both the X and Y axis in one stroke as an `L' shape. The program is modified before the final study to recognise these axes correctly and instantiate the two Axis objects accordingly. 
+\end{enumerate}
+
+There were no structural issues with the way the study itself was carried out, but the timing techniques and the script used during the demonstration did get refined with practice, making for a more valid final user study.
+
 \section{User Study}
+Since there were no issues with the structure of the pilot study, the user study was carried out the same way. To get a fair mix of native and non-native English speakers, it was carried out in India. The participants recruited also had varied levels of experience with Microsoft Excel. 10 participants, all friends and family, were recruited.
+
+One issue that our pilot study had not caught that surfaced in the user study was to do with the recognition of the bars. Some of the Indian participants drew bars as two strokes, which none of the English participants had done. Thus, one of the strokes making up the bar would get recognised as an axis rather than a bar. This led to some interesting observations. The program has the ability to erase and redraw strokes that have been misclassified. However, for the purposes of the study, this feature was not demonstrated to users for 2 reasons:
+\begin{enumerate}
+\item The eraser is one of the less discoverable aspects of the application. Any of the participants could have noticed the eraser like shape at the end of the stylus and tried pressing it. I wanted to see if any users would discover this on their own, without being shown. None of the 10 did so, presumably because users have previously been familiar only with capacitative styluses that don't have such a feature. 
+\item No matter how robust the stroke recogniser is made, there will be classification errors during usage. It was important to note how users react to this, understand what has happened, and correct the problem.
+\end{enumerate} 
+
+In practice, each of the users who made these split bars found a way around this. Some took the less desirable option of hitting `Reset' and starting over, but the majority just drew over their previous sketches. When a new axis was drawn, the old, misinterpreted one was forgotten, and the chart got corrected. Then, the user would draw the bar with one stroke as required.
+
 \subsection{Learnability}
+Our hypothesis was that the time taken for the creation task the second time around would be lower, and this was confirmed by a Paired T Test as shown below.
+
 \begin{verbatim}
 > t.test(Task1, Task2, paired = TRUE)
 
@@ -110,7 +144,7 @@ Residuals       8   5091   636.4
 \end{verbatim}
 
 \subsection{Modification}
-Similar evidence that people took longer to change the bar height in Excel than in Sketchography.
+The hypothesis was confirmed that people took significantly lesser time to modify the chart in Sketchography than they did in Excel.
 
 \begin{verbatim}
 > t.test(Sketch, Excel, paired = TRUE)
@@ -128,6 +162,7 @@ mean of the differences
                   -55.8 
 \end{verbatim}
 
+Again, for the Paired T Test to be valid, we need to confirm that the data was normally distributed, which is shown below.
 \begin{figure}[H]
 		\centering
 		\begin{subfigure}[b]{\textwidth}
@@ -146,7 +181,7 @@ Sketch & 0.9426 & 0.3966 \\
 Excel & 0.8943 & 0.1896 \\
 \end{tabular}
 
-
+Additionally, an Analysis of Variance was done to see whether being a non-native speaker of English made a difference to how much quicker you carried out the modification task in Sketchography compared to Excel.
 \begin{verbatim}
 > summary(aov(ModDiff~LanguageBinary, data=data))
                Df Sum Sq Mean Sq F value Pr(>F)
