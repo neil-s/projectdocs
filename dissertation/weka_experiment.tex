@@ -1,3 +1,5 @@
+%TODO Make this all stay together as much as possible.
+
 \vspace{10pt}
 Tester:     Paired Corrected T Tester
 
@@ -6,9 +8,8 @@ Analysing:  Percent correct
 Confidence: 0.05 (two tailed)
 
 \begin{table}[thb]
-\caption{\label{labelname}Classifier Algorithms Used}
-\scriptsize
-%TODO ^Make this regular sized?
+
+%\scriptsize
 {\centering
 \begin{tabular}{c p{0.9 \textwidth}}\\
 (1) & meta.LogitBoost '-P 100 -F 0 -R 1 -L -1.7976931348623157E308 -H 1.0 -S 1 -I 10 -W trees.DecisionStump' 8627452775249625582 \\
@@ -17,11 +18,12 @@ Confidence: 0.05 (two tailed)
 (4) & trees.RandomForest '-I 100 -K 0 -S 1' -2260823972777004705 \\
 \end{tabular}
 }
+\caption{\label{}Classifier Algorithms Used}
 \end{table}
 
 \begin{table}[thb]
-\caption{\label{labelname}Results}
-\footnotesize
+
+%\footnotesize
 {\centering \begin{tabular}{lrr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}
 \\
 \hline
@@ -30,7 +32,8 @@ Dataset & (1)& (2) & & (3) & & (4) & \\
 'Initial study' & 97.05 & 98.15 &         & 98.80 &         & 96.07 &        \\
 \hline
 \multicolumn{8}{c}{$\circ$, $\bullet$ statistically significant improvement or degradation}\\
-\end{tabular} \footnotesize \par}
+\end{tabular}  \par}
+\caption{\label{}Comparison of algorithm accuracy}
 \end{table}
 
 

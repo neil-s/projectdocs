@@ -3,7 +3,7 @@ This project involved vast exploratory design work, in preparation of the actual
 
 	\section{Requirements}
 	\label{sec:Requirements}
-	This project could go in numerous different design directions from the start. Since the functionality and its benefits over existing systems depended heavily on the design chosen, it was hard to separate what benefits the program would achieve from what features the program would include and how it would expose them to the user. 
+	This project could have gone in numerous different design directions from the start. Since the functionality and its benefits over existing systems depended heavily on the design chosen, it was hard to separate what benefits the program would achieve from what features the program would include and how it would expose them to the user. 
 	
 	However, in order to focus our exploration and make sure that the focus was on achieving some real deliverables for end users, a requirement analysis was necessary. The following functional goals were listed based on the project proposal, which focus on what basic tasks the system must help the user achieve, while allowing leeway in how the program exposed and implemented these features.
 	
@@ -38,7 +38,9 @@ This project involved vast exploratory design work, in preparation of the actual
 	\section{Design Goals}
 	In order to meet the usability requirements, some design principles need to be followed. The main benefit of a sketch-based interface is that it is more likely to match the user's mental model, or their expectation of what every UI widget will do, since it draws upon familiar metaphors, and offers liveness and direct manipulation of the visualisation. This section explores the theories of direct manipulation and liveness, and how they might be applied to this project.
 	
+	\subsubsection*{Direct Manipulation}
 	\begin{quote}
+	%TODO Discuss that this is not actually an error.
 	Direct manipulation systems offer the satisfying experience of operating on visible objects. The computer becomes transparent, and users can concentrate on their tasks. [It] permits novice users access to powerful facilities without the burden of learning to use a complex syntax and lengthy list of commands. Direct manipulation involves three interrelated techniques: 
 		\begin{enumerate}
 			\item Provide a physically direct way of moving a cursor or manipulating the objects of interest.
@@ -54,6 +56,19 @@ This project involved vast exploratory design work, in preparation of the actual
 	%TODO since it interacts directly with objects on screen rather than ...?
 	Besides the inherent benefits of stylus interaction, this application provides a concrete visual representation of the objects of interest, since all configuration settings for the chart are represented as visual parts of the chart rather than options in a configuration window far removed from the chart itself. Additionally, changes are made directly to the chart, resulting in instantaneous feedback, rather than being made to a settings window which then updates the chart when closed.
 	
+	\subsubsection*{Live Programming}
+	\cite{blackwell_what_2002} suggests that classical definitions of programming need to be re-thought based on the evolving use of computers. Specifically, it is suggested that:
+	\begin{enumerate}
+	\item All computer users must now be regarded as programmers. 
+	\item All software applications now include programming languages.
+	\item These tools only differ in their usability for the purpose of programming.
+	\end{enumerate}
+	
+	%TODO Change phrasing?
+	\cite{ko_state_2011} clarify that this is end-user programming - ``Most programs today are not written by professional software developers, but by people with expertise in other domains working towards goals for which they need computational support\ldots Although these end-user programmers may not have the same goals as professional developers, they do face many of the same software design challenges\ldots''
+	
+	Since one of the alternatives to this project is to actually use programming frameworks like D3.js to generate charts, the task of instructing the computer on how to turn data into graphics is rightly considered programming. One of the properties that improves the usability of such a programming tool is liveness.
+	
 	\begin{quote}
 	 ``Liveness in programming environments generally refers to the ability to modify a running program. Liveness is one form of a more general class of behaviors by a programming environment that provide information to programmers about what they are constructing.''
 	 \end{quote} 
@@ -61,7 +76,7 @@ This project involved vast exploratory design work, in preparation of the actual
 	 \citep{tanimoto_perspective_2013}
 	\end{flushright}
 	
-	Besides simple tools like Microsoft Excel, advanced users may use programming-based charting tools like D3.js. Thus, creating data visualisations can be considered a form of programming - instructing the computer how to turn the data into graphics. This application allows you to directly draw or erase lines in the chart, for example, rather than making changes to textual code and then re-running the code to verify that it does create the change you intended. Thus, it provides a live programming environment, whose benefits have been described by papers like \cite{tanimoto_perspective_2013}.	
+	This application allows you to directly draw or erase lines in the chart, for example, rather than making changes to textual code and then re-running the code to verify that it does create the change you intended. Thus, it provides a live programming environment, whose benefits have been previously documented \citep{tanimoto_perspective_2013}.	
 	
 	\section{Work Items}
 
@@ -77,7 +92,7 @@ This project involved vast exploratory design work, in preparation of the actual
 		\item Run a pilot study followed by a user study to evaluate the system.
 	\end{enumerate}	
 	
-	An iterative development process, similar to the Spiral Model and Scrum, was adopted for this project. This allowed early experimentation with and user testing of the various components and different interface designs. After each iteration of the code development, we came across design decisions that needed to be made. After evaluating the various options, we would build one out, resulting in a new iteration, and then repeat the process.
+	An iterative development process, similar to the Spiral Model and Scrum, was adopted for this project. This allowed early experimentation with and user testing of the various components and different interface designs. After each iteration of development, design choices arose. Various options were evaluated, one was built, resulting in a new iteration, at which point the process repeated. 
 	
 	To manage technical debt and follow best practices, we adopted a form of Test-Driven Development (TDD). In its pure form, TDD relies on a fully planned out functional specification and automated testing. However, since the design and functionality of this project were evolving over time, small specifications were made for each iteration, and changed as necessary after a sprint (to borrow Scrum terminology). Also, since the input needed to sketched by hand, and the output was visual and changes in literal pixel values between trials, it was non-trivial to simulate and verify this interaction automatically. These parts were verified through repeated manual testing each time the code was changed or refactored. Parts of the code that were effectively in a functional programming style (deterministic calculations with no side effects) could, however, be checked with unit tests. In addition, to pick up design flaws early, the prototypes were constantly used for hallway testing (friends and family were asked to use the application and speak out what they were thinking as they did).
 	
@@ -96,22 +111,22 @@ This project involved vast exploratory design work, in preparation of the actual
 	Core to the system is an ink recognition component that identifies the chart element (e.g.\ bar, axis) that the user has sketched. This must work above a certain accuracy threshold or the system will prove frustrating to users \citep{frankish_recognition_1995}. However, since the project scope included other components too, the time available to build this classifier was limited. Additionally, given the complexity of building a classifier, and our limited experience with building them, it would be difficult to get the same accuracy as those provided in a mature library. Hence, we decided to build a classifier using existing tools rather than implementing one from scratch. 
 	
 	\subsection{Recognition Method}
-	A number of different approaches have been taken in building systems that automatically interpret hand-drawn sketches. These approaches vary in the recognition accuracy they offer, and the robustness to generalise across multiple domains. \citep{ouyang_visual_2009}. Some of the approaches that have been attempted:
+	A number of different approaches have been taken in building systems that automatically interpret hand-drawn sketches. These approaches vary in the recognition accuracy they offer, and the robustness to generalise across multiple domains. Some of the approaches that have been attempted:
 	
 	\begin{itemize}
-		\item Focus on \textbf{defining shapes structurally}. A base vocabulary of primitives like lines, ellipses and arcs is built by describing the properties of such shapes. \citep{shilman_statistical_2002} used a hand-coded grammar to describe shapes in a domain as a composition of such primitives. \citep{alvarado_sketchread:_2004} used dynamically constructed Bayesian networks to scale this process to multiple domains. \citep{hammond_ladder:_2006} developed a language to manually describe how diagrams in a domain are drawn, displayed and edited. 
-		\item Look at the \textbf{visual appearance} of shapes and symbols. \citep{kara_image-based_2004} used image-based similarity metrics to perform template matching. \citep{shilman_recognition_2004} broke up the ink into connected subgraphs of nearby strokes, which were then compared to known symbols. \citep{oltmans_envisioning_2007} proposed a visual parts-based method that utilise a library of shape contexts to describe and identify symbols in a domain.
-		\item \textbf{Compute features} of the ink. \citep{patel_ink_2007} selects these features and sets their thresholds statistically. \citep{yu_domain-independent_2003} uses heuristics for the same purpose. \citep{chang_rata._2010,  rubine_specifying_1991, willems_iconic_2009} all use machine learning to automatically find relationships between features and choose an appropriate feature set accordingly.
+		\item Focus on \textbf{defining shapes structurally}. A base vocabulary of primitives like lines, ellipses and arcs is built by describing the properties of such shapes. \cite{shilman_statistical_2002} used a hand-coded grammar to describe shapes in a domain as a composition of such primitives. \cite{alvarado_sketchread:_2004} used dynamically constructed Bayesian networks to scale this process to multiple domains. \cite{hammond_ladder:_2006} developed a language to manually describe how diagrams in a domain are drawn, displayed and edited. 
+		\item Look at the \textbf{visual appearance} of shapes and symbols. \cite{kara_image-based_2004} and \cite{ouyang_visual_2009} used image-based similarity metrics to perform template matching. \cite{shilman_recognition_2004} broke up the ink into connected subgraphs of nearby strokes, which were then compared to known symbols. \cite{oltmans_envisioning_2007} proposed a visual parts-based method that utilise a library of shape contexts to describe and identify symbols in a domain.
+		\item \textbf{Compute features} of the ink. \cite{patel_ink_2007} select these features and sets their thresholds statistically. \cite{yu_domain-independent_2003} use heuristics for the same purpose. \cite{chang_rata._2010,  rubine_specifying_1991, willems_iconic_2009} all use machine learning to automatically find relationships between features and choose an appropriate feature set accordingly.
 	\end{itemize}		
 	
-	\citep{chang_rata._2010} showed that the first two approaches forego some accuracy, since they rely on the final pixel values of the sketch and so do not fully exploit the rich temporal data stored with digital ink. Within the last approach, they showed that using machine learning allows recognisers to be generated for new domains with less effort than statistical or heuristic methods. Since the domain for this charting application could grow over time, we wanted a recogniser that could be adapted easily over time. Using data mining, this can be done using training data rather than programming effort.
+	\cite{chang_rata._2010} showed that the first two approaches forego some accuracy, since they rely on the final pixel values of the sketch and so do not fully exploit the rich temporal data stored with digital ink. Within the last approach, they showed that using machine learning allows recognisers to be generated for new domains with less effort than statistical or heuristic methods. Since the domain for this charting application could grow over time, we wanted a recogniser that could be adapted easily over time. Using data mining, this can be done using training data rather than programming effort.
 	
 	Having decided on using a feature-based approach that selects the feature set by data mining a training dataset, there were a number of alternatives available to us. While most projects, like \citep{rubine_specifying_1991} and \citep{willems_iconic_2009}, rely on one or two data mining algorithms, \citep{chang_rata._2010}'s RATA.SSR combines the results from four well-performing algorithms in WEKA \citep{hall_weka_2009} tuned to their best configurations, to provide a more accurate recogniser. RATA.SSR thus outperformed all the other recognisers tested (PaleoSketch \citep{paulson_paleosketch:_2008}, CALI \citep{fonseca_cali:_2002}, \$1 recogniser \citep{wobbrock_gestures_2007}) on domains other than the one they were explicitly demonstrated on. 
 	
-	Besides, RATA.SSR also has the advantaged of outputting an API that can be plugged into our system after we build the recogniser. Additionally, one of the authors, Beryl Plimmer, previously worked with some members of the Graphics and Interaction Group at the Cambridge Computer Laboratory, and so could be reached for support and source code, which proved to be an invaluable resource.
+	RATA.SSR also has the advantage of outputting an API that can be plugged into our system after we build the recogniser. Additionally, one of the authors, Beryl Plimmer, previously worked with some members of the Graphics and Interaction Group at the Cambridge Computer Laboratory, and so could be reached for support and source code, which proved to be an invaluable resource.
 	
 	\subsection{Data collection}
-	After acquiring RATA, we inspected the code and did manual testing, which revealed some blocking bugs. Since we were in contact with the authors of the software, we were able to confirm with them that these were indeed bugs. We implemented fixes for them and contributed them back to the authors, and are working towards getting the code ready for to be published Open Source.
+	After acquiring RATA, I inspected the code and did manual testing, which revealed some blocking bugs. Since we were in contact with the authors of the software, I was able to confirm with them that these were indeed bugs. I implemented fixes for them and contributed them back to the authors, and am working towards getting the code ready for to be published Open Source.
 	
 	With a working version of RATA, an initial study was run to collect training data. We asked 10 participants (20-26 year old Cambridge students, studying a large variety of subjects) to draw a chart. I spoke out the following prompt:
 	
@@ -146,7 +161,7 @@ This project involved vast exploratory design work, in preparation of the actual
 	They were asked to draw the same chart 2 times, in order to get 20 training samples in total, and to observe how much variation there is between multiple sketches by the same user. On the second drawing, they were encouraged to draw a less conventional chart, to make the system as robust in the face of variations as possible. 
 	%TODO ^Explain this better
 		
-	\begin{figure}[h]
+	\begin{figure}[H]
         \centering
         \begin{subfigure}[b]{0.5\textwidth}
                 \includegraphics[width=\textwidth]{collection1}
@@ -181,7 +196,7 @@ This project involved vast exploratory design work, in preparation of the actual
 	
 	Three elements were then defined: Axis, Bar and Text (an extra element, 'L Axis' was added later based on feedback from a pilot user study). We went through each figure and labelled the various elements.
 	
-	\begin{figure}[h]
+	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\textwidth]{collection_labelled}
 		\caption{Elements of the sketch labelled as Axis (cyan), Bar (brown) or Text (dark blue)}
