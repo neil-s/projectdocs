@@ -43,19 +43,19 @@ Speak out aloud the name of the country where the population is declining (where
 
 This is better, since the user now needs to understand the context of the problem, grasp which data is relevant and which fields need to go on each axis for them to notice the trend required.
 
-\subsubsection*{Modification}
+\subsection*{Modification}
 To see whether the interface encourages exploration, the time required to make a specific modification in Sketchography needed to be compared to the time required for the same modification in users' usual chart editor. The only other chart editor we compared was Microsoft Excel, which proved a sensible decision since all the final study participants indicated that Excel was their tool of choice for making charts, and only 2 out of 10 had actually used anything else to create a chart.
 
 To make the comparison fair, we needed a modification that was a reasonable change to make quickly, and was supported by both editors. Two such changes are to change the width of the bars, and to change the height of the bars, without changing the dimensions of the chart itself. In the pilot study, some participants were asked to change the height, while others were asked to change the width. However, in Excel, the user has no direct control over the width of the bars. Instead, they have to do this indirectly by changing a 'Gap Width' setting, which controls the space between the bars. This indirection was not a perfect analogue to the method to change the bar width in Sketchography, so some users never identified how to make this change. Thus, in the final user study, we focused instead just on changing the height of the bar.
 
-\subsubsection*{Language Independence}
+\subsection*{Language Independence}
 A secondary benefit of the direct manipulation and visual metaphors is that Sketchography isn't as language dependent as a system with configuration dialogues in English. Users should be able to learn Sketchography just as quickly whether they speak English as their primary language or not. 
 
 India is a nation of multiple languages, but a lot of businesses conduct their activities in English. By carrying out the study there, participants with varied levels of fluency in English can be recruited.
 
 To study the effect of language on the two measures above, users were asked what their primary language was, on their questionnaire. This was then divided into a binary classification: English or Non-English.
 
-\subsubsection*{Other factors}
+\subsection*{Other factors}
 A number of factors could affect people's performance on these tasks. For example, users who regularly create charts in Excel might be faster. To investigate how these factors affect the measures above, a questionnaire was given to users following their completion of the tasks, asking:
 
 \begin{enumerate}
@@ -161,7 +161,7 @@ Task 2 & 0.8317 & 0.03511 \\
 \subsection{Modification}
 The hypothesis was confirmed that people took significantly lesser time to modify the chart in Sketchography than they did in Excel.
 
-A Paired T Test gave this result (p-value = 0.001389), but was inconclusive since the data was not normal in this case (p-value = 0.3966 for Sketch and 0.1896 for Excel). 
+A Paired T Test show this to be true (p-value = 0.001389), but was inconclusive since the data was not normal in this case (p-value = 0.3966 for Sketch and 0.1896 for Excel). 
 
 \begin{figure}[H]
 		\centering
@@ -174,10 +174,9 @@ A Paired T Test gave this result (p-value = 0.001389), but was inconclusive sinc
 		\caption{Modification task data wasn't normally distributed}
 	\end{figure}
 
-However, a Wilcox test, which doesn't rely on the same assumptions, confirmed the hypothesis true.
-\begin{verbatim}
-> wilcox.test(Sketch, Excel, Paired=T, exact=F)
+A Wilcox test, which doesn't rely on the same assumptions of normality, confirmed the hypothesis true.
 
+\begin{verbatim}
 	Wilcoxon rank sum test with continuity correction
 
 data:  Sketch and Excel
@@ -198,8 +197,6 @@ Given that some participants might have a lot of experience with Excel and none 
 \caption{Less frequent users of Excel gain a bigger speedup from using Sketchography}
 \label{fig:frequencybox}
 \end{figure}
-
-
 
 
 No correlation was observed between the creation time task difference and the number of years the participant had used computers (Pearson's product-moment correlation p-value = 0.1978). Similarly, there was no correlation between creation time difference and the years of Excel use(p-value = 0.1386).  
