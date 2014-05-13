@@ -1,0 +1,292 @@
+\chapter{Project Proposal}
+\thispagestyle{empty}
+
+\rightline{\large\emph{N. Satra}}
+\medskip
+\rightline{\large\emph{Pembroke College}}
+\medskip
+\rightline{\large\emph{ns532}}
+
+\vfil
+
+\centerline{\large Part II Project Proposal}
+\vspace{0.4in}
+\centerline{\Large\bf Creating Custom Visualisations using Sketch Recognition}
+\vspace{0.3in}
+\centerline{\large \emph{16 October 2013}}
+
+\vfil
+
+{\bf Project Originator:} Neil Satra
+
+{\bf Project Supervisor:} Alistair Stead
+
+{\bf Director of Studies:}  Chris Hadley
+
+{\bf Overseers:} Lawrence Paulson and Richard Gibbens
+
+\vfil
+\eject
+
+
+
+
+
+
+\section*{Aim}
+
+My aim is to build a system that allows users to visualise data in novel ways. They will achieve this by sketching an example of the visualisation for a small sample of their data, and demonstrating how the two are linked. The software must then recognise the sketch, understand the way it relates to the data, and generate the entire visualisation for the full dataset accordingly.
+
+
+
+
+
+
+
+\section*{Introduction and Description of the Work}
+
+The amount of data being generated is constantly increasing, but the ways to easily visualise this data are still limited by the input mechanisms and tools of yesteryear. Through this project I want to enable the user to build more appropriate representations than they can using traditional graph creation tools like Microsoft Excel, and do it faster too.
+
+A sample workflow for an end user might be as follows:
+\begin{enumerate}
+  \item Import the data file into the application
+  \item The user will use a stylus with the touch screen to draw the axes. The software uses sketch recognition to recognise that they are lines.
+  \item The user will use a stylus to draw a bar. Once the tool has recognised it as a rectangle, indicate that you want to link the height attribute of the rectangles to a field from the data. The software will automatically generate bars for the rest of the data.
+  \item Additionally, the user could write the name of the fields they want on the axis, and the software will populate the chart with the relevant data (extension)
+\end{enumerate}
+
+This tool will still allow users to generate simple representations like bar graphs. However, it will also allow them to create variants of these simple representations, such as a bar graph where the horizontal position of the bars conveys data. Additionally, they could create complex representations such as an x-y plot with circles where the area conveys data. Rather than defining an extensive domain of possible graphs, this tool shall provide them with basic elements such as points, lines, rectangles and circles that they can then combine to form complex visualisations. Using sketches, users can easily input what they are picturing, instead of having to translate their mental picture into rectangle, circle and line tools offered by traditional drawing interfaces.
+
+\clearpage
+
+
+
+
+
+
+
+
+
+\section*{Resources Required}
+
+As well as use of the MCS computers and networked storage space, the following resources will be needed:
+\begin{enumerate}
+
+\item {\bf Surface Pro}(Intel Core i5 - 1.70 GHz, 4GB RAM, 256 GB SSD), which has a pressure-sensitive touchscreen with digitizer and a compatible stylus. This is needed as an input mechanism for sketches. Insurance will be purchased for the device to ensure quick replacement in case of damage/loss/theft. The lab also has several Android tablets that could be used as substitutes if my Surface fails, since Rata works on Android as well. Documents will be backed up to Dropbox and WriteLatex, and code to Dropbox as well as Github.
+ 
+\item {\bf Rata sketch recognition framework}, which is available for download for non-commercial use. 
+\footnote{Rata Framework - \url{http://www.cs.auckland.ac.nz/research/hci/digital_ink/ink_recognition/rata_recognizers.shtml}} Rata is one of the leading tools to build and train analysers for specific domains, and is written by Beryl Plimmer. Beryl was working in Cambridge until recently and is still in contact with us.
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+\section*{Starting Point}
+I have no prior knowledge or experience in this field. However, I'm taking courses in AI and Computer Vision over the coming terms which should teach me concepts I might need to draw on, for example to understand how Rata works in detail, and to create simple shape classifiers if Rata doesn't fit this project's needs. I shall also supplement these courses with online resources. There are sources to draw inspiration from in terms of design decisions,  including Microsoft's SketchInsight\footnote{Microsoft Research, SketchInsight - \url{http://research.microsoft.com/en-us/um/redmond/groups/cue/sketchinsight/}} and Bret Victor's research\footnote{Bret Victor, "Drawing Dynamic Visualisations" - \url{http://vimeo.com/66085662}} which itself is based on previous HCI research in the fields of Direct Manipulation, Programming by Example and Programming by demonstration. Some research on 'liveness' has also been conducted by Steve Tanimoto, who will be visiting the Computer Lab Rainbow Research Group this  term. Some of my design principles seem to match the philosophy of the now-discontinued Protovis.\footnote{Protovis: \url{http://mbostock.github.io/protovis/}} 
+
+I will also be learning how to use Rata from scratch, but my supervisor has some experience with it, and I am in contact with the team that developed it, including the lead on the project who was at the Computer Laboratory until recently. Rata has some of the best precision and recall rates of sketch recognition software, and hasn't been used much in the past, so it should lead to a fairly successful recognition tool.
+
+
+
+
+
+
+
+
+
+
+\section*{Substance and Structure of the Project}
+The project would involve building a dataset and training a classifier using it in conjunction with Rata. It would also require writing software that can store sketch input from the user and analyse it using the classifier. It would also have to take data as input and extract field names.
+It would then have to present a user-friendly interface for users to tag attributes of shapes in the sketch to fields in the data, and have the software generate similar shapes for the rest of the data accordingly. 
+
+The project has the following main sections:
+
+\begin{enumerate}
+
+\item Studying algorithms and techniques required for recognising sketches of basic shapes, and correlating these shapes to common elements of visualisations.
+
+\item Studying trends in data visualisations and infographics to identify the common building blocks such as bars and wedges. This may be achieved by surveying students who regularly create visualisations, as well as studying award-winning infographics and visualisations online.
+
+\item Evaluating the various technology stacks available to decide the right tools for the job. It must be decided whether to write a stand-alone app or a Microsoft Excel add-in, and whether to use Rata-generated recognisers or write my own.
+
+\item Designing the interface and interactions needed for users to input shapes, define bindings between data and attributes of shapes (eg correlating the 'population' field to the radius of the circle) and instruct the tool on how to recreate the shape for the rest of the data points.
+
+\item Developing and testing the code for the algorithms
+referred to in (1) and the interface in (2). A more detailed breakdown of this development is presented in the Timetable.
+
+\item Evaluation and the preparation of examples to demonstrate that the implementation has been successful. A working demo will be presented to my supervisor. There might be a quantitative evaluation of how accurately the tool-generated graph matches what the user's envisioned. There may also be a user study wherein users could be asked to present the same data, using this tool as well as other visualisation tools including Microsoft Excel and D3.js. Then they will compare the speed and learning curves of the different solutions as well as the appropriateness of the resulting visualisations.
+
+\item Writing the dissertation.
+
+\end{enumerate}
+
+\clearpage
+
+If time allows, there might be scope to build extensions to the project such as the ones below:
+\begin{itemize}
+
+\item Write my own simple classifier, since if the number of shapes to identified are small, it may be just as much effort to write my own classifier as to learn and integrate Rata.
+
+\item Rather than limiting links from data to specific attributes of the shapes, an extension could be written that let's the user specify custom axes through gestures. eg. Diagonal of a rectangle or 'radius' of a star.
+
+\item Build more combinations of ways to link data to shape attributes, so that for example the user could link the 'Country' data field to the shape's colour to have it  generate a colour scheme for the legend.
+
+\item Build simple heuristics to automatically calculate which attribute specified data fields may be best tied to. For example, if a field is numerical and a line is drawn, the height of the line is the most likely attribute to be linked. This could make it possible for the user to just drag the data field to the axis and have it generate the graph without further instruction. Heuristics could get very technically challenging to build, but the complexity of heuristics implemented could be decided based on time available.
+
+
+\item See if there are any opportunities for improvement in recognition by the Rata-generated classifier, perhaps by pre-processing the strokes in some manner.
+
+
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+\section*{Success Criteria}
+
+The following should be achieved:
+
+\begin{itemize}
+
+\item Read data from files and successfully extract fields and associated data.
+
+\item Accept and temporarily store sketch input.
+
+\item Recognise at least 4 basic shapes such as point, line, rectangle and circle. 
+
+\item Let user successfully link data to compatible attributes of shape. The interface should make it evident how to create the link, and should work well with stylus input.
+
+\item Generate shapes for rest of data successfully.
+
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+\section*{Timetable and Milestones}
+
+\subsection*{Summary}
+
+In Michaelmas I will study past research in the field, study the tools available, and iterate on the design of the tool. I will also carry out some initial training of a classifier. During the winter holidays I will cover a lot of ground on implementation. The Rata classifier will be completed and the user interface and data import functionality shall be coded. During Lent term I will prepare the progress report and presentation, and continue work on implementation. Easter holidays will be used to write the dissertation, and design the evaluation. Finally, in Easter term, I will conduct the evaluation and finalise the dissertation. Work will be kept light to allow time for exam preparation.
+
+
+\subsection*{Weeks 1 - 2}
+\emph{28 Oct - 10 Nov, 2013}
+
+Research past work in the areas of direct manipulation, programming by demonstration and by example, and liveness. Study existing visualisation tools. 
+Research visualisation building blocks by studying various visualisation tools. Build corpus of common and unique visualisations from internet sources.
+
+Milestones: Written paper summaries of the major works in this field. Prepared list of shapes to recognise (eg. bars, lines, wedges)
+
+
+\subsection*{Weeks 3 - 4}
+\emph{11 Nov - 24 Nov, 2013}
+
+
+Continue studying visualisation tools. Research sketch recognition techniques and compare with what Rata provides. Assess costs and benefits of implementing my own classifier. Study various possible technology stacks such as a stand-alone C\# app or an MS Office plug-in.
+
+Milestones: Have decided whether Rata can be used, and what stack to implement the tool on.
+
+
+\subsection*{Weeks 5 - 6}
+\emph{25 Nov - 8 Dec, 2013}
+
+Based on the technology stack decided, design the flow of the app. Think about the interactions required to import data, sketch visualisations for a couple of points, link data to shap attributes, and then instruct the tool to generate the rest. 
+
+Milestones: Having examined the ideal workflow and those made possible by each of the technology stacks, have finalised the technology stack. Have a rough design ready.
+
+
+\subsection*{Weeks 7 - 8}
+\emph{9 Dec - 22 Dec, 2013}
+
+Study the Rata framework and train it to recognise the set of shapes identified earlier. Understand entry points that can be used to integrate it with rest of tool.
+
+Milestones: Have a basic analyser for shapes that works reasonably well. Have general understanding of Rata's capabilities.
+
+
+
+\subsection*{Weeks 9 - 10}
+\emph{23 Dec - 5 Jan, 2014}
+
+Build C\# app or 'app for Office' to present UI. Implement data import and extraction of headers. Design and build architecture of shapes and their attributes. 
+
+Milestones: Have a partially implemented front-end ready. Demonstration of user successfully importing a csv file and the data being show inside the app.
+
+
+
+\subsection*{Weeks 11 - 12}
+\emph{6 Jan - 19 Jan, 2014}
+
+Lent term starts 14 Jan. Flesh out the app to accept strokes, store them, and send them through the classifier. Get results, create appropriate objects accordingly, and expose their attributes for linking data.
+
+Milestones: Demonstration of the user drawing strokes on screen and the tool recognising the shape and exposing relevant attributes. 
+
+
+\subsection*{Weeks 13 - 14}
+\emph{20 Jan - 2 Feb, 2014}
+
+Buffer time for unfinished work. Progress report due on 31st January. Review remainder of project plan in view of program development to date and adjust as necessary.  Write the Progress Report drawing attention to the code already written, incorporating some examples, and recording any augmentations which at this stage seem reasonably likely to be incorporated.
+
+Milestones: Basic code now working, but probably not elegant. Progress Report submitted and entire project reviewed both personally and with Overseers.
+
+\subsection*{Weeks 15 - 16}
+\emph{3 Feb - 16 Feb, 2014}
+
+Build functionality to link data fields to shape attributes. Also build functionality to automatically generate similar shapes for each of the other data points, and lay them out sensibly.
+
+\subsection*{Weeks 17 - 18}
+\emph{17 Feb - 2 Mar, 2014}
+
+Polish the workflow. Explore options for exporting the created graph. Conduct hallway testing. Design user study or alternative evaluation methods. Recruit volunteers.
+
+Milestones: A smooth workflow for users, established through hallway testing and demonstration to supervisor. Have a design for the user study and recruited volunteers if needed.
+
+\subsection*{Weeks 19 - 20}
+\emph{03 Mar - 16 Mar, 2014}
+
+Conduct user studies. Easter holidays start 15 Mar.
+
+Milestone: User study data collected. 
+
+
+\subsection*{Weeks 21 - 26}
+\emph{17 Mar - 27 Apr, 2014}
+
+Work on the dissertation. Easter term begins 22 Apr.
+
+Milestones: Nearly final draft of Introduction, Preparation and Implementation chapters of Dissertation complete. Implementation chapter 90\% complete. 
+
+
+\subsection*{Weeks 27 - 28}
+\emph{28 Apr - 11 May, 2014}
+
+Work on the project will be kept ticking over during this period but undoubtedly the Easter Term lectures and examination revision will take priority. 
+Refine implementation, Evaluation and Conclusion chapters as needed. 
+
+Milestones:  Code performs well. Dissertation essentially complete, and proof-read by Supervisor and possibly friends and/or Director of Studies. Buffer period in case anything falls behind schedule.
+
+
+\subsection*{Week 29}
+\emph{12 May - 18 May, 2014}
+
+Dissertation due on 16th May. Submit Dissertation. 
+
+Milestone: Submission of Dissertation. 
