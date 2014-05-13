@@ -38,6 +38,12 @@ qqnorm(Excel, main="Excel Modification Task Q-Q Plot")
 qqline(Excel)
 shapiro.test(Excel)
 
+wilcox.test(Sketch, Excel, Paired=T, exact=F)
+
 summary(aov(ModDiff~LanguageBinary, data=data))
 @
 
+<<>>=
+cor.test(TaskDiff, ComputerYears)
+cor.test(TaskDiff, ExcelYears)
+cor.test(ModDiff, ExcelYears)

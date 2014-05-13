@@ -3,14 +3,15 @@ Since design usability was the salient point of this project, a user study was a
 %TODO Add reference to appendix ^
 
 \section{Study Goals}
-In the Introduction \ref{cha:introduction}, it was hypothesized that the direct manipulation and liveness of this system would offer two advantages:
+In the Introduction (\autoref{cha:introduction}), it was hypothesized that the direct manipulation and liveness of this system would offer two advantages:
 
 \begin{enumerate}
-\item[H1] This interface is more 'learnable' over time
+\item[H1] This interface is more `learnable' over time
 \item[H2] It encourages exploratory data visualisation creation by making modification easier
+\item[H3] Its advantages hold independent of how fluent the user is in English.
 \end{enumerate}
 
-Hence, the study was design to evaluate whether these two properties were achieved. 
+Hence, the study was design to evaluate whether these three properties were achieved. 
 
 \subsection*{Learnability}
 To see whether the interface is learnable over time, users were asked to carry out a very similar task twice, and their times across tasks were compared. If the user shows a statistically significant improvement in the time taken to carry out the task, then they are learning how to use the interface, and becoming better at using it. The chosen task is to import (mock) data and create a bar chart.
@@ -47,8 +48,15 @@ To see whether the interface encourages exploration, the time required to make a
 
 To make the comparison fair, we needed a modification that was a reasonable change to make quickly, and was supported by both editors. Two such changes are to change the width of the bars, and to change the height of the bars, without changing the dimensions of the chart itself. In the pilot study, some participants were asked to change the height, while others were asked to change the width. However, in Excel, the user has no direct control over the width of the bars. Instead, they have to do this indirectly by changing a 'Gap Width' setting, which controls the space between the bars. This indirection was not a perfect analogue to the method to change the bar width in Sketchography, so some users never identified how to make this change. Thus, in the final user study, we focused instead just on changing the height of the bar.
 
+\subsubsection*{Language Independence}
+A secondary benefit of the direct manipulation and visual metaphors is that Sketchography isn't as language dependent as a system with configuration dialogues in English. Users should be able to learn Sketchography just as quickly whether they speak English as their primary language or not. 
+
+India is a nation of multiple languages, but a lot of businesses conduct their activities in English. By carrying out the study there, participants with varied levels of fluency in English can be recruited.
+
+To study the effect of language on the two measures above, users were asked what their primary language was, on their questionnaire. This was then divided into a binary classification: English or Non-English.
+
 \subsubsection*{Other factors}
-A number of factors could affect people's performance on these tasks. For example, users who regularly create charts in Excel might be faster. Additionally, since Excel relies heavily on text, while Sketchography largely uses visual metaphors, non-native English speakers may be faster with Sketchography. To investigate how these factors affect the two measures above, a questionnaire was given to users following their completion of the tasks, asking:
+A number of factors could affect people's performance on these tasks. For example, users who regularly create charts in Excel might be faster. To investigate how these factors affect the measures above, a questionnaire was given to users following their completion of the tasks, asking:
 
 \begin{enumerate}
 \item How often do you make charts for work or studies?
@@ -87,7 +95,21 @@ The key things we learnt were:
 There were no structural issues with the way the study itself was carried out, but the timing techniques and the script used during the demonstration did get refined with practice, making for a more valid final user study.
 
 \section{User Study}
-Since there were no issues with the structure of the pilot study, the user study was carried out the same way. To get a fair mix of native and non-native English speakers, it was carried out in India. The participants recruited also had varied levels of experience with Microsoft Excel. 10 participants, all friends and family, were recruited.
+The final user study was conducted with the same structure as the pilot study since no issues were faced. To get a fair mix of native and non-native English speakers, it was carried out in Mumbai, India. 10 participants with various levels of experience with Excel, and aged between 20 and 60 years old, volunteered. They were all white collar works in various industries, some of whom used computers on a daily basis.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{c c}
+Age group & Number of participants \\
+20-30 & 4 \\
+30-40 & 1 \\
+40-50 & 4 \\
+50-60 & 1 \\
+
+\end{tabular}
+\end{center}
+\caption{Distribution of participant ages}
+\end{table}
 
 One issue that our pilot study had not caught that surfaced in the user study was to do with the recognition of the bars. Some of the Indian participants drew bars as two strokes, which none of the English participants had done. Thus, one of the strokes making up the bar would get recognised as an axis rather than a bar. This led to some interesting observations. The program has the ability to erase and redraw strokes that have been misclassified. However, for the purposes of the study, this feature was not demonstrated to users for 2 reasons:
 \begin{enumerate}
@@ -118,84 +140,71 @@ mean of the differences
                    41.2 
 \end{verbatim}
 
-The test is valid if the data follows a normal distribution. For each of the tasks, below is a Q-Q plot comparing the actual values (points) to the theoretical normal (line), and the results of the Shapiro Wilk test of normality.
+The test is valid if the data follows a normal distribution, which a Q-Q plot and Shapiro-Wilk test proved to be true for this data.
 
-\begin{figure}[H]
-		\centering
-		\begin{subfigure}[b]{\textwidth}
-			\includegraphics[width=\textwidth]{figure/task1qq.png}
-		\end{subfigure}
-		\begin{subfigure}[b]{\textwidth}
-			\includegraphics[width=\textwidth]{figure/task2qq.png}
-		\end{subfigure}
-		\caption{Normality Tests for Creation Tasks}
-	\end{figure}
+\begin{table}[H]
+\begin{center}
+\setlength{\tabcolsep}{8pt} 
+\renewcommand{\arraystretch}{1.5}
 
-\begin{tabular}{l l l}
-Dataset & W & p-value \\
+
+\begin{tabular}{l | l l}
+Dataset & W & p-value \\ \hline
 Task 1 & 0.8435 & 0.04854 \\
 Task 2 & 0.8317 & 0.03511 \\
 \end{tabular}
+\end{center}
+\caption{Creation task data was normally distributed}
+\end{table}
 
-The learnability doesn't change much whether you speak English or not, so Sketchography is just as easy for non-native English speakers to pick up.
-\begin{verbatim}
-> summary(aov(TaskDiff~LanguageBinary, data=data))
-               Df Sum Sq Mean Sq F value Pr(>F)
-LanguageBinary  1    518   518.4   0.815  0.393
-Residuals       8   5091   636.4                       
-\end{verbatim}
 
 \subsection{Modification}
 The hypothesis was confirmed that people took significantly lesser time to modify the chart in Sketchography than they did in Excel.
 
-\begin{verbatim}
-> t.test(Sketch, Excel, paired = TRUE)
+A Paired T Test gave this result (p-value = 0.001389), but was inconclusive since the data was not normal in this case (p-value = 0.3966 for Sketch and 0.1896 for Excel). 
 
-	Paired t-test
-
-data:  Sketch and Excel
-t = -4.5484, df = 9, p-value = 0.001389
-alternative hypothesis: true difference in means 
-is not equal to 0
-95 percent confidence interval:
- -83.55241 -28.04759
-sample estimates:
-mean of the differences 
-                  -55.8 
-\end{verbatim}
-
-Again, for the Paired T Test to be valid, we need to confirm that the data was normally distributed, which is shown below.
 \begin{figure}[H]
 		\centering
-		\begin{subfigure}[b]{\textwidth}
+		\begin{subfigure}[b]{0.4\textwidth}
 			\includegraphics[width=\textwidth]{figure/sketchqq.png}
 		\end{subfigure}
-		\begin{subfigure}[b]{\textwidth}
+		\begin{subfigure}[b]{0.4\textwidth}
 			\includegraphics[width=\textwidth]{figure/excelqq.png}
 		\end{subfigure}
-		\caption{Normality Test for Modification Tasks}
+		\caption{Modification task data wasn't normally distributed}
 	\end{figure}
 
-
-\begin{tabular}{l l l}
-Dataset & W & p-value \\
-Sketch & 0.9426 & 0.3966 \\
-Excel & 0.8943 & 0.1896 \\
-\end{tabular}
-
-Additionally, an Analysis of Variance was done to see whether being a non-native speaker of English made a difference to how much quicker you carried out the modification task in Sketchography compared to Excel.
+However, a Wilcox test, which doesn't rely on the same assumptions, confirmed the hypothesis true.
 \begin{verbatim}
-> summary(aov(ModDiff~LanguageBinary, data=data))
-               Df Sum Sq Mean Sq F value Pr(>F)
-LanguageBinary  1   1392    1392   0.917  0.366
-Residuals       8  12153    1519    
+> wilcox.test(Sketch, Excel, Paired=T, exact=F)
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  Sketch and Excel
+W = 15.5, p-value = 0.01014
+alternative hypothesis: true location shift is not equal to 0
 \end{verbatim}
 
-\subsection{Other observations}
-%TODO Any point including this?
-In general, there is a (weak) inverse correlation (Pearson's product-moment correlation p-value=0.1978) between the creation tasks time difference and the number of years the participant has used computers, meaning that those unfamiliar with computers made the biggest leap in learning after doing the task once. A similarly weak inverse correlation (p-value=0.1386) was present between the modification tasks time difference and the years of computer use.
+\subsection{Language Independence}
+Half the participants spoke English as their primary language with native fluency, while the other half used it during their job but not as a primary language. Tests to show that the learnability for English speakers was more than that for non-English speakers failed. While not statistically conclusive, this suggests that there wasn't a significant difference in learnability depending on language, which supports the hypothesis.
 
-Interestingly, there is no correlation between the modification tasks time difference and whether the participant has used Excel for charting. There is also no correlation to how often the participant uses Excel at present. This suggest that users might still not have learnt how to use Excel after having used it before, unlike Sketchography where they showed a measurable speedup after having used it once.
+\subsection{Other observations}
+Given that some participants might have a lot of experience with Excel and none with Sketchography, making it an uneven playing field, data was collected about how frequently they use Excel. As might be expected, the less frequently the participant used Excel, in general, the bigger the gain in speed they got from using Sketchography for the Modification task. There aren't enough samples per frequency category (Daily, Weekly, \ldots) to run a conclusive statistical analysis, but the trend is visible in \autoref{fig:frequencybox}.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.8\linewidth]{figure/frequencybox.png}
+\end{center}
+\caption{Less frequent users of Excel gain a bigger speedup from using Sketchography}
+\label{fig:frequencybox}
+\end{figure}
+
+
+
+
+No correlation was observed between the creation time task difference and the number of years the participant had used computers (Pearson's product-moment correlation p-value = 0.1978). Similarly, there was no correlation between creation time difference and the years of Excel use(p-value = 0.1386).  
+
+Interestingly, there is no correlation between the modification tasks time difference and whether the participant has used Excel for charting (p-value = 0.5753). This suggest that users might still not have learnt how to use Excel after having used it before, unlike Sketchography where they showed a measurable speedup after having used it once.
 
 %TODO Insert comments here
 Participant comments go here.

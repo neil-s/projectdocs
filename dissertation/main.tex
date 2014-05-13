@@ -242,6 +242,17 @@ Irrefutable evidence that users learnt how to use the software and got faster af
 ## W = 0.8943, p-value = 0.1896
 \end{verbatim}
 \begin{alltt}
+\hlkwd{wilcox.test}\hlstd{(Sketch, Excel,} \hlkwc{Paired} \hlstd{= T,} \hlkwc{exact} \hlstd{= F)}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	Wilcoxon rank sum test with continuity correction
+## 
+## data:  Sketch and Excel
+## W = 15.5, p-value = 0.01014
+## alternative hypothesis: true location shift is not equal to 0
+\end{verbatim}
+\begin{alltt}
 \hlkwd{summary}\hlstd{(}\hlkwd{aov}\hlstd{(ModDiff} \hlopt{~} \hlstd{LanguageBinary,} \hlkwc{data} \hlstd{= data))}
 \end{alltt}
 \begin{verbatim}
@@ -253,6 +264,58 @@ Irrefutable evidence that users learnt how to use the software and got faster af
 \end{knitrout}
 
 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{cor.test}\hlstd{(TaskDiff, ComputerYears)}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  TaskDiff and ComputerYears
+## t = 1.405, df = 8, p-value = 0.1978
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.2568  0.8393
+## sample estimates:
+##    cor 
+## 0.4448
+\end{verbatim}
+\begin{alltt}
+\hlkwd{cor.test}\hlstd{(TaskDiff, ExcelYears)}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  TaskDiff and ExcelYears
+## t = 1.365, df = 8, p-value = 0.2094
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.2684  0.8356
+## sample estimates:
+##    cor 
+## 0.4346
+\end{verbatim}
+\begin{alltt}
+\hlkwd{cor.test}\hlstd{(ModDiff, ExcelYears)}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  ModDiff and ExcelYears
+## t = -0.5841, df = 8, p-value = 0.5753
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.7379  0.4898
+## sample estimates:
+##     cor 
+## -0.2022
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 \input{proposal.tex}
 
