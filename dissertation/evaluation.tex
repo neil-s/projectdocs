@@ -100,9 +100,11 @@ In practice, each of the users who made these split bars found a way around this
 \subsection{Learnability}
 Our hypothesis was that the time taken for the creation task the second time around would be lower, and this was confirmed by a Paired T Test as shown below.
 
-\begin{verbatim}
-> t.test(Task1, Task2, paired = TRUE)
-
+%TODO Either change all commands to colour or change this back to black.
+\begin{alltt}
+> \hlkwd{t.test}\hlstd{(Task1, Task2,} \hlkwc{paired} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim} 
 	Paired t-test
 
 data:  Task1 and Task2
