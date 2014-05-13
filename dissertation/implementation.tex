@@ -1,6 +1,19 @@
 \chapter{Implementation}
+With the classifier working, this project was deemed viable to complete. To build the application, the interface needed to be designed, and the underlying functionality needed to be developed. While the design and the development were highly interdependent and hence interleaved in the iterative development process, they have been described separately below for clarity.
+
 \section{Design}
-	Now that we had shown that a classifier could be built with relatively small sets of training data that still performed well, we had to design the interface to expose this functionality. This largely involved assessing tradeoffs between choices.
+\label{sec:design}
+	A few design decisions were relatively clear from the start:
+	\begin{enumerate}
+	\item The application must have a large canvas to sketch on.
+	\item The chart must be shown somewhere - either on the same canvas as the sketches, or in a separate viewing panel. The limited screen size on the Surface Pro makes the latter a less desirable option.
+	\item There must be a panel where data can be imported, and the imported column headers can be viewed.
+	\item The user must be able to drag and drop this data onto where it needed to be bound, as this would be direct manipulation.
+	\item A status area may be needed to inform the user about what state the program is in.
+	\item There must be a `Reset' button for users to start over if needed.
+	\end{enumerate}
+	
+	A number of other design decisions involved assessing tradeoffs, as outlined in the rest of this section.	
 	
 	\subsection{`Sketchy' or Formal}	
 	\begin{figure}[h]
@@ -31,26 +44,24 @@
 %			& A gesture is transient, unlike a sketch. Users wouldn't be able to modify their input, they would have to redo their actions. 
 %		\end{tabular}	
 		
-			\textbf{Pros}
+			\textbf{Gestures - Pros}
 			\begin{itemize}
 			\item This would provide higher recognition accuracy, since the domain of shapes to distinguish between is limited, and can be designed to maximise differences between them. 
 			\end{itemize}
 			
 			
-			\textbf{Cons} 
+			\textbf{Gestures - Cons} 
 			\begin{itemize}
 			\item A gesture is transient, unlike a sketch. Users wouldn't be able to modify their input, they would have to redo their actions. 
 			\item One of the principles of direct manipulation is to avoid using a command language, but a gesture library is exactly that, requiring users to remember which gesture corresponds to which chart type or element. 
 			\end{itemize}
 				
-	
-	This would provide higher recognition accuracy, since the domain of shapes to distinguish is much more limited, and can be designed to maximise differences between them. 
-	
-	% Can cite Chao
+	To satisfy the design goal of direct manipulation, the sketch-based approach was chosen.
+
 	\subsection{Modes or modeless}
 	Since the application now has both sketch and formal content, the user must have an easy way to switch between the two views. One approach is to give the user an explicit UI widget to toggle between the two modes. This way, the user explicitly indicates what they want to see, and thus should have a better understanding of what state the system is in. This also allows the system a chance to change the controls available to the user.
 	
-	The other approach is to avoid modes, requiring lesser cognitive effort from the user since they don't need to keep track of what state the system is in. \cite{norman_user_1986} describe this as the Gulf of Evaluation - the difficulty of assessing the state of the system. In this project, this could have been done by showing the sketch view when the user was about to edit the chart. The active digitizer hardware allows the system to detect when the user brings the stylus within range of the screen, just before they actually touch the screen, allowing the chart to be in sketch view by the time the stylus is down. When the stylus goes out of range, the system can switch to the formal chart view. This would solidify the metaphor that edits are done to the sketch, but the final product to be looked at is the formal view. 
+	The other approach is to avoid modes, requiring lesser cognitive effort from the user since they don't need to keep track of what state the system is in. \cite{norman_user_1986} describe this as the Gulf of Evaluation - the difficulty of assessing the state of the system, and the Gulf of Execution - the difficulty of knowing what actions are possible in the current state. In this project, this could have been done by showing the sketch view when the user was about to edit the chart. The active digitizer hardware allows the system to detect when the user brings the stylus within range of the screen, just before they actually touch the screen, allowing the chart to be in sketch view by the time the stylus is down. When the stylus goes out of range, the system can switch to the formal chart view. This would solidify the metaphor that edits are done to the sketch, but the final product to be looked at is the formal view. 
 	
 	At first, the modeless version was chosen for its lower cognitive overhead. However, when the extension to allow edits not just to the sketch view, but also the formal view, was undertaken, we had to switch over to a mode-based system to allow the user to interact with the graph in both views with their stylus.
 	
@@ -62,26 +73,28 @@
 	\subsection{Finite or infinite domain}
 	Some tools, such as Microsoft Excel, let the user make one of a limited set of charts, such as bar or pie charts, quickly. Others, (which usually involve coding), such as D3.js, let the user make a vast variety of visualisations by creatively combining basic elements like lines, boxes and wedges. However, these require expert knowledge of the tools, and take longer to create basic visualisations. 
 	
-	\begin{table}[h]
-	\begin{tabular}{p{0.15 \linewidth} p{0.425 \linewidth} p{0.425 \linewidth}}
+	\begin{table}[h]	
+	\setlength{\tabcolsep}{8pt} 
+	\renewcommand{\arraystretch}{1.5}
+	\begin{tabular}{p{0.2 \linewidth} | p{0.4 \linewidth} | p{0.4 \linewidth}}
 	
 									& 
 	\bfseries Library of charts 	& 
-	\bfseries Modular charts 		\\
+	\bfseries Modular charts 		\\ \hline
 	
 	\textbf{Description} 																&
 	Draw basic gestures or elements to indicate which chart type is desired 	& 
 	Draw any one of 7 basic components and 
 	bind data to attributes of theirs such as width, height, colour or radius
-	\vspace{6 \lineskip} 	\\
+	\vspace{6 \lineskip} 	\\ \hline
 	
 	\textbf{Domain} 				&
 	Finite domain 		& 
-	Infinite domain 	\\
+	Infinite domain 	\\ \hline
 	
 	\textbf{Speed} 				&
 	Quick				& 
-	Slower 				\\
+	Slower 				\\ \hline
 	
 	\textbf{Complexity}															&
 	Simple interface, just drop data on an element to bind data			& 
@@ -89,12 +102,12 @@
 	\end{tabular}
 	\end{table}
 	
-	\cite{chao_poster:_2010} uses pen gestures to indicate 'proto-objects' that can be combined. While an infinite domain system that uses pen sketches would have been intriguing to explore, it would contradict the project's primary usability goal that the system should be faster than users' current systems. Additionally, the 80/20 rule indicated that while a few power users may want to generate custom visualisations, the majority would just want to make simple charts. Thus, the additional functionality didn't justify the additional complexity for the average user.
+	\cite{chao_poster:_2010} uses pen gestures to indicate 'proto-objects' that can be combined. While an infinite domain system that uses pen sketches would have been intriguing to explore, it would contradict the project's primary usability goal that the system should be faster than users' current systems. Additionally, the 80/20 rule indicated that while a few power users may want to generate custom visualisations, the majority would just want to make simple charts. Thus, the additional functionality did not justify the additional complexity for the average user.
 	
 %	\subsection{To beautify or not to beautify}
 %	The formal graphics generated by the system are easy to modify with existing tooling, whereas human ink strokes are less straightforward to modify while maintaining their natural look and feel.
 
-
+	%TODO Mention that it is event-driven programming
 	\section{Development}
 	Interleaved with the design process above was the development process detailed in this section. The C\# code supports a stand-alone Sketch Chart component that can be used in any Windows Forms application that requires charting functionality, as well as a reference implementation of such an application, Sketchography, which lets users import their Microsoft Excel or Comma Separated Values data and generate charts. This satisfies all the core requirements described in \autoref{sec:Requirements}, as well as 3 of the 6 extensions outlined.
 	
@@ -103,17 +116,29 @@
 		\caption{Interactions between classes}
 	\end{figure}		
 	
-	As seen above, the Sketchography form is the main application run when Program starts. Sketchography contains a SketchChart component, which contains the canvas for users to sketch on, as well as the formal chart generated. SketchChart in turn uses SketchAxis and SketchSeries objects. SketchChart, SketchAxis and SketchSeries inherit from their non-sketch counterparts Chart, Axis and Series (from System.Windows.Forms.DataVisualization.Charting, which is part of the .NET framework), in order to reuse the built-in functionality and members, and complement them with functions and members specific to sketching. SketchChart also references two instances of SizeDragger, which is a custom UI widget to support dragging ends of columns in a column chart to scale them. Settings and Resources are two additional classes used to store properties of the project.
+	As seen above, the \texttt{Sketchography} form is the main application run when \texttt{Program} starts. \texttt{Sketchography} contains a \texttt{SketchChart} component, which contains the canvas for users to sketch on, as well as the formal chart generated. \texttt{SketchChart} in turn uses \texttt{SketchAxis} and \texttt{SketchSeries} objects. \texttt{SketchChart}, \texttt{SketchAxis} and \texttt{SketchSeries} inherit from their non-sketch counterparts \texttt{Chart}, \texttt{Axis} and \texttt{Series} (which are a part of the .NET framework), in order to reuse the built-in functionality and members, and complement them with functions and members specific to sketching. \texttt{SketchChart} also references two instances of \texttt{SizeDragger}, which is a custom UI widget to support dragging ends of columns in a column chart to scale them. Settings and Resources are two additional classes used to store properties of the project.
 	
+	No class is more than 400 lines of code, indicating that functionality has been split up at a reasonably fine grain to not concentrate too much responsibility in any one class. Visual Studio, the IDE used for Windows Forms development, has a built-in code metrics tool with a maintainability index.
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{r@{ - }l | l}
+\multicolumn{2}{l |}{Index value} & Maintainability \\ \hline
+20 & 100 & Good \\
+10 & 19 & Moderate \\
+0 & 9 & Low \\
+\end{tabular}
+\end{center}
+\caption{Microsoft Visual Studio maintainability rankings \citep{microsoft_corporation_code_2013}}
+\end{table}
 	
-	%TODO Should I include that the core of the project is around 620 lines of code? This doesn't include the classifier or the interface code
-	No class is more than 400 lines of code, indicating that functionality has been split up at a reasonably fine grain to not concentrate too much responsibility in any one class. Visual Studio's calculated code metrics show that the project has a maintainability index of 74/100, which gets the highest rating - 'good' maintainability. Should I include the data in this paragraph?
+	The project got an overall index of 74/100, putting it squarely within the highest maintainability segment.
 	
 	At a high level, the functionality of the program can be divided into 3 responsibilities - data handling, sketch processing and charting (in increasing order of complexity). It is written in an Object Oriented fashion, with separation between the views (Windows Forms) and controllers (C\# classes), to allow for easy testing.
 	
 	
 	\subsection{Data import and management}
-		Since the application is targeted at the average user, their data is most likely to be stored in spreadsheet format. Thus, it is important to allow them to import data from .xlsx and .csv files. 
+	The application is targeted at the average consumer, whose data is most likely to be stored in spreadsheet files. Thus, it is important to allow them to import data from .xlsx and .csv files. 
 		For the sake of simplicity, the code assumes that the data is well-formed. Specifically, it works on the following assumptions:
 		\begin{enumerate}
 		\item The data is arranged as records in the rows of the spreadsheet.
@@ -159,7 +184,7 @@
 	 
 	\end{enumerate}
 
-	After the core of the project was finished, an extension was implemented that allows erasing of strokes. The stylus available has a button simulating an eraser at the back. When this eraser comes into range, a \texttt{CursorInRange} event is thrown, wherein we can check whether the stylus is inverted or not.
+	After the core of the project was finished, \ref{ext:erase} was implemented that allows erasing of strokes. The stylus available has a button simulating an eraser at the back. When this eraser comes into range, a \texttt{CursorInRange} event is thrown, wherein we can check whether the stylus is inverted or not.
 	
 	\begin{lstlisting}[frame=single]
 _inkOverlay.EditingMode = e.Cursor.Inverted ? 
@@ -212,9 +237,10 @@ _inkOverlay.EditingMode = e.Cursor.Inverted ?
 
 	\end{figure}
 	
-	In response to strokes that create chart elements, drop targets are generated so that the user may then drag and drop data directly onto the chart element to bind it. This provides direct manipulation, since it doesn't force the user through a menu and dialogue system to configure which data corresponds to which axis. In order to do this, a dictionary is maintained in SketchChart, storing the mapping between Rectangles encoding the location of a drop target, and the string representing the chart element it corresponds to. For the x axis, this would be ``X Axis"; for the data series it would be the name of the series. 
+	In response to strokes that create chart elements, drop targets are generated so that the user may then drag and drop data directly onto the chart element to bind it. This provides direct manipulation, since it does not force the user through a menu and dialogue system to configure which data corresponds to which axis. In order to do this, a dictionary is maintained in SketchChart, storing the mapping between Rectangles encoding the location of a drop target, and the string representing the chart element it corresponds to. For the x axis, this would be ``X Axis"; for the data series it would be the name of the series. 
 	
 	\begin{figure}[h]
+	\centering
 	\includegraphics[scale=1]{droptargets}
 	\caption{Drop Targets for 2 data series and the X axis, revealed when data is being dropped onto the chart}
 	\end{figure}
@@ -230,7 +256,7 @@ _inkOverlay.EditingMode = e.Cursor.Inverted ?
 
 	
 	\subsection{Charting}
-	This part of the functionality, unexpectedly, proved the most challenging and time-consuming. In the first few iterations, a built-in .NET chart component was used, which allowed rapid prototyping. However, converting from the coordinate system used within the charting component to that used in the rest of the window was proving non-trivial and inaccurate. In addition, the component didn't allow very fine-grained positioning of its various elements, or much control over their sizing and other attributes. Hence, we had to implement our own chart control. To make the most of the functionality already implemented in the built-in control, we inherited from it. This also meant our custom control could easily replace the built-in one since it implemented the same interface but with a few extra features.
+	This part of the functionality, unexpectedly, proved the most challenging and time-consuming. In the first few iterations, a built-in .NET chart component was used, which allowed rapid prototyping. However, converting from the coordinate system used within the charting component to that used in the rest of the window was proving non-trivial and inaccurate. In addition, the component did not allow very fine-grained positioning of its various elements, or much control over their sizing and other attributes. Hence, we had to implement our own chart control. To make the most of the functionality already implemented in the built-in control, we inherited from it. This also meant our custom control could easily replace the built-in one since it implemented the same interface but with a few extra features.
 	
 	The painting of the chart graphics is done in a largely procedural fashion unfortunately, as this is how it is done for Windows Forms controls. Most of the work is done in the \texttt{PostPaint} event handler, which is called after the built-in chart is done painting (even though the built-in chart control is not shown to the user at all, it still needs to be painted in a hidden background for some of its functionality to work correctly). This painting occurs whenever changes are made that might affect its output. Within the event handler, there are distinct sections that:
 	\begin{itemize}
@@ -249,7 +275,7 @@ _inkOverlay.EditingMode = e.Cursor.Inverted ?
 	\subsubsection{Positioning and scaling bars}
 	To allow maximum flexibility, constants are introduced that control various parameters of the appearance of the bars, such as the ratio of the gap between them, and the fraction of the height of the chart they should cover by default. Then, formulae are used to account for the number of data series, the relative width scale of each series, the relative scale of the gap between data points, and the length of the X axis, to calculate the position each bar should be drawn at.
 	
-	The application also has to calculate the values to show for labels on the Y axis. This is something that the custom charting control doesn't handle as elegantly as the built-in control, since the values are not usually rounded, whole numbers. This is because the range of values in the data series is simply spread across a set number of labels to determine the individual label values.
+	The application also has to calculate the values to show for labels on the Y axis. This is something that the custom charting control does not handle as elegantly as the built-in control, since the values are not usually rounded, whole numbers. This is because the range of values in the data series is simply spread across a set number of labels to determine the individual label values.
 	\subsubsection{Transforming strokes to match formal bars}
 	\begin{figure}[h]
 		\centering
@@ -262,13 +288,14 @@ _inkOverlay.EditingMode = e.Cursor.Inverted ?
 		\caption{Before and after the transform}
 	\end{figure}		
 	
-	This was implemented as an extension, to better express the connection between the sketches and the formal bars to the user. It is done by maintaining a mapping between the sketch and the first bar of the series. When the bar is drawn, its coordinates and dimensions are saved. These are then applied as a scale and translation transform to the associated sketch.
+	This implements \ref{ext:transform_sketch}, to better express the connection between the sketches and the formal bars to the user. It is done by maintaining a mapping between the sketch and the first bar of the series. When the bar is drawn, its coordinates and dimensions are saved. These are then applied as a scale and translation transform to the associated sketch.
 	
 	
 	\subsubsection{Height and width dragging}
-	Another extension was to allow users to make changes to the formal chart, and have those changes feed back to the sketches. We decided to offer the ability to change the width and height of the bars. When in the formal view, if users hover over the first bar in a series, they see a drag handle each for the height and width, in the form of a grey rectangle. We decided on the size of these handles by experimenting with various sizes to see which one formed a target big enough to grasp with a stylus. Since these rectangles are simply graphics drawn onto a picture box rather than explicit controls, they do not offer native drag functionality. Instead, this has to be approximated by toggling a flag when mouse/stylus is down within the rectangle of the drag handle indicating that a drag has started. When the mouse/stylus is lifted, if the flag was on and the cursor position has changed, this is viewed as a drag, and the change in position is taken to be the size change desired. This scaling is then applied to the variables previously introduced for positioning and scaling bars, so the changes take effect in the next paint cycle, which seems fairly instantaneous to users, if not perfectly so.
+	\ref{ext:formal_to_informal} was to allow users to make changes to the formal chart, and have those changes feed back to the sketches. We decided to offer the ability to change the width and height of the bars. When in the formal view, if users hover over the first bar in a series, they see a drag handle each for the height and width, in the form of a grey rectangle. We decided on the size of these handles by experimenting with various sizes to see which one formed a target big enough to grasp with a stylus. Since these rectangles are simply graphics drawn onto a picture box rather than explicit controls, they do not offer native drag functionality. Instead, this has to be approximated by toggling a flag when mouse/stylus is down within the rectangle of the drag handle indicating that a drag has started. When the mouse/stylus is lifted, if the flag was on and the cursor position has changed, this is viewed as a drag, and the change in position is taken to be the size change desired. This scaling is then applied to the variables previously introduced for positioning and scaling bars, so the changes take effect in the next paint cycle, which seems fairly instantaneous to users, if not perfectly so.
 	
 	\begin{figure}
+	\centering
 	\includegraphics[scale=1]{draghandles}
 	\caption{Drag handles}
 	\end{figure}		
@@ -280,9 +307,10 @@ _inkOverlay.EditingMode = e.Cursor.Inverted ?
 	\subsubsection{Maintaining the legend}
 	To keep the user aware of the state of the system at all times, it is important to have a legend showing which data is connected to which element of the visualisation. While most charting tools have a separate legend, we decided, in the theme of direct manipulation, that the colour key should be right where the data is - in the list of column headers. 
 	
-	However, the list of column headers is in the Sketchography form, whereas the colours are stored within the SketchChart, which is referenced in the form. We followed a subscriber pattern here, by creating an event in SketchChart that notifies about changes to the legend. SketchChart also exposes a public Legend dictionary, mapping colours to headers. Sketchography subscribes to those notifications, and its event handler regenerates the legend by checking the list in SketchChart.	
+	However, the list of column headers is in the Sketchography form, whereas the colours are stored within the SketchChart, which is referenced in the form. We followed a publish-subscribe pattern here, by creating an event in SketchChart that notifies about changes to the legend. SketchChart also exposes a public Legend dictionary, mapping colours to headers. Sketchography subscribes to those notifications, and its event handler regenerates the legend by checking the list in SketchChart.	
 	
 	\begin{figure}
+	\centering
 	\includegraphics[scale=1]{legend}
 	\caption{Legend}
 	\end{figure}
@@ -294,6 +322,7 @@ _inkOverlay.EditingMode = e.Cursor.Inverted ?
 	%TODO Get screenshot of earlier iteration
 	
 	\begin{figure}[h]
+	\centering
 	\includegraphics[scale=1]{toggle}
 	\caption{Switching between formal and informal views}
 	\end{figure}

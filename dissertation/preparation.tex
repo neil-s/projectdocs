@@ -8,7 +8,7 @@ This project involved vast exploratory design work, in preparation of the actual
 	However, in order to focus our exploration and make sure that the focus was on achieving some real deliverables for end users, a requirement analysis was necessary. The following functional goals were listed based on the project proposal, which focus on what basic tasks the system must help the user achieve, while allowing leeway in how the program exposed and implemented these features.
 	
 	The system must allow the user to:
-	\begin{enumerate}[label=\bfseries Core \arabic*:]
+	\begin{enumerate}[label=\bfseries Core \arabic*]
 		\item Use any data they have in reasonably arranged formats in common file types.
 		\item Specify the type of chart they want by drawing a likeness of it on screen using a stylus.
 		\item Bind the data to the chart using an interface that makes it clear how the data is affecting the visualisation.
@@ -17,18 +17,18 @@ This project involved vast exploratory design work, in preparation of the actual
 	\end{enumerate}
 	
 	In addition, time permitting, the system may:
-	\begin{enumerate}[label=\bfseries Extension \arabic*:]
+	\begin{enumerate}[label=\bfseries Extension \arabic*]
 		%TODO Make this first point clearer
-		\item Transform user-drawn sketches to show the visual link to the formal chart elements.
-		\item Feed back manipulations applied to the formal layer back to the user drawn sketches, in order to keep the visuals of the formal and sketch layers in synchronisation.
-		\item Allow users to undo actions by erasing sketches, and remove the corresponding formal elements without throwing errors.
+		\item \label{ext:transform_sketch} Transform user-drawn sketches to show the visual link to the formal chart elements.
+		\item \label{ext:formal_to_informal} Feed back manipulations applied to the formal layer back to the user drawn sketches, in order to keep the visuals of the formal and sketch layers in synchronisation.
+		\item \label{ext:erase} Allow users to undo actions by erasing sketches, and remove the corresponding formal elements without throwing errors.
 		\item Allow users to manipulate any property of chart elements, not just one, so that the domain of visualisations they can create is infinite. For example, allow them to bind not just the height of bars in a bar chart to data, but also their width and colour. 
 		\item Analyse the data and infer properties that may allow it to automatically suggest properties of the chart, such as which field belongs on which axis, or whether a data series should be log scale or linear scale.
 		\item The user must be able to export the chart as a Microsoft Chart object that can be embedded as a dynamic object in Microsoft Office files, not just as a raster image.
 	\end{enumerate}
 	
 	The core of this project focusses on making more usable software, rather than providing additional functionality, compared to existing systems. Hence, some usability goals were also specified:
-	\begin{enumerate}[label=\bfseries Usability \arabic*:]
+	\begin{enumerate}[label=\bfseries Usability \arabic*]
 		\item Users must be able to create charts at least as quickly as they can using current systems.
 		\item Users must be able to build a mental model of the software's behaviour within 2 uses of it. They should thus be able to accurately predict the consequences of any action taken within the software.
 		\item Changes to the information visualisation must occur through directly manipulating the visual representation of the chart, rather than through disconnected User Interface widgets.
