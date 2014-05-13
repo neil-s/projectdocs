@@ -64,10 +64,14 @@
 
 \cleardoublepage
 
-%TODO: Appendices go here
-\chapter{Appendices}
-<<child-demo, child='learningttest.Rnw'>>=
-@
 \bibliographystyle{apalike}
 \bibliography{collection}
+
+
+%TODO: Appendices go here
+%\chapter{Appendices}
+\appendix
+<<child-demo, child='learningttest.Rnw'>>=
+@
+
 \end{document}
