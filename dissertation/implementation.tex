@@ -1,5 +1,5 @@
 \chapter{Implementation}
-With the classifier working, this project was deemed viable to complete. To build the application, the interface needed to be designed, and the underlying functionality needed to be developed. While the design and the development were highly interdependent and hence interleaved in the iterative development process, they have been described separately below for clarity.
+With the classifier working, a major milestone was reached as the project was deemed viable to complete. To build the application, the interface needed to be designed, and the underlying functionality needed to be developed. While the design and the development were highly interdependent and hence interleaved in the iterative development process, they have been described separately below for clarity. Constant hallway testing was carried out to minimise the probability of bugs or usability issues going uncaught.
 
 \section{Design}
 \label{sec:design}
@@ -333,6 +333,7 @@ _inkOverlay.EditingMode = e.Cursor.Inverted ?
 	
 	Behind the scenes, all the chart elements are drawn in both views, with the unselected view dimmed or ghosted out. Hence, when users are sketching, they can see faint feedback of the recognition in the background and thus notice early if there has been a misclassification. This is done by setting two alpha or transparency values - one which is high when the formal view is selected, and one which is high when the in informal mode. Each of the elements then uses one of these alpha values to draw themselves according to which mode they should be prominent in.
 	
+	%TODO Put list of major milestones/iterations
 	
 \section{Summary}
 This chapter has detailed how various obstacles were overcome to implement all the core requirements, as well as three extensions. It describes how various design tradeoffs were evaluated to painstakingly make a design that would maximise usability for users by being the easiest to learn. It also describes how the code components fit together, with one main window which contains the sketch-based charting component. The charting component in turn has instances of various chart element objects.
