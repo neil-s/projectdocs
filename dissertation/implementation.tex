@@ -222,7 +222,20 @@ _inkOverlay.EditingMode = e.Cursor.Inverted ?
 	\\
 	\end{tabular}
 
-	\begin{figure}[h]
+
+	
+	In response to strokes that create chart elements, drop targets are generated so that the user may then drag and drop data directly onto the chart element to bind it. This provides direct manipulation, since it does not force the user through a menu and dialogue system to configure which data corresponds to which axis. In order to do this, a dictionary is maintained in SketchChart, storing the mapping between Rectangles encoding the location of a drop target, and the string representing the chart element it corresponds to. For the x axis, this would be ``X Axis"; for the data series it would be the name of the series. 
+
+	\begin{figure}[H]
+	\centering
+	\includegraphics[scale=1]{droptargets}
+	\caption{Drop Targets for 2 data series and the X axis, revealed when data is being dropped onto the chart}
+	\end{figure}
+	
+
+	When the user begins dragging a column header from the list on the left, this calls a number of event handlers in Sketchography. These configure the drag and drop action so that the column name saved within the list item is the data sent to the drop location. They also flip a \texttt{ShowDropTargets} flag, so that the chart rendering system draws grey rectangles indicating where the drop areas lie. This UI pattern is based on one users may be familiar from a number of drag and drop interfaces they may have previously interacted with, thus making it easier for them to understand what's happening. We also tried adding `Drop here' text in the targets like in the examples below, but this proved to cluttered in the small drop targets being used. Additionally, hallway testing revealed that once users began dropping, they were already aware that they must drop it in targets, and the change in colour was conspicuous enough to draw their attention to them.
+	
+		\begin{figure}[H]
 		\centering
 		\begin{subfigure}[b]{0.4\textwidth}
 			\includegraphics[width=\textwidth]{dropexample1}
@@ -235,17 +248,8 @@ _inkOverlay.EditingMode = e.Cursor.Inverted ?
 			\label{fig:dropexample2}
 		\end{subfigure}
 
-	\end{figure}
-	
-	In response to strokes that create chart elements, drop targets are generated so that the user may then drag and drop data directly onto the chart element to bind it. This provides direct manipulation, since it does not force the user through a menu and dialogue system to configure which data corresponds to which axis. In order to do this, a dictionary is maintained in SketchChart, storing the mapping between Rectangles encoding the location of a drop target, and the string representing the chart element it corresponds to. For the x axis, this would be ``X Axis"; for the data series it would be the name of the series. 
-	
-	\begin{figure}[h]
-	\centering
-	\includegraphics[scale=1]{droptargets}
-	\caption{Drop Targets for 2 data series and the X axis, revealed when data is being dropped onto the chart}
-	\end{figure}
-	
-	When the user begins dragging a column header from the list on the left, this calls a number of event handlers in Sketchography. These configure the drag and drop action so that the column name saved within the list item is the data sent to the drop location. They also flip a \texttt{ShowDropTargets} flag, so that the chart rendering system draws grey rectangles indicating where the drop areas lie. This UI pattern is based on one users may be familiar from a number of drag and drop interfaces they may have previously interacted with, thus making it easier for them to understand what's happening. We also tried adding `Drop here' text in the targets like in the examples below, but this proved to cluttered in the small drop targets being used. Additionally, hallway testing revealed that once users began dropping, they were already aware that they must drop it in targets, and the change in colour was conspicuous enough to draw their attention to them.
+	\end{figure}	
+
 	
 	When the data is dropped, this calls another event handler. In Sketchography, the event handler simply verifies that its a valid drag and drop, and then passes on the data to the \texttt{DropData} function on the SketchChart. For every rectangle in the dictionary of drop targets, \texttt{DropData} checks if the drop event occured within it. When it finds the drop target the user picked, it looks up the corresponding string, and calls \texttt{BindDataSeries} on it. \texttt{BindDataSeries} adds the binding appropriately. If the data was dropped on a data series rather than the X axis, it also renames that series and the corresponding drop target, so that the user can reassign that bar to some other data if they change their mind. From this point, the charting functionality takes over.
 	
