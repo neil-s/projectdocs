@@ -3,7 +3,7 @@ With the classifier working, a major milestone was reached as the project was de
 
 \section{Design}
 \label{sec:design}
-	A few design decisions were relatively clear from the start:
+	I identified the following 6 design decisions at the start of the implementation phase.
 	\begin{enumerate}
 	\item The application must have a large canvas to sketch on.
 	\item The chart must be shown somewhere - either on the same canvas as the sketches, or in a separate viewing panel. The limited screen size on the Surface Pro makes the latter a less desirable option.
@@ -13,9 +13,35 @@ With the classifier working, a major milestone was reached as the project was de
 	\item There must be a `Reset' button for users to start over if needed.
 	\end{enumerate}
 	
-	A number of other design decisions involved assessing tradeoffs, as outlined in the rest of this section.	
+	These specifications were enough to start building a high level prototype, but the final interface would need much more thought and research about the details of the design. A number of tough choices were faced, whose tradeoffs are outlined in the remainder of this section. 
 	
-	\subsection{`Sketchy' or Formal}	
+\subsection{Sketches or gestures}
+	So far, I have talked only about sketches, but in fact, there are two ways one can use a stylus to send input to a computer: sketches, or gestures. Sketches share some visual semblance with the chart they're trying to indicate, whereas gestures are just movements chosen from a library of easy-to-distinguish movements, that behave like commands instructing the software to choose a certain chart type. SketchInsight \citep{walny_understanding_2012} uses the latter approach, requiring, for example, just an `L' shape to indicate a bar chart, or a `V' shape to indicate a line chart. 
+	
+%		\begin{tabular}[h]{p{0.5 \linewidth} | p {0.5 \linewidth}}
+%			\bfseries{Pros} & \bfseries{Cons} \\
+%			This would provide higher recognition accuracy, since the domain of shapes to distinguish between is limited, and can be designed to maximise differences between them. & One of the principles of direct manipulation is to avoid using a command language, but a gesture library is exactly that, requiring users to remember which gesture corresponds to which chart type or element. \\ \hline
+%			& A gesture is transient, unlike a sketch. Users wouldn't be able to modify their input, they would have to redo their actions. 
+%		\end{tabular}	
+		
+			\textbf{Advantages of Gestures}
+			\begin{itemize}
+			\item Gestures provide higher recognition accuracy, since the domain of shapes to distinguish between is limited, and can be designed to maximise differences between them. 
+			\end{itemize}
+			
+			
+			\textbf{Advantages of Sketches} 
+			\begin{itemize}
+			\item A gesture is transient, unlike a sketch. Users wouldn't be able to modify their input, they would have to redo their actions. 
+			\item One of the principles of direct manipulation is to avoid using a command language, but a gesture library is exactly that, requiring users to remember which gesture corresponds to which chart type or element. 
+			\end{itemize}
+				
+	To satisfy the design goal of direct manipulation, the sketch-based approach was chosen.	
+	
+	
+	
+	
+\subsection{`Sketchy' or Formal Appearance}	
 	\begin{figure}[h]
 		\centering
 		\begin{subfigure}[b]{0.4\textwidth}
@@ -29,41 +55,32 @@ With the classifier working, a major milestone was reached as the project was de
 			\label{fig:formal}
 		\end{subfigure}
 	\end{figure}
-	User content can be in shown in two styles: sketch or formal. This refers to the usability dimension described by \cite{bresciani_collaborative_2008} as 'Perceived Finishedness'. \cite{yeung_effect_2008} showed that a doodle-like appearance of low-fidelity prototypes encourages early-stage experimentation and discussion, whereas a formal appearance looks finished and professional.  Thus, it had to be decided whether the system should generate the rest of the chart with a 'sketchy' look, or convert the input into a finished chart with a formal look. \cite{blackwell_formality_2008} note how the rapid replacement of pen and paper by computers has made more of our processes formal and precise, potentially discouraging us from exploration and iteration in creative processes that would benefit from them.
 	
-	%TODO Check tense in 'needs to be offered. Thus, we decided to offer...
-	Generating the 'sketchy' look can be non-trivial, \citep{plimmer_sketchnode:_2010, wang_sketchset:_2011} e.g.\ if the user draws one bar, how should the system generate more bars that look hand-drawn by the same author but not just like stretched versions of the first bar? Additionally, if the users want to present these charts to an audience, they must look polished, and so at some point an export option for a formal look needs to be offered. Thus, we decided to offer a hybrid that shows the user's input in sketch form, with the system's output in formal form. Extensions were implemented to keep these two forms as closely in synchronization as possible, thus making the mapping visually evident.
+	Once the user sketches, say, one bar, the application needs to complete the chart by generating more bars for the rest of the data points. It could do this in one of two styles: `sketchy' or formal.
+
+A `sketchy' look encourages exploration and modification. This is due to the usability dimension described by \cite{bresciani_collaborative_2008} as 'Perceived Finishedness'. \cite{yeung_effect_2008} showed that a doodle-like appearance of low-fidelity prototypes encourages early-stage experimentation and discussion, whereas a formal appearance looks finished and professional. \cite{blackwell_formality_2008} note how the rapid replacement of pen and paper by computers has made more of our processes formal and precise, potentially discouraging us from exploration and iteration in creative processes that would benefit from them. Thus, generating the rest of the bars with the same look and feel as the one sketched by the user has clear benefits in terms of reflecting malleability.
+
+However, automatically generating more bars with a sketchy look can be non-trivial  \citep{plimmer_sketchnode:_2010}. \cite{wang_sketchset:_2011} proposed an approach that uses a library of hand-drawn examples to generate shapes that look human drawn. However, besides being laborious, this would be inappropriate in this case since one bar would be drawn in the user's style, while the others would distinctly be in the style of another author. 
+
+On the other hand, \cite{walny_understanding_2012} proposed SketchInsight, which simply discards the user's strokes, and replaces them with a completely formal chart. This finished look, while discouraging modification, exhibits what \cite{blackwell_formality_2008} describes as a `Formal Connotation', which is expected in many professional settings. Users may be more inclined to present a formal-looking chart to colleagues than a sketched one.
+
+Thus, I designed an interface that offered the benefits of both looks. The user's input is stored in sketch view, and the user can keep modifying it. The computer generated chart is in formal view, available at any time to preview or present.
 	
-	\subsection{Sketches or gestures}
-	%TODO Discuss that this should be covered in prep.
-	A related design decision was whether to use sketches or gestures. Sketches share some visual semblance with the chart they're trying to indicate, whereas gestures are just movements chosen from a library of easy-to-distinguish movements, that behave like commands instructing the software to choose a certain chart type. SketchInsight \citep{walny_understanding_2012} uses the latter approach, requiring, for example, just an `L' shape to indicate a bar chart, or a `V' shape to indicate a line chart. 
-	
-%		\begin{tabular}[h]{p{0.5 \linewidth} | p {0.5 \linewidth}}
-%			\bfseries{Pros} & \bfseries{Cons} \\
-%			This would provide higher recognition accuracy, since the domain of shapes to distinguish between is limited, and can be designed to maximise differences between them. & One of the principles of direct manipulation is to avoid using a command language, but a gesture library is exactly that, requiring users to remember which gesture corresponds to which chart type or element. \\ \hline
-%			& A gesture is transient, unlike a sketch. Users wouldn't be able to modify their input, they would have to redo their actions. 
-%		\end{tabular}	
-		
-			\textbf{Gestures - Pros}
-			\begin{itemize}
-			\item This would provide higher recognition accuracy, since the domain of shapes to distinguish between is limited, and can be designed to maximise differences between them. 
-			\end{itemize}
-			
-			
-			\textbf{Gestures - Cons} 
-			\begin{itemize}
-			\item A gesture is transient, unlike a sketch. Users wouldn't be able to modify their input, they would have to redo their actions. 
-			\item One of the principles of direct manipulation is to avoid using a command language, but a gesture library is exactly that, requiring users to remember which gesture corresponds to which chart type or element. 
-			\end{itemize}
-				
-	To satisfy the design goal of direct manipulation, the sketch-based approach was chosen.
 
 	\subsection{Modes or modeless}
 	Since the application now has both sketch and formal content, the user must have an easy way to switch between the two views. One approach is to give the user an explicit UI widget to toggle between the two modes. This way, the user explicitly indicates what they want to see, and thus should have a better understanding of what state the system is in. This also allows the system a chance to change the controls available to the user.
 	
-	The other approach is to avoid modes, requiring lesser cognitive effort from the user since they don't need to keep track of what state the system is in. \cite{norman_user_1986} describe this as the Gulf of Evaluation - the difficulty of assessing the state of the system, and the Gulf of Execution - the difficulty of knowing what actions are possible in the current state. In this project, this could have been done by showing the sketch view when the user was about to edit the chart. The active digitizer hardware allows the system to detect when the user brings the stylus within range of the screen, just before they actually touch the screen, allowing the chart to be in sketch view by the time the stylus is down. When the stylus goes out of range, the system can switch to the formal chart view. This would solidify the metaphor that edits are done to the sketch, but the final product to be looked at is the formal view. 
+	The other approach is to avoid modes, requiring lesser cognitive effort from the user since they don't need to keep track of what state the system is in. \cite{norman_user_1986} describe this as the Gulf of Evaluation - the difficulty of assessing the state of the system, and the Gulf of Execution - the difficulty of knowing what actions are possible in the current state. 
+	
+	In this project, this could have been done by showing the sketch view when the user wants to edit the chart, and automatically showing the formal preview when they stop to look at it. Their intent can be predicted because the active digitizer hardware can detect when the stylus is hovering over the screen, before it actually touches the screen. The application can then replace the formal view with the sketch view just in time as the user's stylus touches the screen, and switch back to formal view when the cursor is out of range. Hallway testing revealed users were delighted by this feature, since most touch systems cannot give feedback to hover events.
 	
 	At first, the modeless version was chosen for its lower cognitive overhead. However, when the extension to allow edits not just to the sketch view, but also the formal view, was undertaken, we had to switch over to a mode-based system to allow the user to interact with the graph in both views with their stylus.
+	
+	\begin{figure}[H]
+	\centering
+	\includegraphics[scale=1]{toggle}
+	\caption{Users can click visual toggle buttons to switch between views}
+	\end{figure}
 	
 	\subsection{Stock or bespoke charting widget}	
 	Since the system is generating a formal version of the chart, a charting component is required to render this visualisation. The .NET framework comes with built-in chart controls that offer basic functionality with relatively low implementation effort. They also allow easy export as dynamic chart objects into Microsoft Office files. However, customising their appearance beyond a certain point is extremely difficult, making it easier to just make one's own charting component from scratch and control all aspects of the rendering. This means having to re-implement a lot of core functionality though, such as scaling shapes correctly, choosing labels that are round figures when possible, and generating colours than work well together for different data series. This also means that the chart can only be exported as a raster image rather than as a chart object.
