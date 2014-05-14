@@ -1,4 +1,3 @@
-\setcounter{page}{1}
 \chapter*{Proforma}
 
 %TODO Check that this whole proforma needs to be 100 words.
@@ -14,19 +13,11 @@ Supervisor:         & Alistair Stead (ags46)				\\
 \end{tabular}
 
 \section*{Original Aims}
-This project aims to explore if users are able to create information visualisations faster, or experiment with it more, if given the tools to directly manipulate their charts. Specifically, it involved:
-\begin{enumerate}
-
-	\item Building an application that lets users create graphical visualisations of their data by simply sketching their desired output, like they would on paper.
-
-	\item Evaluating the learnability of the interface, and how it compares to existing tools for creating charts, through a user study.
-
-\end{enumerate}
+This project aimed to enable users to visualise information faster, and encourage them to explore and experiment with it more. This would be done by building a tablet application that draws on the familiar metaphor of sketching using pen and paper. Users must be able to make a rough sketch of the type of chart they'd like to see. An ink stroke recogniser must then complete the chart with user data. Such a tool should provide the benefits of direct manipulation and liveness, since user actions receive immediate feedback. These benefits need to be evaluated through a user study.
 
 \section*{Work Completed}
-I have completed all the core work items by successfully building a Chart component in C\# for Windows applications. This component lets users make a rough sketch of the chart they want to create with a stylus on their tablet, and then uses sketch recognition to create an actual chart based on their data. It performs the sketch recognition by running data mining algorithms on computed features of the digital ink. It also imports data by parsing a user-specified spreadsheet file. I also designed and developed an interface that exposes this component in a user friendly way, attempting to minimize the learning curve by applying Human Computer Interface principles to match the users' mental model through liveness and direct manipulation. I ran a user study assessing how quickly users learnt how to use it (both native and non-native English speakers), and comparing its complexity to that of the existing charting application Microsoft Excel.
+I have successfully designed and developed a charting application that meets all the functional and usability requirements, and includes three extensions. The sketch recognition component uses multiple data mining algorithms to recognise chart elements drawn on a tablet with a stylus. The custom charting widget plots user data into the chart type the user sketched. The interface was designed to be easy to learn - this was evaluated through a user study. The charting widget is ready to be open sourced and included in other applications. In the process, I also contributed two bug fixes to tools used in the project.
 
-As an extension, I implemented the ability to beautify the hand-drawn sketches in a natural-looking manner to match edits made to the chart. I also implemented the ability to erase parts of the hand-drawn sketch, and have those same changes applied to the chart, to further solidify the metaphor to pen and paper.
 
 \section*{Special Difficulties}
 %None.
