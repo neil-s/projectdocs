@@ -7,33 +7,33 @@ Analysing:  Percent correct
 
 Confidence: 0.05 (two tailed)
 
-\begin{table}[thb]
+%\begin{table}[thb]
+%
+%%\scriptsize
+%{\centering
+%\begin{tabular}{c p{0.9 \textwidth}}\\
+%(1) & meta.LogitBoost '-P 100 -F 0 -R 1 -L -1.7976931348623157E308 -H 1.0 -S 1 -I 10 -W trees.DecisionStump' 8627452775249625582 \\
+%(2) & bayes.BayesNet '-D -Q bayes.net.search.local.TAN -- -S BAYES -E bayes.net.estimate.SimpleEstimator -- -A 0.5' 746037443258775954 \\
+%(3) & trees.LMT '-P -I 50 -M 200 -W 0.0 -A' -1113212459618104943 \\
+%(4) & trees.RandomForest '-I 100 -K 0 -S 1' -2260823972777004705 \\
+%\end{tabular}
+%}
+%\caption{\label{}Classifier Algorithms Used}
+%\end{table}
 
-%\scriptsize
-{\centering
-\begin{tabular}{c p{0.9 \textwidth}}\\
-(1) & meta.LogitBoost '-P 100 -F 0 -R 1 -L -1.7976931348623157E308 -H 1.0 -S 1 -I 10 -W trees.DecisionStump' 8627452775249625582 \\
-(2) & bayes.BayesNet '-D -Q bayes.net.search.local.TAN -- -S BAYES -E bayes.net.estimate.SimpleEstimator -- -A 0.5' 746037443258775954 \\
-(3) & trees.LMT '-P -I 50 -M 200 -W 0.0 -A' -1113212459618104943 \\
-(4) & trees.RandomForest '-I 100 -K 0 -S 1' -2260823972777004705 \\
-\end{tabular}
-}
-\caption{\label{}Classifier Algorithms Used}
-\end{table}
-
-\begin{table}[thb]
+\begin{table}[h]
 
 %\footnotesize
 {\centering \begin{tabular}{lrr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}
 \\
 \hline
-Dataset & (1)& (2) & & (3) & & (4) & \\
+Dataset & LogitBoost & BayesNet & & LMT & & RandomForest & \\
 \hline
-'Initial study' & 97.05 & 98.15 &         & 98.80 &         & 96.07 &        \\
+Initial study & 97.05 & 98.15 &         & 98.80 &         & 96.07 &        \\
 \hline
 \multicolumn{8}{c}{$\circ$, $\bullet$ statistically significant improvement or degradation}\\
 \end{tabular}  \par}
-\caption{\label{}Comparison of algorithm accuracy}
+\caption{\label{}Comparison of accuracy of the algorithms used}
 \end{table}
 
 

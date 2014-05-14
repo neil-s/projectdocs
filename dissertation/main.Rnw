@@ -59,6 +59,9 @@
 \input{evaluation.tex}
 \input{conclusions.tex}
 
+%Ignore all files below when calculating word count
+%TC:ignore
+
 \addcontentsline{toc}{chapter}{Bibliography}
 %\bibliography{refs}
 
@@ -74,5 +77,5 @@
 <<child-demo, child='learningttest.Rnw'>>=
 @
 \input{proposal.tex}
-
+%TC:endignore
 \end{document}

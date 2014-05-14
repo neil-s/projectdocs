@@ -1,38 +1,38 @@
 \chapter{Preparation}
-This project involved vast exploratory design work, in preparation of the actual implementation.
+In order to keep the project organised and on schedule, some preparatory work was required. Specifically, the requirements needed to be analysed, and the goals and work items needed to be spelt out accordingly. Additionally, the feasibility of performing the stroke recognition needed to be evaluated, by building a classifier that exhibited reasonable accuracy.
 
 	\section{Requirements}
 	\label{sec:Requirements}
-	This project could have gone in numerous different design directions from the start. Since the functionality and its benefits over existing systems depended heavily on the design chosen, it was hard to separate what benefits the program would achieve from what features the program would include and how it would expose them to the user. 
+	This project could have taken numerous different design directions. Since the functionality and its benefits over existing systems depended heavily on the design chosen, it was difficult to state technical requirements without first designing the system.
 	
-	However, in order to focus our exploration and make sure that the focus was on achieving some real deliverables for end users, a requirement analysis was necessary. The following functional goals were listed based on the project proposal, which focus on what basic tasks the system must help the user achieve, while allowing leeway in how the program exposed and implemented these features.
+	However, in order to focus the design exploration and plan realistic development schedules, a requirement analysis was necessary. Based on the project proposal, the following functional goals were identified. They focused on what basic tasks the system must help the user achieve, while allowing leeway in how the program exposed and implemented these features.
 	
 	The system must allow the user to:
 	\begin{enumerate}[label=\bfseries Core \arabic*]
-		\item Use any data they have in reasonably arranged formats in common file types.
+		\item Visualise data they have stored in common file formats.
 		\item Specify the type of chart they want by drawing a likeness of it on screen using a stylus.
-		\item Bind the data to the chart using an interface that makes it clear how the data is affecting the visualisation.
-		\item Specify visual, size and positioning properties of the chart through the sketches.
+		\item Bind the data to the chart using an interface that makes it clear how the data is being used to generate the graphics.
+		\item Specify visual properties of the chart, such as size and position, through the sketches.
 		\item Manipulate the visual appearance of the created chart.
 	\end{enumerate}
 	
 	In addition, time permitting, the system may:
 	\begin{enumerate}[label=\bfseries Extension \arabic*]
 		%TODO Make this first point clearer
-		\item \label{ext:transform_sketch} Transform user-drawn sketches to show the visual link to the formal chart elements.
-		\item \label{ext:formal_to_informal} Feed back manipulations applied to the formal layer back to the user drawn sketches, in order to keep the visuals of the formal and sketch layers in synchronisation.
+		\item \label{ext:transform_sketch} Transform user-drawn sketches to resemble and overlap the formal chart elements they generated, in order to show the link between the sketch and the formal elements visually.
+		\item \label{ext:formal_to_informal} Mirror any manipulations applied to the formal layer back to the user drawn sketches, in order to keep the visuals of the formal and sketch layers in synchronisation.
 		\item \label{ext:erase} Allow users to undo actions by erasing sketches, and remove the corresponding formal elements without throwing errors.
 		\item Allow users to manipulate any property of chart elements, not just one, so that the domain of visualisations they can create is infinite. For example, allow them to bind not just the height of bars in a bar chart to data, but also their width and colour. 
 		\item Analyse the data and infer properties that may allow it to automatically suggest properties of the chart, such as which field belongs on which axis, or whether a data series should be log scale or linear scale.
-		\item The user must be able to export the chart as a Microsoft Chart object that can be embedded as a dynamic object in Microsoft Office files, not just as a raster image.
+		\item Support exporting the chart as a Microsoft Chart object that can be embedded as a dynamic object in Microsoft Office files, not just as a raster image.
 	\end{enumerate}
 	
 	The core of this project focusses on making more usable software, rather than providing additional functionality, compared to existing systems. Hence, some usability goals were also specified:
 	\begin{enumerate}[label=\bfseries Usability \arabic*]
-		\item Users must be able to create charts at least as quickly as they can using current systems.
+		\item Users must be able to create charts at least as quickly as they can using current charting systems.
 		\item Users must be able to build a mental model of the software's behaviour within 2 uses of it. They should thus be able to accurately predict the consequences of any action taken within the software.
-		\item Changes to the information visualisation must occur through directly manipulating the visual representation of the chart, rather than through disconnected User Interface widgets.
-		\item The user must be able to easily try out changes to the visualisation, see what that would look like, and undo them if needed.
+		\item Changes to the visualisation must occur through directly manipulating the visual representation of the chart, rather than through disconnected User Interface widgets.
+		\item The user must be able to easily try out changes to the visualisation, see what the resultant chart would look like, and undo them if needed.
 	\end{enumerate}
 	
 	\section{Design Goals}
@@ -41,11 +41,11 @@ This project involved vast exploratory design work, in preparation of the actual
 	\subsubsection*{Direct Manipulation}
 	\begin{quote}
 	%TODO Discuss that this is not actually an error.
-	Direct manipulation systems offer the satisfying experience of operating on visible objects. The computer becomes transparent, and users can concentrate on their tasks. [It] permits novice users access to powerful facilities without the burden of learning to use a complex syntax and lengthy list of commands. Direct manipulation involves three interrelated techniques: 
+	``Direct manipulation systems offer the satisfying experience of operating on visible objects. The computer becomes transparent, and users can concentrate on their tasks. [It] permits novice users access to powerful facilities without the burden of learning to use a complex syntax and lengthy list of commands. Direct manipulation involves three interrelated techniques: 
 		\begin{enumerate}
 			\item Provide a physically direct way of moving a cursor or manipulating the objects of interest.
 			\item Present a concrete visual representation of the objects of interest and immediately change the view to reflect operations.
-			\item Avoid using a command language and depend on operations applied to the cognitive model which is shown on the display.
+			\item Avoid using a command language and depend on operations applied to the cognitive model which is shown on the display.''
 		\end{enumerate}			
 	\end{quote}
 	\begin{flushright}
@@ -65,7 +65,7 @@ This project involved vast exploratory design work, in preparation of the actual
 	\end{enumerate}
 	
 	%TODO Change phrasing?
-	\cite{ko_state_2011} clarify that this is end-user programming - ``Most programs today are not written by professional software developers, but by people with expertise in other domains working towards goals for which they need computational support\ldots Although these end-user programmers may not have the same goals as professional developers, they do face many of the same software design challenges\ldots''
+	\cite{ko_state_2011} clarify by calling it end-user programming - ``Most programs today are not written by professional software developers, but by people with expertise in other domains working towards goals for which they need computational support\ldots Although these end-user programmers may not have the same goals as professional developers, they do face many of the same software design challenges\ldots''
 	
 	Since one of the alternatives to this project is to actually use programming frameworks like D3.js to generate charts, the task of instructing the computer on how to turn data into graphics is rightly considered programming. One of the properties that improves the usability of such a programming tool is liveness.
 	
@@ -84,7 +84,7 @@ This project involved vast exploratory design work, in preparation of the actual
 	%TODO Maybe insert a picture of my development process here, including the user studies?
 	\begin{enumerate}
 		\item Get the requisite approvals for the human study from the Ethics Review Committee.
-		\item Assess the various methods to build a classifier for ink recognition, including using the RATA Framework.
+		\item Assess the various methods to build a classifier for ink recognition.
 		\item Run an initial user study to  see how people naturally draw graphs, and also use it to collect training examples for the classifier.
 		\item Build a UI that accepts strokes, runs them through the classifier, and shows the user feedback to indicate successful recognition.
 		\item Build the UI widget that lets users import their spreadsheets in Microsoft Excel (xlsx) or Comma Separated Value (csv) files. It must then expose the various fields detected.
@@ -92,23 +92,20 @@ This project involved vast exploratory design work, in preparation of the actual
 		\item Run a pilot study followed by a user study to evaluate the system.
 	\end{enumerate}	
 	
-	An iterative development process, similar to the Spiral Model and Scrum, was adopted for this project. This allowed early experimentation with and user testing of the various components and different interface designs. After each iteration of development, design choices arose. Various options were evaluated, one was built, resulting in a new iteration, at which point the process repeated. 
+	An iterative development process, similar to the Spiral Model and Scrum, was adopted for this project. This allowed early experimentation and user testing of the various components and different interface designs. After each development iteration, design choices arose. Of the various options evaluated, one would be built. This would start a new iteration, and the cycle would repeat.
 	
-	To manage technical debt and follow best practices, we adopted a form of Test-Driven Development (TDD). In its pure form, TDD relies on a fully planned out functional specification and automated testing. However, since the design and functionality of this project were evolving over time, small specifications were made for each iteration, and changed as necessary after a sprint (to borrow Scrum terminology). Also, since the input needed to sketched by hand, and the output was visual and changes in literal pixel values between trials, it was non-trivial to simulate and verify this interaction automatically. These parts were verified through repeated manual testing each time the code was changed or refactored. Parts of the code that were effectively in a functional programming style (deterministic calculations with no side effects) could, however, be checked with unit tests. In addition, to pick up design flaws early, the prototypes were constantly used for hallway testing (friends and family were asked to use the application and speak out what they were thinking as they did).
+	To manage technical debt and minimise bugs, Test-Driven Development (TDD) was adopted. In its pure form, TDD relies on a fully planned out functional specification and automated testing. However, since the design and functionality of this project were evolving over time, small specifications were made for each iteration, and changed as necessary after a sprint (to borrow Scrum terminology). Also, since the input needed to sketched by hand, and the output was visual and changed in literal pixel values between trials without changing in semantic meaning, it was non-trivial to simulate and verify this interaction automatically. These parts were verified through repeated manual testing each time the code was changed or refactored. Parts of the code that were effectively in a functional programming style (deterministic calculations with no side effects) could, however, be checked with unit tests. In addition, to pick up design flaws early, the prototypes were constantly hallway tested (friends and family were asked to use the application and speak out what they were thinking as they did so).
 	
-	Thanks to the constant refactoring of the code to minimise coupling, the project could be open sourced at the end and plugged in as a standard GUI component in other Windows applications in the end, making sure that this software can actually be used.
-	
-	
-	
+	Thanks to the constant refactoring of the code, the coupling between various components was minimised. This meant the project could be open sourced at the end and plugged in as a standard GUI component in other Windows applications, making it easier to integrate this component in real world applications.
 	
 	
 	\section{Development Environment}
-	For this project, the hardware available was a Microsoft Surface Pro (\nth{1} gen), which features the active digitizer screen required for precise inking. Since this machine runs Windows by default, we chose to develop the system using the .NET framework, which has built-in support for Tablet PCs and Ink handling.
+	For this project, the hardware available was a Microsoft Surface Pro (\nth{1} gen), which features the active digitizer screen and stylus required for precise inking. Since this machine runs Windows by default, I chose to develop the system using the .NET framework, which has built-in support for Tablet PCs and Ink handling.
 	
 	As a precaution, insurance was taken out on the machine to ensure quick replacement in case of damage or loss. Additionally, version control was used extensively in the project, to ensure no work was lost. The code for the RATA ink stroke recogniser, described below, was uploaded to a Git repository in collaboration with RATA's authors. The code for this project was then written in a fork of that repository, to allow updates to RATA to be pulled in. The dissertation itself was written in \LaTeX , so that the text files could be versioned in another Git repository. Both repositories were backed up off-site on repository host Bitbucket. The dissertation was also backed up online using file synchronisation software Microsoft OneDrive. 
 	
 	\section{Building the classifier}	
-	Core to the system is an ink recognition component that identifies the chart element (e.g.\ bar, axis) that the user has sketched. This must work above a certain accuracy threshold or the system will prove frustrating to users \citep{frankish_recognition_1995}. However, since the project scope included other components too, the time available to build this classifier was limited. Additionally, given the complexity of building a classifier, and our limited experience with building them, it would be difficult to get the same accuracy as those provided in a mature library. Hence, we decided to build a classifier using existing tools rather than implementing one from scratch. 
+	Core to the system is an ink recognition component that identifies the chart element (e.g.\ bar, axis) that the user has sketched. This must work above a certain accuracy threshold or the system will prove frustrating to users \citep{frankish_recognition_1995}. However, since the project scope included other components too, the time available to build this classifier was limited. Additionally, given the complexity of building a classifier, and my limited experience with building them, it would be difficult to get the same accuracy as those built using mature libraries. Hence, we decided to build a classifier using existing tools rather than implementing one from scratch. 
 	
 	\subsection{Recognition Method}
 	A number of different approaches have been taken in building systems that automatically interpret hand-drawn sketches. These approaches vary in the recognition accuracy they offer, and the robustness to generalise across multiple domains. Some of the approaches that have been attempted:
@@ -205,6 +202,11 @@ This project involved vast exploratory design work, in preparation of the actual
 
 	Once all the elements in all the charts were labelled, we could begin training. RATA includes a dataset generator tool that allowed easy extraction of various features of the strokes, such as 'distance from first to last point', 'absolute curve of largest segment' and 'pressure variation'. Data for 121 such attributes, about 270 ink strokes was compiled into a .csv file for use in training. 
 	\subsection{Training}	
-	The labelled data was then sent to a 'Vote' classifier in Weka, which combines the probability distributions derived from multiple classifiers \citep{kuncheva_combining_2004}. Specifically, the types of classifiers combined were Logit Boost, Bayes Net, LMT (Logistic Model Trees) and Random Forest. In order to assess how well each of these individual classifiers were performing, an experiment was set up using Weka Experimenter. The data collected in the initial study was shuffled, and then 66\% was chosen randomly as training data, the rest as testing. Then a paired T Test gave the following results:
+	The labelled data was then sent to a 'Vote' classifier in Weka, which combines the probability distributions derived from multiple classifiers \citep{kuncheva_combining_2004}. Specifically, the types of classifiers combined were Logit Boost, Bayes Net, LMT (Logistic Model Trees) and Random Forest. 
+	
+	In order to assess how well each of these individual classifiers were performing, an experiment was set up using Weka Experimenter. The data collected in the initial study was shuffled, and then 66\% was chosen randomly as training data, the rest as testing. A paired T test on this data showed that none of these top-performing algorithms had statistically significant improvements in accuracy over the others.
 	
 	\input{weka_experiment}
+
+\section{Summary}
+This chapter detailed the work done before implementation was begun. A thorough requirements analysis covered functional goals (core and extension) as well as usability goals, while being open-ended about how exactly the system would look and operate. The work items required to meet these requirements were assessed. In order to assess the feasibility of building such a system, an initial study with 10 participants was run. The data thus generated was manually labelled and used to generate and train a classifier. Finally, the algorithms used within the classifier were individually checked for their accuracy on this domain of chart element identification, on which they all performed very well, getting accuracies of upwards of 96.07 despite the small training set.

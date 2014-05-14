@@ -48,6 +48,8 @@ To see whether the interface encourages exploration, the time required to make a
 
 To make the comparison fair, we needed a modification that was a reasonable change to make quickly, and was supported by both editors. Two such changes are to change the width of the bars, and to change the height of the bars, without changing the dimensions of the chart itself. In the pilot study, some participants were asked to change the height, while others were asked to change the width. However, in Excel, the user has no direct control over the width of the bars. Instead, they have to do this indirectly by changing a 'Gap Width' setting, which controls the space between the bars. This indirection was not a perfect analogue to the method to change the bar width in Sketchography, so some users never identified how to make this change. Thus, in the final user study, we focused instead just on changing the height of the bar.
 
+The users weren't shown how to make this change, or that the option was only available in the formal view (since stylus interaction with the chart in sketch view would be interpreted as ink). They had to explore the User Interface and discover the way to do this themselves. The method involved hovering over a bar in the data series, which exposes a drag handle on the top and the right of the bar. The top one can be dragged to manipulate the height (more specifically, the Y axis scale). In Excel, it involved opening an `Action Pane' by double clicking on a bar, or right clicking on it and then selecting the right option, or via a button in the ribbon interface on the top of the screen. In this `Action Pane', there was a setting to change the Y axis scale.
+
 \subsection*{Language Independence}
 A secondary benefit of the direct manipulation and visual metaphors is that Sketchography isn't as language dependent as a system with configuration dialogues in English. Users should be able to learn Sketchography just as quickly whether they speak English as their primary language or not. 
 
@@ -67,7 +69,7 @@ A number of factors could affect people's performance on these tasks. For exampl
 
 Additionally, they were asked some open-ended questions to gain qualitative observations on their thoughts on Excel and Sketchography.
 
-The exact phrasing of the questionnaire and the task descriptions is in the Appendix Blah.
+The exact phrasing of the questionnaire and the task descriptions is in the Appendix TODOexc.
 %TODO Insert reference to appendix.
 
 
@@ -184,6 +186,14 @@ W = 15.5, p-value = 0.01014
 alternative hypothesis: true location shift is not equal to 0
 \end{verbatim}
 
+Qualitatively, a lot of participants were observed trying to drag the bounding box handles that appear when you select a bar in the Excel chart. They were frustrated when they realised that these handles can't actually be manipulated. One participant seemed to have prior experience with this - on reading the task, they said out loud, ``Oh yeah this is a pain, I know this is a pain".
+
+Even when users did find relevant options in the Excel configuration panels, three of them hovered over the button, hesitated, and then tried something else instead. One actually said ``But this is different, no?", before abandoning it. They weren't able to instantly preview what result they would get if they picked the button, so they avoided exploring that possibility. 
+
+On the other hand, they felt comfortable dragging the height handle in Sketchography despite it not having a label confirming its purpose.
+
+One user even tried using the interface with a mouse, and by pinching her fingers apart on screen in a `zoom in' gesture. This suggests a willingness to experiment. It also suggested some future work for this project, to integrate finger gestures to manipulate the chart while using the pen purely for inking.
+
 \subsection{Language Independence}
 Half the participants spoke English as their primary language with native fluency, while the other half used it during their job but not as a primary language. Tests to show that the learnability for English speakers was more than that for non-English speakers failed. While not statistically conclusive, this suggests that there wasn't a significant difference in learnability depending on language, which supports the hypothesis.
 
@@ -203,6 +213,49 @@ No correlation was observed between the creation time task difference and the nu
 
 Interestingly, there is no correlation between the modification tasks time difference and whether the participant has used Excel for charting (p-value = 0.5753). This suggest that users might still not have learnt how to use Excel after having used it before, unlike Sketchography where they showed a measurable speedup after having used it once.
 
-%TODO Insert comments here
-Participant comments go here.
+\subsection{Participant comments}
+Some of the interesting responses to the open-ended questions are included below.
 
+\textbf{Question: How do you think the software works?}
+
+(Note: This question intended to elicit whether the participants had formed a correct mental model of how the software functions, but some of the participants less averse with English misinterpreted it as soliciting feedback, which led to even more interesting answers)
+
+``Easy and real fast."
+
+``Works pretty well. It is much easier to understand this software as compared to Excel."
+
+
+
+\textbf{Question: What is the best thing about Excel?}
+
+``Can easily plot the data and could be understood easily."
+
+``All pervading."
+
+\textbf{Question: What is the worst thing about Excel?}
+
+``Certain times it is time consuming."
+
+``Too vast to remember everything."
+
+``Flexibility in charts is fairly low - it's templatized for the most part and not customize-able."
+
+``Cumbersome."
+
+
+\textbf{Question: What is the best thing about Sketchography?}
+
+``Very efficient software. Easy to understand. Charts can be prepared in a matter of seconds."
+
+``Intuitive."
+
+\textbf{Question: What is the worst thing about Sketchography?}
+
+``While making bars, not everybody will have the same style, so the Y Axis can get misjudged. Rest was easy and fun. Less time consuming. User friendly. Mistakes should get highlighted."
+
+``The image recognition could be better. Apart from that, the software is easy to use, extremely intuitive, versatile and has great potential."
+
+``A few kinks to work out, but on the right track."
+
+\section{Summary}
+In the introduction, this project outlined some hypotheses that it believed would be supported by the merits of the application. This chapter details a user study carried out on 10 participants that confirmed the two primary hypotheses with statistically significant results, and suggested that the third is supported too. Namely, users learn how to use the software on their first try and are already becoming skilled, and thus faster on their second try. They are also able to determine how to make a specific change quicker in Sketchography than they are in Microsoft Excel. It is likely that they have been able to learn how to use the application and make the modification regardless of conversant they are in English.
