@@ -37,6 +37,7 @@ Additionally, the feasibility of performing the stroke recognition needed to be 
 		\item The user must be able to easily try out changes to the visualisation, see what the resultant chart would look like, and undo them if needed.
 	\end{enumerate}
 	
+	%Talk about how had to read a lot of papers beyond what is covered in course.
 	\section{Design Goals}
 	In order to meet the usability requirements, some design principles need to be followed. The main benefit of a sketch-based interface is that it is more likely to match the user's mental model, or their expectation of what every UI widget will do, since it draws upon familiar metaphors, and offers liveness and direct manipulation of the visualisation. This section explores the theories of direct manipulation and liveness, and how they might be applied to this project.
 	
@@ -106,6 +107,7 @@ Additionally, the feasibility of performing the stroke recognition needed to be 
 	
 	As a precaution, insurance was taken out on the machine to ensure quick replacement in case of damage or loss. Additionally, version control was used extensively in the project, to ensure no work was lost. The code for the RATA ink stroke recogniser, described below, was uploaded to a Git repository in collaboration with RATA's authors. The code for this project was then written in a fork of that repository, to allow updates to RATA to be pulled in. The dissertation itself was written in \LaTeX , so that the text files could be versioned in another Git repository. Both repositories were backed up off-site on repository host Bitbucket. The dissertation was also backed up online using file synchronisation software Microsoft OneDrive. 
 	
+	%TODO Explain somewhere how low RATA was on documentation, and how hard it was to understand and use.
 	\section{Building the classifier}	
 	Core to the system is an ink recognition component that identifies the chart element (e.g.\ bar, axis) that the user has sketched. This must work above a certain accuracy threshold or the system will prove frustrating to users \citep{frankish_recognition_1995}. However, since the project scope included other components too, the time available to build this classifier was limited. Additionally, given the complexity of building a classifier, and my limited experience with building them, it would be difficult to get the same accuracy as those built using mature libraries. Hence, we decided to build a classifier using existing tools rather than implementing one from scratch. 
 	
@@ -203,6 +205,8 @@ Additionally, the feasibility of performing the stroke recognition needed to be 
 	\end{figure}
 
 	Once all the elements in all the charts were labelled, we could begin training. RATA includes a dataset generator tool that allowed easy extraction of various features of the strokes, such as 'distance from first to last point', 'absolute curve of largest segment' and 'pressure variation'. Data for 121 such attributes, about 270 ink strokes was compiled into a .csv file for use in training. 
+	
+	%Give more details on algorithms and show that they are beyond what's learned in class.	
 	\subsection{Training}	
 	The labelled data was then sent to a 'Vote' classifier in Weka, which combines the probability distributions derived from multiple classifiers \citep{kuncheva_combining_2004}. Specifically, the types of classifiers combined were Logit Boost, Bayes Net, LMT (Logistic Model Trees) and Random Forest. 
 	
