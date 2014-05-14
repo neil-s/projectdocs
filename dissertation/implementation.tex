@@ -233,7 +233,7 @@ _inkOverlay.EditingMode = e.Cursor.Inverted ?
 	\end{figure}
 	
 
-	When the user begins dragging a column header from the list on the left, this calls a number of event handlers in Sketchography. These configure the drag and drop action so that the column name saved within the list item is the data sent to the drop location. They also flip a \texttt{ShowDropTargets} flag, so that the chart rendering system draws grey rectangles indicating where the drop areas lie. This UI pattern is based on one users may be familiar from a number of drag and drop interfaces they may have previously interacted with, thus making it easier for them to understand what's happening. We also tried adding `Drop here' text in the targets like in the examples below, but this proved to cluttered in the small drop targets being used. Additionally, hallway testing revealed that once users began dropping, they were already aware that they must drop it in targets, and the change in colour was conspicuous enough to draw their attention to them.
+	When the user begins dragging a column header from the list on the left, this calls a number of event handlers in Sketchography. These configure the drag and drop action so that the column name saved within the list item is the data sent to the drop location. They also flip a \texttt{ShowDropTargets} flag, so that the chart rendering system draws grey rectangles indicating where the drop areas lie. This UI pattern is based on one users may be familiar from a number of drag and drop interfaces they may have previously interacted with, thus making it easier for them to understand what's happening. We also tried adding `Drop here' text in the targets like in the examples below, but this proved too cluttered in the small drop targets being used. Additionally, hallway testing revealed that once users began dropping, they were already aware that they must drop it in targets, and the change in colour was conspicuous enough to draw their attention to them.
 	
 		\begin{figure}[H]
 		\centering
@@ -251,7 +251,7 @@ _inkOverlay.EditingMode = e.Cursor.Inverted ?
 	\end{figure}	
 
 	
-	When the data is dropped, this calls another event handler. In Sketchography, the event handler simply verifies that its a valid drag and drop, and then passes on the data to the \texttt{DropData} function on the SketchChart. For every rectangle in the dictionary of drop targets, \texttt{DropData} checks if the drop event occured within it. When it finds the drop target the user picked, it looks up the corresponding string, and calls \texttt{BindDataSeries} on it. \texttt{BindDataSeries} adds the binding appropriately. If the data was dropped on a data series rather than the X axis, it also renames that series and the corresponding drop target, so that the user can reassign that bar to some other data if they change their mind. From this point, the charting functionality takes over.
+	When the data is dropped, this calls another event handler. In Sketchography, the event handler simply verifies that it's a valid drag and drop, and then passes on the data to the \texttt{DropData} function on the SketchChart. For every rectangle in the dictionary of drop targets, \texttt{DropData} checks if the drop event occured within it. When it finds the drop target the user picked, it looks up the corresponding string, and calls \texttt{BindDataSeries} on it. \texttt{BindDataSeries} adds the binding appropriately. If the data was dropped on a data series rather than the X axis, it also renames that series and the corresponding drop target, so that the user can reassign that bar to some other data if they change their mind. From this point, the charting functionality takes over.
 	
 	
 	
@@ -331,7 +331,7 @@ _inkOverlay.EditingMode = e.Cursor.Inverted ?
 	\caption{Switching between formal and informal views}
 	\end{figure}
 	
-	Behind the scenes, all the chart elements are drawn in both views, with the unselected view dimmed or ghosted out. Hence, when users are sketching, they can see faint feedback of the recognition in the background and thus notice early if there has been a misclassification. This is done by setting two alpha or transparency values - one which is high when the formal view is selected, and one which is high when the in informal mode. Each of the elements then uses one of these alpha values to draw themselves according to which mode they should be prominent in.
+	Behind the scenes, all the chart elements are drawn in both views, with the unselected view dimmed or ghosted out. Hence, when users are sketching, they can see faint feedback of the recognition in the background and thus notice early if there has been a misclassification. This is done by setting two alpha or transparency values - one which is high when the formal view is selected, and one which is high when in the informal mode. Each of the elements then uses one of these alpha values to draw themselves according to which mode they should be prominent in.
 	
 	%TODO Put list of major milestones/iterations
 	
