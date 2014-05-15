@@ -1,11 +1,11 @@
 \chapter{Introduction}
 \label{cha:introduction}
-The aim of this project has been to design and develop Sketchography, an application for users to make a chart of their data by sketching a rough version onto a tablet screen, rather than using a complex Graphical User Interface or programming. The goal is to make an application that's easier for users to pick up than existing charting tools, and one that encourages exploration of the data and various visualisations. I have successfully met all the core requirements, implemented three extensions, and evaluated that the goals were satisfied through a user study.
+The aim of this project has been to design and develop Sketchography, an application for users to make a chart of their data by sketching a rough version onto a tablet screen, rather than using a complex Graphical User Interface or programming. The goal is to make an application that's easier for users to pick up than existing charting tools, and one that encourages exploration of the data and various visualisations. I have successfully met all the core requirements, implemented three extensions, and carried out an evaluation that provided evidence that the design goals were reached.
 
 This chapter documents the motivation for such a project, including previous work in the field, and an overview of what functions the application performs from a user's point of view.
 
 \section{Motivation}
-This project is an exploration of Human Computer Interface concepts governing the interactions of users with tools that let them explore and visualise data.
+As a society, we are generating increasing amounts of data, and need better ways to quickly visualise them through charts. This project is an exploration of Human Computer Interface concepts governing the interactions of users with tools that let them explore and visualise data.
 
 The design of most charting tools is driven by the choice of interface: the mouse and keyboard. Thus, they usually allow graph generation through one of two means:
 \begin{enumerate}
@@ -27,7 +27,7 @@ Meanwhile, there has been increasing adoption of touch-enabled phones and multi-
 
 Additionally, \cite{norman_user_1986} describe the `Gulf of Execution', or the gap between a person's intent and their ability to execute that intent. Existing charting tools require users to learn how to accomplish each task, whereas the familiar metaphor of sketching on paper can encourage exploratory work due to the ease of creating changes by visually expressing what sort of change one is trying to make.
 
-There have been a couple of projects that attempt to apply sketch input to the problem domain of creating charts. Microsoft Research's SketchInsight \citep{walny_understanding_2012} lets users make gestures to indicate a type of chart they want. However, by letting the user simply draw the chart they're imagining, rather than making them learn gestures that may not bear a visual resemblance to the end product, Sketchography aims to be easier to learn. Additionally, gestures are immediately converted to charts, which means any further interaction or modifications don't make use of the stylus' digital ink. \cite{chao_poster:_2010} propose a system that lets the user compose basic elements to make visualisations of arbitrary complexity. However, this requires a lot of sketching even for the most basic charts that are commonly used.
+Some projects have attempted to apply sketch input to the problem domain of creating charts. Microsoft Research's SketchInsight \citep{walny_understanding_2012} lets users make gestures with a stylus to indicate the type of chart they want. However, by letting the user simply draw the chart they are imagining, rather than making them learn gestures that may not bear a visual resemblance to the end product, Sketchography aims to be easier to learn. Additionally, gestures are immediately converted to charts, which means any further interaction or modifications do not make use of the stylus' digital ink. \cite{chao_poster:_2010} propose a system that lets the user compose basic elements to make visualisations of arbitrary complexity. However, this requires a lot of sketching even for the most basic charts that are commonly used.
 
 In addition to an improved design, this project is also using better sketch recognition techniques, thus reducing the likelihood of frustration due to misclassification of ink strokes.
 
@@ -42,7 +42,7 @@ This paper describes an application that allows the user to sketch a subset of a
 \item[H3] Its advantages hold independent of how fluent the user is in English
 \end{enumerate}
 
-These hypotheses were investigated through a user study.
+These hypotheses were investigated through a user study, which provided data that strongly supported the first two, and wasn't conclusive on the last one.
 
 The end result is a charting application that works as below:
 \begin{enumerate}
@@ -51,7 +51,7 @@ The end result is a charting application that works as below:
 	\centering
 	\includegraphics[width=0.6\linewidth]{walk1}
 	\end{figure}
-\item They sketch a rough indication of a chart.
+\item They sketch a rough indication of part of a chart.
 	\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\linewidth]{walk2}
@@ -61,7 +61,7 @@ The end result is a charting application that works as below:
 	\centering
 	\includegraphics[width=0.6\linewidth]{walk3}
 	\end{figure}
-\item The tool then creates a 'formal' chart.
+\item The tool then creates a completed, `formal' chart with the user's data.
 	\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\linewidth]{walk4}
