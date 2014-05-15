@@ -98,6 +98,8 @@
 
 \tableofcontents
 
+%TODO: Should I include a list of figures here? I really don't see the point
+
 \clearpage
 
 
@@ -115,18 +117,23 @@
 %TC:ignore
 
 \addcontentsline{toc}{chapter}{Bibliography}
+%\bibliography{refs}
 
 \cleardoublepage
 
 \bibliographystyle{apalike}
 \bibliography{collection}
 
+
+%TODO: Appendices go here
+%\chapter{Appendices}
 \appendix
 \input{study.tex}
 \input{questionnaire.tex}
 \input{study_data}
 
 \chapter{Study Analysis}
+\label{cha:analysis}
 
 
 
