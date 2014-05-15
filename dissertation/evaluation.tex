@@ -1,10 +1,10 @@
 \chapter{Evaluation}
-Since design usability was the salient point of this project, a user study was a good way to assess its performance. After gaining approval from the Ethics board, a pilot study was run, followed by the actual user study. The results confirm the hypotheses - users learnt how to use the system after one use, and they were able to modify their chart faster in Sketchography compared to Excel. A description of the study and a summary of the results follows; for the entire questionnaire and full data analysis, see appendix blah.
+Given that design usability was the salient point of this project, a user study was a good way to assess its performance. After gaining approval from the Ethics board, a pilot study was run, followed by the actual user study. The results confirm the hypotheses - users learnt how to use the system after one use, and they were able to modify their chart faster in Sketchography compared to Excel. A description of the study and a summary of the results follows; for the entire questionnaire and full data analysis, see \autoref{cha:questionnaire} and \autoref{cha:analysis}.
 %TODO Add reference to appendix ^
 %TODO Maybe add a qualitative example here of horribly drawn charts being correctly identified. Or atleast mention that the recognition works remarkably well.
 
 \section{Study Goals}
-In the Introduction (\autoref{cha:introduction}), it was hypothesized that the direct manipulation and liveness of this system would offer two advantages:
+In the Introduction (\autoref{cha:introduction}), I hypothesized that the direct manipulation and liveness of this system would offer two advantages:
 
 \begin{enumerate}
 \item[H1] This interface is more `learnable' over time
@@ -12,14 +12,14 @@ In the Introduction (\autoref{cha:introduction}), it was hypothesized that the d
 \item[H3] Its advantages hold independent of how fluent the user is in English.
 \end{enumerate}
 
-Hence, the study was designed to evaluate whether these three properties were achieved. 
+The study was designed to evaluate whether these three properties were achieved. 
 
 \subsection*{Learnability}
-To see whether the interface is learnable over time, users were asked to carry out a very similar task twice, and their times across tasks were compared. If the user shows a statistically significant improvement in the time taken to carry out the task, then they are learning how to use the interface, and becoming better at using it. The chosen task is to import (mock) data and create a bar chart.
+To investigate whether the interface is learnable over time, users were asked to carry out a very similar task twice, and their times across tasks were compared. If the user shows a statistically significant improvement in the time taken to carry out the task, then they are learning how to use the interface, and becoming adept at using it. The chosen task is to import (mock) data and create a bar chart.
 
-To make this experiment fair, the tasks must be phrased very carefully. The tasks must be very similar, to make sure one isn't systematically harder or easier, but not so similar that users can mechanically follow the same steps without even understanding the problem.
+To make this experiment fair, the tasks had to be phrased very carefully. The tasks had to be very similar, to make sure one was not systematically harder or easier, but not so similar that users could mechanically follow the same steps without even understanding the problem.
 
-In addition, the tasks must tell the user what output is expected, without explicitly listing every single step required to get there. This didn't hold true for the first draft of the task descriptions, an example of which is below.
+In addition, the tasks had to tell the user what output is expected, without explicitly listing every single step required to get there. This did not hold true for the version of the task descriptions used in the pilot, an example of which is below.
 
 \begin{quotation}
 Task A:
@@ -45,9 +45,9 @@ Speak out aloud the name of the country where the population is declining (where
 This is better, since the user now needs to understand the context of the problem, grasp which data is relevant and which fields need to go on each axis for them to notice the trend required.
 
 \subsection*{Modification}
-To see whether the interface encourages exploration, the time required to make a specific modification in Sketchography needed to be compared to the time required for the same modification in users' usual chart editor. The only other chart editor we compared was Microsoft Excel, which proved a sensible decision since all the final study participants indicated that Excel was their tool of choice for making charts, and only 2 out of 10 had actually used anything else to create a chart.
+To see whether the interface enables quick exploration, the time required to make a specific modification in Sketchography needed to be compared to the time required for the same modification in users' usual chart editor. The only other chart editor we compared was Microsoft Excel, which proved a sensible decision since all the final study participants indicated that Excel was their tool of choice for making charts, and only 2 out of 10 had actually used anything else to create a chart.
 
-To make the comparison fair, we needed a modification that was a reasonable change to make quickly, and was supported by both editors. Two such changes are to change the width of the bars, and to change the height of the bars, without changing the dimensions of the chart itself. In the pilot study, some participants were asked to change the height, while others were asked to change the width. However, in Excel, the user has no direct control over the width of the bars. Instead, they have to do this indirectly by changing a 'Gap Width' setting, which controls the space between the bars. This indirection was not a perfect analogue to the method to change the bar width in Sketchography, so some users never identified how to make this change. Thus, in the final user study, we focused instead just on changing the height of the bar.
+To make the comparison fair, we needed a modification that was a reasonable change to make quickly, and was supported by both editors. Two such changes are to change the width of the bars, and to change the height of the bars, without changing the dimensions of the chart itself. In the pilot study, some participants were asked to change the height, while others were asked to change the width. However, in Excel, the user has no direct control over the width of the bars. Instead, they have to do this indirectly by changing a 'Gap Width' setting, which controls the space between the bars. This indirection was not a perfect analogue to the method to change the bar width in Sketchography, so some users never identified how to make this change. Thus, in the final user study, we focused instead on changing just the height of the bar, which could be done via similar settings in both applications.
 
 The users weren't shown how to make this change, or that the option was only available in the formal view (since stylus interaction with the chart in sketch view would be interpreted as ink). They had to explore the User Interface and discover the way to do this themselves. The method involved hovering over a bar in the data series, which exposes a drag handle on the top and the right of the bar. The top one can be dragged to manipulate the height (more specifically, the Y axis scale). In Excel, it involved opening an `Action Pane' by double clicking on a bar, or right clicking on it and then selecting the right option, or via a button in the ribbon interface on the top of the screen. In this `Action Pane', there was a setting to change the Y axis scale.
 
@@ -59,7 +59,7 @@ India is a nation of multiple languages, but a lot of businesses conduct their a
 To study the effect of language on the two measures above, users were asked what their primary language was, on their questionnaire. This was then divided into a binary classification: English or Non-English.
 
 \subsection*{Other factors}
-A number of factors could affect people's performance on these tasks. For example, users who regularly create charts in Excel might be faster. To investigate how these factors affect the measures above, a questionnaire was given to users following their completion of the tasks, asking:
+A number of factors could affect people's performance on these tasks. For example, users who regularly create charts in Excel might be able to do so faster. To investigate how these factors affect the measures above, a questionnaire was given to users following their completion of the tasks, asking:
 
 \begin{enumerate}
 \item How often do you make charts for work or studies?
@@ -68,29 +68,29 @@ A number of factors could affect people's performance on these tasks. For exampl
 \item Have you used Microsoft Excel to make charts?
 \end{enumerate}
 
-Additionally, they were asked some open-ended questions to gain qualitative observations on their thoughts on Excel and Sketchography.
+Additionally, participants were asked three open-ended questions to gain qualitative observations on their thoughts on Excel and Sketchography.
 
 The exact phrasing of the task descriptions and the questionnaire is in \autoref{cha:tasks} and \autoref{cha:questionnaire} respectively.
 
 
 \section{Pilot Study}
-The pilot study was conducted on 3 participants, all grad students at the University of Cambridge Computer Lab, who were not paid for their time. It was carried out in a controlled lab environment, with a video recording set up that focussed on their interactions with the application, and also recorded what they were saying as they interacted with it.
+The pilot study was conducted with 3 participants, all graduate students (aged between 20 and 30) at the University of Cambridge Computer Lab, who were not paid for their time. They were members of the Graphics and Interaction group, and had carried out user studies of their own in the past. Besides directly contributing as participants in the study, they could also help me identify any flaws in the study setup. The study was carried out in a controlled lab environment, with equipment that recorded video of participants' interactions with the application, and audio of what they were saying as they interacted with it.
 
 The study proceeded as follows:
 \begin{enumerate}
 \item The participant signs a form indicating his consent to participating, and being recorded for the purposes of the study. They are also informed that they are being timed not to assess their own performance, but that of the system, in order to put them at rest.
 \item I demonstrate the system to them by importing a data file, creating a bar chart, switching between formal and informal views and resetting the application to its initial state.
-\item I explain that they will be given a task description on a slip of paper, and can take as long as they like to read it. When they are ready, I will start timing. I will not answer any questions they may have about the system.
+\item I explain that they will be given a task description on a slip of paper, and can take as long as they like to read it. When they are ready, I will start timing. While they are carrying out the task, I will provide no assistance, in order to maintain uniformity.
 \item The Surface tablet is presented to them, with the application open in its initial state. The default folder when the `Open File' dialogue is opened contains only the three Excel files they need for their tasks, and are named `Task A.xlsx' and so on.
 \item They are given the 2 creation tasks, followed by the two modification tasks. Comments they make out loud during this time are noted down. 
 \item After they finish all 4 tasks, they are given the questionnaire.
 \item After they finish the questionnaire, they are free to leave. Most stay to make comments about the software, which are also noted down.
 \end{enumerate}
 
-The key things we learnt were:
+The key things learnt were:
 \begin{enumerate}
 \item The task descriptions gave the steps in too much detail, as described above.
-\item The width modification task isn't appropriate, as described above.
+\item The width modification task was not appropriate, as described above.
 \item Despite it being subtly mentioned that each chart element must be drawn with an individual stroke, some users draw both the X and Y axis in one stroke as an `L' shape. The program is modified before the final study to recognise these axes correctly and instantiate the two Axis objects accordingly. 
 \end{enumerate}
 

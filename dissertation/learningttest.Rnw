@@ -1,4 +1,5 @@
 \chapter{Study Analysis}
+\label{cha:analysis}
 <<echo=FALSE>>=
 data <- read.csv("C:\\Users\\Neil\\SkyDrive\\Documents\\Cambridge\\3rd Year\\Project\\User Study\\StudyDataCleaned.csv")
 attach(data)
