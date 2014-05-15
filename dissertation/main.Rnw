@@ -13,6 +13,7 @@
 \usepackage{hyperref}
 \usepackage{listings}
 \usepackage{float}
+\usepackage{pdfpages}
 \raggedbottom                           % try to avoid widows and orphans
 %\sloppy
 %\clubpenalty1000%
@@ -79,5 +80,6 @@
 @
 \input{study.tex}
 \input{proposal.tex}
+\input{questionnaire.tex}
 %TC:endignore
 \end{document}
