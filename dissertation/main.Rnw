@@ -79,7 +79,7 @@
 <<child-demo, child='learningttest.Rnw'>>=
 @
 \input{study.tex}
-\input{proposal.tex}
 \input{questionnaire.tex}
+\input{proposal.tex}
 %TC:endignore
 \end{document}
