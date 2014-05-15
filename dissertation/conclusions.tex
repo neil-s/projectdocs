@@ -1,8 +1,10 @@
 \chapter{Conclusion}
-Overall, this project went better than expected, resulting in three extensions being implemented. It was shown to be a statistically significant improvement over existing tools in terms of learning curve. This was the result of numerous design iterations, and a lot of code to develop the custom charting system that best matched the project needs.
+The project proceeded better than was expected, resulting in three extensions being implemented. It was shown to be a statistically significant improvement over existing tools in terms of learning curve. This was the result of numerous design iterations, and a lot of code to develop the custom charting system that best matched the project needs.
 
 \section{Comparison with Requirements}
 The requirements originally listed in the preparation chapter(\autoref{sec:Requirements}) are restated below for easy comparison, to show that they were met and exceeded.
+
+%TODO To restate or not?
 
 The system must allow the user to:
 	\begin{enumerate}[label=\bfseries Core \arabic*]
@@ -16,7 +18,6 @@ The system must allow the user to:
 	These core requirements were all met.
 	In addition, time permitting, the system may:
 	\begin{enumerate}[label=\bfseries Extension \arabic*]
-		%TODO Make this first point clearer
 		\item Transform user-drawn sketches to resemble and overlap the formal chart elements they generated, in order to show the link between the sketch and the formal elements visually.
 		\item Mirror any manipulations applied to the formal layer back to the user drawn sketches, in order to keep the visuals of the formal and sketch layers in synchronisation.
 		\item Allow users to undo actions by erasing sketches, and remove the corresponding formal elements without throwing errors.
@@ -44,4 +45,7 @@ The primary improvement that would make this tool more practical would be to ena
 
 Additionally, the technical platform built could be extended to support many more types of charts. Given the small amount of data collected to train the classifier, adding recognition support for many more chart elements could have lowered accuracy, which would be detrimental to the usability. However, with more time, more data could be collected, for a variety of chart types.
 
-The charting component could also be made a bit smarter, to apply heuristics such as shifting the axes slightly to make them align perfectly.
+More features could be added to the charting component. It might, for example, apply heuristics such as shifting the axes slightly to make them align with each other, or choose round numbers for axis labels rather than precisely splitting up the range of values.
+
+In the short term, I will be packaging the \texttt{SketchChart} component for distribution for others to use in their applications. In this project, I have broken new ground by creating a third-party User Interface component for .NET applications that accepts sketch input. While I have built a powerful sketch recognition platform, and accompanying custom charting component, there are a lot more features that could be added. The project was designed in an extensible manner to allow the domain of sketches to be expanded or changed to another one entirely. Hence, I will be making the repository public and adding necessary documentation to invite contributions from other developers, and to let the code support other use cases that would benefit from the direct manipulation and liveness.
+
