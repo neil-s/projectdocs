@@ -10,8 +10,7 @@ listing <- function(x, options) {
 par("pin"=c(3,2))
 @
 
-Irrefutable evidence that users learnt how to use the software and got faster after one try.
-%TODO Fix the width of this thing:
+Participants performed Task 2 significantly faster than Task 1.
 <<tidy=TRUE>>=
 t.test(Task1, Task2, paired=TRUE)
 
@@ -26,7 +25,7 @@ shapiro.test(Task2)
 summary(aov(TaskDiff~LanguageBinary, data=data))
 @
 
-
+Participants performed the modification task significantly faster in Sketchography than in Excel. 
 <<>>=
 t.test(Sketch, Excel, paired=TRUE)
 
