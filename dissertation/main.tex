@@ -63,6 +63,8 @@
 \usepackage{listings}
 \usepackage{float}
 \usepackage{pdfpages}
+\usepackage{csvsimple}
+\usepackage{rotating}
 \raggedbottom                           % try to avoid widows and orphans
 %\sloppy
 %\clubpenalty1000%
@@ -126,6 +128,9 @@
 %TODO: Appendices go here
 %\chapter{Appendices}
 \appendix
+\input{study.tex}
+\input{questionnaire.tex}
+\input{study_data}
 
 \chapter{Study Analysis}
 
@@ -321,8 +326,6 @@ Participants performed the modification task significantly faster in Sketchograp
 \end{kframe}
 \end{knitrout}
 
-\input{study.tex}
-\input{questionnaire.tex}
 \input{proposal.tex}
 %TC:endignore
 \end{document}

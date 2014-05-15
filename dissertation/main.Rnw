@@ -14,6 +14,8 @@
 \usepackage{listings}
 \usepackage{float}
 \usepackage{pdfpages}
+\usepackage{csvsimple}
+\usepackage{rotating}
 \raggedbottom                           % try to avoid widows and orphans
 %\sloppy
 %\clubpenalty1000%
@@ -76,10 +78,11 @@
 %TODO: Appendices go here
 %\chapter{Appendices}
 \appendix
-<<child-demo, child='learningttest.Rnw'>>=
-@
 \input{study.tex}
 \input{questionnaire.tex}
+\input{study_data}
+<<child-demo, child='learningttest.Rnw'>>=
+@
 \input{proposal.tex}
 %TC:endignore
 \end{document}
